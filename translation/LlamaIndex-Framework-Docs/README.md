@@ -298,7 +298,7 @@ Bu dizin, LlamaIndex framework dokümantasyonunun Türkçe çevirilerini içerme
 - **291** - [AlibabaCloud-PaiEas](291-alibabacloud-paieas.md)
 - **292** - [PaLM](292-palm.md)
 - **293** - [Perplexity](293-perplexity.md)
-- **294** - [[Pipeshift](https://pipeshift.com)](294-pipeshift.md)
+- **294** - [Pipeshift](294-pipeshift.md)
 - **295** - [Portkey](295-portkey.md)
 - **296** - [Predibase](296-predibase.md)
 - **297** - [PremAI LlamaIndex](297-premai-llamaindex.md)
