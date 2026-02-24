@@ -1,6 +1,6 @@
-# Upstage Embeddings
+# Upstage Gömmeleri (Embeddings)
 
-If you're opening this Notebook on colab, you will probably need to install LlamaIndex 🦙.
+Eğer bu not defterini colab üzerinde açıyorsanız, muhtemelen LlamaIndex'i 🦙 kurmanız gerekecektir.
 
 
 ```python
@@ -16,7 +16,7 @@ If you're opening this Notebook on colab, you will probably need to install Llam
 ```python
 import os
 
-os.environ["UPSTAGE_API_KEY"] = "YOUR_API_KEY"
+os.environ["UPSTAGE_API_KEY"] = "API_ANAHTARINIZ"
 ```
 
 
@@ -28,19 +28,19 @@ embed_model = UpstageEmbedding()
 Settings.embed_model = embed_model
 ```
 
-## Using Upstage Embeddings
+## Upstage Gömmelerini Kullanma
 
-Note, you may have to update your openai client: `pip install -U openai`
+Not: openai istemcinizi güncellemeniz gerekebilir: `pip install -U openai`
 
 
 ```python
-# get API key and create embeddings
+# API anahtarını alın ve gömmeleri oluşturun
 from llama_index.embeddings.upstage import UpstageEmbedding
 
 embed_model = UpstageEmbedding()
 
 embeddings = embed_model.get_text_embedding(
-    "Upstage new Embeddings models is great."
+    "Upstage'in yeni gömme modelleri harika."
 )
 ```
 
@@ -63,7 +63,7 @@ print(len(embeddings))
 
 ```python
 embeddings = embed_model.get_query_embedding(
-    "What are some great Embeddings model?"
+    "Bazı harika gömme modelleri nelerdir?"
 )
 ```
 
@@ -85,11 +85,11 @@ print(len(embeddings))
 
 
 ```python
-# embed documents
+# belgeleri gömme
 embeddings = embed_model.get_text_embedding_batch(
     [
-        "Upstage new Embeddings models is awesome.",
-        "Upstage LLM is also awesome.",
+        "Upstage'in yeni gömme modelleri müthiş.",
+        "Upstage LLM de müthiş.",
     ]
 )
 ```

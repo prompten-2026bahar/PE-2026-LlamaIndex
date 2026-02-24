@@ -1,82 +1,73 @@
 # Aleph Alpha
 
-Aleph Alpha is a powerful language model that can generate human-like text. Aleph Alpha is capable of generating text in multiple languages and styles, and can be fine-tuned to generate text in specific domains.
+Aleph Alpha, insan benzeri metinler üretebilen güçlü bir dil modelidir. Aleph Alpha, birden fazla dilde ve stilde metin üretme yeteneğine sahiptir ve belirli alanlarda metin üretmek üzere ince ayar (fine-tune) yapılabilir.
 
-If you're opening this Notebook on colab, you will probably need to install LlamaIndex 🦙.
-
+Eğer bu not defterini colab üzerinde açıyorsanız, muhtemelen LlamaIndex'i 🦙 kurmanız gerekecektir.
 
 ```python
 %pip install llama-index-llms-alephalpha
 ```
 
-
 ```python
 !pip install llama-index
 ```
 
-#### Set your Aleph Alpha token
-
-
+#### Aleph Alpha jetonunuzu (token) ayarlayın
 
 ```python
 import os
 
-os.environ["AA_TOKEN"] = "your_token_here"
+os.environ["AA_TOKEN"] = "jetonunuz_buraya"
 ```
 
-#### Call `complete` with a prompt
-
+#### Bir istem (prompt) ile `complete` çağrısı
 
 ```python
 from llama_index.llms.alephalpha import AlephAlpha
 
-# To customize your token, do this
-# otherwise it will lookup AA_TOKEN from your env variable
+# Jetonunuzu özelleştirmek için bunu yapın,
+# aksi takdirde ortam değişkeninizden AA_TOKEN aranacaktır
 # llm = AlephAlpha(token="<aa_token>")
 llm = AlephAlpha(model="luminous-base-control")
 
-resp = llm.complete("Paul Graham is ")
+resp = llm.complete("Paul Graham ")
 ```
-
 
 ```python
 print(resp)
 ```
 
-     a well-known computer scientist and entrepreneur. He is the co-founder of PayPal and a co-founder of the Y Combinator startup accelerator. He has also co-authored the book "Programming the Web". Paul Graham is also a frequent speaker and writer on topics related to computer science, entrepreneurship, and startups. He has written several blog posts on the topic of "Why Startups Fail". In this post, I will summarize some of the key points from Paul Graham's blog post on why startups fail.
+     tanınmış bir bilgisayar bilimcisi ve girişimcidir. PayPal'ın kurucu ortağı ve Y Combinator girişim hızlandırıcısının kurucu ortağıdır. Ayrıca "Programming the Web" kitabının ortak yazarıdır. Paul Graham ayrıca bilgisayar bilimi, girişimcilik ve startuplar ile ilgili konularda sık sık konuşmacı ve yazar olarak yer almaktadır. "Girişimler Neden Başarısız Olur" konusu üzerine birkaç blog yazısı yazmıştır. Bu yazıda, Paul Graham'ın girişimlerin neden başarısız olduğu hakkındaki blog yazısından bazı önemli noktaları özetleyeceğim.
     
-    1. Lack of a clear vision: Startups often lack a clear vision of what they
+    1. Net bir vizyon eksikliği: Girişimler genellikle ne olduklarına dair net bir vizyondan yoksundur...
 
+#### Ek Yanıt Ayrıntıları
 
-#### Additional Response Details
-To access detailed response information such as log probabilities, ensure your AlephAlpha instance is initialized with the `log_probs` parameter. The `logprobs` attribute of the `CompletionResponse` will contain this data. Other details like the model version and raw completion text can be accessed directly if they're part of the response or via `additional_kwargs`.
-
-
+Log olasılıkları (log probabilities) gibi ayrıntılı yanıt bilgilerine erişmek için, AlephAlpha örneğinizin `log_probs` parametresiyle başlatıldığından emin olun. `CompletionResponse` nesnesinin `logprobs` özniteliği bu verileri içerecektir. Model sürümü ve ham tamamlama metni gibi diğer ayrıntılara, eğer yanıtın bir parçasıysa doğrudan veya `additional_kwargs` üzerinden erişilebilir.
 
 ```python
 from llama_index.llms.alephalpha import AlephAlpha
 
 llm = AlephAlpha(model="luminous-base-control", log_probs=0)
 
-resp = llm.complete("Paul Graham is ")
+resp = llm.complete("Paul Graham ")
 
 if resp.logprobs is not None:
-    print("\nLog Probabilities:")
+    print("\nLog Olasılıkları (Log Probabilities):")
     for lp_list in resp.logprobs:
         for lp in lp_list:
-            print(f"Token: {lp.token}, LogProb: {lp.logprob}")
+            print(f"Belirteç (Token): {lp.token}, LogProb: {lp.logprob}")
 
 if "model_version" in resp.additional_kwargs:
-    print("\nModel Version:")
+    print("\nModel Sürümü:")
     print(resp.additional_kwargs["model_version"])
 
 if "raw_completion" in resp.additional_kwargs:
-    print("\nRaw Completion:")
+    print("\nHam Tamamlama (Raw Completion):")
     print(resp.additional_kwargs["raw_completion"])
 ```
 
-    
-    Log Probabilities:
+    Log Olasılıkları (Log Probabilities):
     Token:  a, LogProb: -0.95955
     Token:  well, LogProb: -1.9219251
     Token: -, LogProb: -0.1312752
@@ -164,27 +155,24 @@ if "raw_completion" in resp.additional_kwargs:
     Token: ator, LogProb: -1.490105e-05
     Token: ., LogProb: -0.48073012
     Token: <|endoftext|>, LogProb: -0.30235213
-    
-    Model Version:
+
+    Model Sürümü:
     20240215
-    
-    Raw Completion:
+
+    Ham Tamamlama (Raw Completion):
      a well-known computer scientist and entrepreneur. He is the co-founder of PayPal and a co-founder of the Y Combinator startup accelerator. He has also been a professor at the MIT Media Lab. Paul Graham has written several books on computer science and entrepreneurship, including "Programming the Universe" and "The Art of Computer Programming". He is also the founder of the startup incubator, Y Combinator.
 
-
-## Async
-
+## Asenkron (Async)
 
 ```python
 from llama_index.llms.alephalpha import AlephAlpha
 
 llm = AlephAlpha(model="luminous-base-control")
-resp = await llm.acomplete("Paul Graham is ")
+resp = await llm.acomplete("Paul Graham ")
 ```
-
 
 ```python
 print(resp)
 ```
 
-     a computer scientist and entrepreneur who is known for his work in the field of artificial intelligence and computer science. He is the co-founder of the company Y Combinator, which is a startup accelerator that helps startups get funding and resources. Paul Graham has also written several books on computer science and entrepreneurship, including "Programming: Principles and Practice" and "The Art of Computer Programming". He is a well-known figure in the computer science community and has made significant contributions to the field.
+     yapay zeka ve bilgisayar bilimi alanındaki çalışmalarıyla tanınan bir bilgisayar bilimcisi ve girişimcidir. Girişimlerin fon ve kaynak bulmasına yardımcı olan bir girişim hızlandırıcısı olan Y Combinator şirketinin kurucu ortağıdır. Paul Graham ayrıca "Programming: Principles and Practice" ve "The Art of Computer Programming" gibi bilgisayar bilimi ve girişimcilik üzerine birkaç kitap yazmıştır. Bilgisayar bilimi topluluğunda tanınmış bir figürdür ve alana önemli katkılarda bulunmuştur.

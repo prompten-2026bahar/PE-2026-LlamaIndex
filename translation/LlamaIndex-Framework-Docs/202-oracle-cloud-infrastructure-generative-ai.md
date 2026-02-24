@@ -1,34 +1,30 @@
 # Oracle Cloud Infrastructure Generative AI
 
-Oracle Cloud Infrastructure (OCI) Generative AI is a fully managed service that provides a set of state-of-the-art, customizable large language models (LLMs) that cover a wide range of use cases, and which is available through a single API.
-Using the OCI Generative AI service you can access ready-to-use pretrained models, or create and host your own fine-tuned custom models based on your own data on dedicated AI clusters. Detailed documentation of the service and API is available __[here](https://docs.oracle.com/en-us/iaas/Content/generative-ai/home.htm)__ and __[here](https://docs.oracle.com/en-us/iaas/api/#/en/generative-ai/20231130/)__.
+Oracle Cloud Infrastructure (OCI) Generative AI, tek bir API aracılığıyla sunulan ve çok çeşitli kullanım senaryolarını kapsayan, son teknoloji ürünü, özelleştirilebilir geniş dil modelleri (LLM'ler) sağlayan tam yönetilen bir hizmettir.
 
-This notebook explains how to use OCI's Genrative AI embedding models with LlamaIndex.
+OCI Generative AI hizmetini kullanarak kullanıma hazır önceden eğitilmiş modellere erişebilir veya ayrılmış yapay zeka kümelerinde (dedicated AI clusters) kendi verilerinize dayalı olarak ince ayar yapılmış (fine-tuned) özel modellerinizi oluşturabilir ve barındırabilirsiniz. Hizmetin ve API'nin ayrıntılı dokümantasyonu __[burada](https://docs.oracle.com/en-us/iaas/Content/generative-ai/home.htm)__ ve __[burada](https://docs.oracle.com/en-us/iaas/api/#/en/generative-ai/20231130/)__ mevcuttur.
 
-## Setup
+Bu not defteri, OCI'ın Generative AI gömme (embedding) modellerinin LlamaIndex ile nasıl kullanılacağını açıklamaktadır.
 
-If you're opening this Notebook on colab, you will probably need to install LlamaIndex 🦙.
+## Kurulum
 
+Eğer bu not defterini colab üzerinde açıyorsanız, muhtemelen LlamaIndex'i 🦙 kurmanız gerekecektir.
 
 ```python
 %pip install llama-index-embeddings-oci-genai
 ```
 
-
 ```python
 !pip install llama-index
 ```
 
-You will also need to install the OCI sdk
-
+Ayrıca OCI SDK'sını da kurmanız gerekecektir.
 
 ```python
 !pip install -U oci
 ```
 
-## Basic Usage
-
-
+## Temel Kullanım
 
 ```python
 from llama_index.embeddings.oci_genai import OCIGenAIEmbeddings
@@ -39,13 +35,13 @@ embedding = OCIGenAIEmbeddings(
     compartment_id="MY_OCID",
 )
 
-e1 = embedding.get_text_embedding("This is a test document")
+e1 = embedding.get_text_embedding("Bu bir test belgesidir")
 print(e1[-5:])
 
-e2 = embedding.get_query_embedding("This is a test document")
+e2 = embedding.get_query_embedding("Bu bir test belgesidir")
 print(e2[-5:])
 
-docs = ["This is a test document", "This is another test document"]
+docs = ["Bu bir test belgesidir", "Bu başka bir test belgesidir"]
 e3 = embedding.get_text_embedding_batch(docs)
 print(e3)
 ```

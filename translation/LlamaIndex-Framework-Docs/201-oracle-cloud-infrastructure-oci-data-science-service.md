@@ -1,80 +1,73 @@
-# Oracle Cloud Infrastructure (OCI) Data Science Service
+# Oracle Cloud Infrastructure (OCI) Data Science Hizmeti
 
-Oracle Cloud Infrastructure (OCI) [Data Science](https://www.oracle.com/artificial-intelligence/data-science) is a fully managed, serverless platform for data science teams to build, train, and manage machine learning models in Oracle Cloud Infrastructure.
+Oracle Cloud Infrastructure (OCI) [Data Science](https://www.oracle.com/artificial-intelligence/data-science), veri bilimi ekiplerinin Oracle Cloud Infrastructure'da makine öğrenimi modelleri oluşturması, eğitmesi ve yönetmesi için tamamen yönetilen, sunucusuz bir platformdur.
 
-It offers [AI Quick Actions](https://docs.oracle.com/en-us/iaas/data-science/using/ai-quick-actions.htm), which can be used to deploy embedding models in OCI Data Science. AI Quick Actions target users who want to quickly leverage the capabilities of AI. They aim to expand the reach of foundation models to a broader set of users by providing a streamlined, code-free, and efficient environment for working with foundation models. AI Quick Actions can be accessed from the Data Science Notebook.
+OCI Data Science'da gömme (embedding) modellerini dağıtmak için kullanılabilecek [AI Quick Actions](https://docs.oracle.com/en-us/iaas/data-science/using/ai-quick-actions.htm) sunar. AI Quick Actions, yapay zekanın yeteneklerinden hızlıca yararlanmak isteyen kullanıcıları hedefler. Temel modellerle çalışmak için kolaylaştırılmış, kodsuz ve verimli bir ortam sağlayarak temel modellerin erişimini daha geniş bir kullanıcı kitlesine yaymayı amaçlarlar. AI Quick Actions'a Data Science Notebook üzerinden erişilebilir.
 
-Detailed documentation on how to deploy embedding models in OCI Data Science using AI Quick Actions is available [here](https://github.com/oracle-samples/oci-data-science-ai-samples/blob/main/ai-quick-actions/model-deployment-tips.md) and [here](https://docs.oracle.com/en-us/iaas/data-science/using/ai-quick-actions-model-deploy.htm).
+OCI Data Science'da AI Quick Actions kullanarak gömme modellerinin nasıl dağıtılacağına ilişkin ayrıntılı dokümantasyon [burada](https://github.com/oracle-samples/oci-data-science-ai-samples/blob/main/ai-quick-actions/model-deployment-tips.md) ve [burada](https://docs.oracle.com/en-us/iaas/data-science/using/ai-quick-actions-model-deploy.htm) mevcuttur.
 
-This notebook explains how to use OCI's Data Science embedding models with LlamaIndex.
+Bu not defteri, OCI'ın Data Science gömme modellerinin LlamaIndex ile nasıl kullanılacağını açıklamaktadır.
 
-## Setup
+## Kurulum
 
-If you're opening this Notebook on colab, you will probably need to install LlamaIndex 🦙.
-
+Eğer bu not defterini colab üzerinde açıyorsanız, muhtemelen LlamaIndex'i 🦙 kurmanız gerekecektir.
 
 ```python
 %pip install llama-index-embeddings-oci-data-science
 ```
 
-
 ```python
 !pip install llama-index
 ```
 
-You will also need to install the [oracle-ads](https://accelerated-data-science.readthedocs.io/en/latest/index.html) SDK.
-
+Ayrıca [oracle-ads](https://accelerated-data-science.readthedocs.io/en/latest/index.html) SDK'sını da kurmanız gerekecektir.
 
 ```python
 !pip install -U oracle-ads
 ```
 
-## Authentication
+## Kimlik Doğrulama
 
-The authentication methods supported for LlamaIndex are equivalent to those used with other OCI services and follow the standard SDK authentication methods, specifically API Key, session token, instance principal, and resource principal. More details can be found [here](https://accelerated-data-science.readthedocs.io/en/latest/user_guide/cli/authentication.html). Make sure to have the required [policies](https://docs.oracle.com/en-us/iaas/data-science/using/model-dep-policies-auth.htm) to access the OCI Data Science Model Deployment endpoint. The [oracle-ads](https://accelerated-data-science.readthedocs.io/en/latest/index.html) helps to simplify the authentication within OCI Data Science.
+LlamaIndex için desteklenen kimlik doğrulama yöntemleri, diğer OCI hizmetlerinde kullanılanlarla eşdeğerdir ve standart SDK kimlik doğrulama yöntemlerini (özellikle API Anahtarı, oturum belirteci, örnek prensibi ve kaynak prensibi) takip eder. Daha fazla ayrıntı [burada](https://accelerated-data-science.readthedocs.io/en/latest/user_guide/cli/authentication.html) bulunabilir. OCI Data Science Model Dağıtımı (Model Deployment) uç noktasına erişmek için gerekli [politikalara](https://docs.oracle.com/en-us/iaas/data-science/using/model-dep-policies-auth.htm) sahip olduğunuzdan emin olun. [oracle-ads](https://accelerated-data-science.readthedocs.io/en/latest/index.html) paketi, OCI Data Science içindeki kimlik doğrulamasını basitleştirmeye yardımcı olur.
 
-## Basic Usage
-
-
+## Temel Kullanım
 
 ```python
 import ads
 from llama_index.embeddings.oci_data_science import OCIDataScienceEmbedding
 
-ads.set_auth(auth="security_token", profile="<replace-with-your-profile>")
+ads.set_auth(auth="security_token", profile="<profilinizle-degistirin>")
 
 embedding = OCIDataScienceEmbedding(
     endpoint="https://<MD_OCID>/predict",
 )
 
-
-e1 = embeddings.get_text_embedding("This is a test document")
+e1 = embedding.get_text_embedding("Bu bir test belgesidir")
 print(e1)
 
-e2 = embeddings.get_text_embedding_batch(
-    ["This is a test document", "This is another test document"]
+e2 = embedding.get_text_embedding_batch(
+    ["Bu bir test belgesidir", "Bu başka bir test belgesidir"]
 )
 print(e2)
 ```
 
-## Async
-
+## Asenkron
 
 ```python
 import ads
 from llama_index.embeddings.oci_data_science import OCIDataScienceEmbedding
 
-ads.set_auth(auth="security_token", profile="<replace-with-your-profile>")
+ads.set_auth(auth="security_token", profile="<profilinizle-degistirin>")
 
 embedding = OCIDataScienceEmbedding(
     endpoint="https://<MD_OCID>/predict",
 )
 
-e1 = await embeddings.aget_text_embedding("This is a test document")
+e1 = await embedding.aget_text_embedding("Bu bir test belgesidir")
 print(e1)
 
-e2 = await embeddings.aget_text_embedding_batch(
-    ["This is a test document", "This is another test document"]
+e2 = await embedding.aget_text_embedding_batch(
+    ["Bu bir test belgesidir", "Bu başka bir test belgesidir"]
 )
 print(e2)
 ```

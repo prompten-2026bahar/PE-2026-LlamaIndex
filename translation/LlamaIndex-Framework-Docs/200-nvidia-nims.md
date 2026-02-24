@@ -1,57 +1,47 @@
-# NVIDIA NIMs
+# NVIDIA NIM'ler (NIMs)
 
-The `llama-index-embeddings-nvidia` package contains LlamaIndex integrations building applications with models on 
-NVIDIA NIM inference microservice. NIM supports models across domains like chat, embedding, and re-ranking models 
-from the community as well as NVIDIA. These models are optimized by NVIDIA to deliver the best performance on NVIDIA 
-accelerated infrastructure and deployed as a NIM, an easy-to-use, prebuilt containers that deploy anywhere using a single 
-command on NVIDIA accelerated infrastructure.
+`llama-index-embeddings-nvidia` paketi, NVIDIA NIM çıkarım mikro hizmetindeki modellerle uygulama oluşturmak için LlamaIndex entegrasyonlarını içerir. NIM; topluluktan ve NVIDIA'dan sohbet, gömme (embedding) ve yeniden sıralama (re-ranking) modelleri gibi alanlardaki modelleri destekler. Bu modeller, NVIDIA tarafından NVIDIA hızlandırılmış altyapısında en iyi performansı sunacak şekilde optimize edilmiştir ve NVIDIA hızlandırılmış altyapısında tek bir komutla her yere dağıtılabilen, kullanımı kolay, önceden oluşturulmuş konteynerler olan NIM olarak sunulur.
 
-NVIDIA hosted deployments of NIMs are available to test on the [NVIDIA API catalog](https://build.nvidia.com/). After testing, 
-NIMs can be exported from NVIDIA’s API catalog using the NVIDIA AI Enterprise license and run on-premises or in the cloud, 
-giving enterprises ownership and full control of their IP and AI application.
+NIM'lerin NVIDIA tarafından barındırılan sürümleri [NVIDIA API kataloğu](https://build.nvidia.com/) üzerinden test edilebilir. Testten sonra NIM'ler, NVIDIA AI Enterprise lisansı kullanılarak NVIDIA'nın API kataloğundan dışa aktarılabilir ve şirket içinde veya bulutta çalıştırılarak işletmelere fikri mülkiyetleri ve AI uygulamaları üzerinde sahiplik ve tam kontrol sağlar.
 
-NIMs are packaged as container images on a per model basis and are distributed as NGC container images through the NVIDIA NGC Catalog. 
-At their core, NIMs provide easy, consistent, and familiar APIs for running inference on an AI model. 
+NIM'ler, model bazında konteyner imajları olarak paketlenir ve NVIDIA NGC Kataloğu aracılığıyla NGC konteyner imajları olarak dağıtılır. Özünde NIM'ler, bir yapay zeka modeli üzerinde çıkarım yapmak için kolay, tutarlı ve tanıdık API'ler sağlar.
 
-## Installation
-
+## Kurulum
 
 ```python
 %pip install --upgrade --quiet llama-index-embeddings-nvidia
 ```
 
-## Setup
+## Kurulum ve Hazırlık
 
-**To get started:**
+**Başlamak için:**
 
-1. Create a free account with [NVIDIA](https://build.nvidia.com/), which hosts NVIDIA AI Foundation models.
+1. NVIDIA AI Foundation modellerini barındıran [NVIDIA](https://build.nvidia.com/) ile ücretsiz bir hesap oluşturun.
 
-2. Select the `Retrieval` tab, then select your model of choice.
+2. `Retrieval` (Geri getirme) sekmesini seçin, ardından istediğiniz modeli seçin.
 
-3. Under `Input` select the `Python` tab, and click `Get API Key`. Then click `Generate Key`.
+3. `Input` (Giriş) altında `Python` sekmesini seçin ve `Get API Key` (API Anahtarı Al) düğmesine tıklayın. Ardından `Generate Key` (Anahtar Oluştur) düğmesine tıklayın.
 
-4. Copy and save the generated key as `NVIDIA_API_KEY`. From there, you should have access to the endpoints.
-
+4. Oluşturulan anahtarı kopyalayın ve `NVIDIA_API_KEY` olarak kaydedin. Buradan uç noktalara (endpoints) erişebiliyor olmalısınız.
 
 ```python
 import getpass
 import os
 
-# del os.environ['NVIDIA_API_KEY']  ## delete key and reset
+# os.environ['NVIDIA_API_KEY'] = '<anahtarınız>'  ## anahtarı silmek ve sıfırlamak için
 if os.environ.get("NVIDIA_API_KEY", "").startswith("nvapi-"):
-    print("Valid NVIDIA_API_KEY already in environment. Delete to reset")
+    print("Geçerli NVIDIA_API_KEY zaten ortamda mevcut. Sıfırlamak için silin.")
 else:
-    nvapi_key = getpass.getpass("NVAPI Key (starts with nvapi-): ")
+    nvapi_key = getpass.getpass("NVAPI Anahtarı (nvapi- ile başlar): ")
     assert nvapi_key.startswith(
         "nvapi-"
-    ), f"{nvapi_key[:5]}... is not a valid key"
+    ), f"{nvapi_key[:5]}... geçerli bir anahtar değil"
     os.environ["NVIDIA_API_KEY"] = nvapi_key
 ```
 
-## Working with the NVIDIA API Catalog
+## NVIDIA API Kataloğu ile Çalışma
 
-When initializing an embedding model, you can select a model by passing a model name (for example, `NV-Embed-QA`), or use the default by not passing any arguments.
-
+Bir gömme (embedding) modeli başlatırken, bir model ismi geçirerek (örneğin, `NV-Embed-QA`) bir model seçebilir veya herhangi bir parametre geçirmeyerek varsayılanı kullanabilirsiniz.
 
 ```python
 from llama_index.embeddings.nvidia import NVIDIAEmbedding
@@ -59,187 +49,173 @@ from llama_index.embeddings.nvidia import NVIDIAEmbedding
 embedder = NVIDIAEmbedding(model="NV-Embed-QA")
 ```
 
-This model is a fine-tuned E5-large model which supports the expected [`Embeddings`](https://docs.llamaindex.ai/en/stable/api_reference/embeddings/) methods including:
+Bu model, aşağıdakiler dahil beklenen [`Embeddings`](https://docs.llamaindex.ai/en/stable/api_reference/embeddings/) yöntemlerini destekleyen, ince ayar yapılmış bir E5-large modelidir:
 
-- `get_query_embedding`: Generate query embedding for a query sample.
+- `get_query_embedding`: Bir sorgu örneği için sorgu gömmesi oluşturur.
 
-- `get_text_embedding_batch`: Generate text embeddings for a list of documents which you would like to search over.
+- `get_text_embedding_batch`: Arama yapmak istediğiniz belgelerin listesi için metin gömmeleri oluşturur.
 
-- And asynchronous versions of the above.
+- Ve yukarıdakilerin asenkron versiyonları.
 
-## Working with NVIDIA NIMs
+## NVIDIA NIM'ler ile Çalışma
 
-In addition to connecting to hosted [NVIDIA NIMs](https://ai.nvidia.com), this connector can be used to connect to local NIM instances. This helps you take your applications local when necessary.
+Barındırılan [NVIDIA NIM'lere](https://ai.nvidia.com) bağlanmanın yanı sıra, bu bağlayıcı yerel NIM örneklerine bağlanmak için de kullanılabilir. Bu, gerektiğinde uygulamalarınızı yerelleştirmenize yardımcı olur.
 
-For instructions on how to set up local NIM instances, refer to [NVIDIA NIM](https://developer.nvidia.com/nim).
-
+Yerel NIM örneklerinin nasıl kurulacağına ilişkin talimatlar için [NVIDIA NIM](https://developer.nvidia.com/nim) sayfasına bakın.
 
 ```python
 from llama_index.embeddings.nvidia import NVIDIAEmbedding
 
-# Connect to an embedding NIM running at localhost:8080
+# localhost:8080 adresinde çalışan bir gömme (embedding) NIM'ine bağlanın
 embedder = NVIDIAEmbedding(base_url="http://localhost:8080/v1")
 embedder.available_models
 ```
 
-    /home/raspawar/Desktop/llama_index/llama-index-integrations/embeddings/llama-index-embeddings-nvidia/llama_index/embeddings/nvidia/base.py:161: UserWarning: Default model is set as: NV-Embed-QA. 
-    Set model using model parameter. 
-    To get available models use available_models property.
+    /home/raspawar/Desktop/llama_index/llama-index-integrations/embeddings/llama-index-embeddings-nvidia/llama_index/embeddings/nvidia/base.py:161: UserWarning: Varsayılan model şu şekilde ayarlandı: NV-Embed-QA. 
+    Model parametresini kullanarak modeli ayarlayın. 
+    Kullanılabilir modelleri almak için available_models özelliğini kullanın.
       warnings.warn(
-
-
-
-
 
     [Model(id='NV-Embed-QA', base_model=None)]
 
+### **Benzerlik (Similarity)**
 
+Aşağıdaki veriler için benzerliğin hızlı bir testi verilmiştir:
 
-### **Similarity**
+**Sorgular:**
 
-The following is a quick test of the similarity for these data points:
+- Kamçatka'da hava nasıl?
 
-**Queries:**
+- İtalya hangi yemekleriyle tanınır?
 
-- What's the weather like in Komchatka?
+- Benim adım ne? Hatırlamadığına bahse girerim...
 
-- What kinds of food is Italy known for?
+- Hayatın amacı nedir ki?
 
-- What's my name? I bet you don't remember...
+- Hayatın amacı eğlenmektir :D
 
-- What's the point of life anyways?
+**Metinler:**
 
-- The point of life is to have fun :D
+- Kamçatka'nın havası soğuktur, kışlar uzun ve sert geçer.
 
-**Texts:**
+- İtalya makarna, pizza, dondurma (gelato) ve espresso ile ünlüdür.
 
-- Komchatka's weather is cold, with long, severe winters.
+- Kişisel isimleri hatırlayamam, sadece bilgi sağlayabilirim.
 
-- Italy is famous for pasta, pizza, gelato, and espresso.
+- Hayatın amacı değişir, genellikle kişisel tatmin olarak görülür.
 
-- I can't recall personal names, only provide information.
+- Hayatın anlarının tadını çıkarmak gerçekten harika bir yaklaşımdır.
 
-- Life's purpose varies, often seen as personal fulfillment.
-
-- Enjoying life's moments is indeed a wonderful approach.
-
-### Embed queries
-
+### Sorguları Gömme (Embed queries)
 
 ```python
-print("\nSequential Embedding: ")
+print("\nSıralı Gömme (Sequential Embedding): ")
 q_embeddings = [
-    embedder.get_query_embedding("What's the weather like in Komchatka?"),
-    embedder.get_query_embedding("What kinds of food is Italy known for?"),
+    embedder.get_query_embedding("Kamçatka'da hava nasıl?"),
+    embedder.get_query_embedding("İtalya hangi yemekleriyle tanınır?"),
     embedder.get_query_embedding(
-        "What's my name? I bet you don't remember..."
+        "Benim adım ne? Hatırlamadığına bahse girerim..."
     ),
-    embedder.get_query_embedding("What's the point of life anyways?"),
-    embedder.get_query_embedding("The point of life is to have fun :D"),
+    embedder.get_query_embedding("Hayatın amacı nedir ki?"),
+    embedder.get_query_embedding("Hayatın amacı eğlenmektir :D"),
 ]
-print("Shape:", (len(q_embeddings), len(q_embeddings[0])))
+print("Boyut (Shape):", (len(q_embeddings), len(q_embeddings[0])))
 ```
 
-### Embed documents
-
+### Belgeleri Gömme (Embed documents)
 
 ```python
-print("\nBatch Document Embedding: ")
+print("\nToplu Belge Gömme (Batch Document Embedding): ")
 d_embeddings = embedder.get_text_embedding_batch(
     [
-        "Komchatka's weather is cold, with long, severe winters.",
-        "Italy is famous for pasta, pizza, gelato, and espresso.",
-        "I can't recall personal names, only provide information.",
-        "Life's purpose varies, often seen as personal fulfillment.",
-        "Enjoying life's moments is indeed a wonderful approach.",
+        "Kamçatka'nın havası soğuktur, kışlar uzun ve sert geçer.",
+        "İtalya makarna, pizza, dondurma (gelato) ve espresso ile ünlüdür.",
+        "Kişisel isimleri hatırlayamam, sadece bilgi sağlayabilirim.",
+        "Hayatın amacı değişir, genellikle kişisel tatmin olarak görülür.",
+        "Hayatın anlarının tadını çıkarmak gerçekten harika bir yaklaşımdır.",
     ]
 )
-print("Shape:", (len(d_embeddings), len(d_embeddings[0])))
+print("Boyut (Shape):", (len(d_embeddings), len(d_embeddings[0])))
 ```
 
-Now that we've generated our embeddings, we can do a simple similarity check on the results to see which documents would have triggered as reasonable answers in a retrieval task:
-
+Artık gömmelerimizi oluşturduğumuza göre, bir geri çağırma (retrieval) görevinde hangi belgelerin makul yanıtlar olarak tetikleneceğini görmek için sonuçlar üzerinde basit bir benzerlik kontrolü yapabiliriz:
 
 ```python
 %pip install --upgrade --quiet matplotlib scikit-learn
 ```
-
 
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Compute the similarity matrix between q_embeddings and d_embeddings
+# q_embeddings ve d_embeddings arasındaki benzerlik matrisini hesaplayın
 cross_similarity_matrix = cosine_similarity(
     np.array(q_embeddings),
     np.array(d_embeddings),
 )
 
-# Plotting the cross-similarity matrix
+# Çapraz benzerlik matrisini çizdirme
 plt.figure(figsize=(8, 6))
 plt.imshow(cross_similarity_matrix, cmap="Greens", interpolation="nearest")
 plt.colorbar()
-plt.title("Cross-Similarity Matrix")
-plt.xlabel("Query Embeddings")
-plt.ylabel("Document Embeddings")
+plt.title("Çapraz Benzerlik Matrisi")
+plt.xlabel("Sorgu Gömmeleri")
+plt.ylabel("Belge Gömmeleri")
 plt.grid(True)
 plt.show()
 ```
 
-As a reminder, the queries and documents sent to our system were:
+Hatırlatmak gerekirse, sisteme gönderilen sorgular ve belgeler şunlardı:
 
-**Queries:**
+**Sorgular:**
 
-- What's the weather like in Komchatka?
+- Kamçatka'da hava nasıl?
 
-- What kinds of food is Italy known for?
+- İtalya hangi yemekleriyle tanınır?
 
-- What's my name? I bet you don't remember...
+- Benim adım ne? Hatırlamadığına bahse girerim...
 
-- What's the point of life anyways?
+- Hayatın amacı nedir ki?
 
-- The point of life is to have fun :D
+- Hayatın amacı eğlenmektir :D
 
-**Texts:**
+**Metinler:**
 
-- Komchatka's weather is cold, with long, severe winters.
+- Kamçatka'nın havası soğuktur, kışlar uzun ve sert geçer.
 
-- Italy is famous for pasta, pizza, gelato, and espresso.
+- İtalya makarna, pizza, dondurma (gelato) ve espresso ile ünlüdür.
 
-- I can't recall personal names, only provide information.
+- Kişisel isimleri hatırlayamam, sadece bilgi sağlayabilirim.
 
-- Life's purpose varies, often seen as personal fulfillment.
+- Hayatın amacı değişir, genellikle kişisel tatmin olarak görülür.
 
-- Enjoying life's moments is indeed a wonderful approach.
+- Hayatın anlarının tadını çıkarmak gerçekten harika bir yaklaşımdır.
 
-## Truncation
+## Kırpma (Truncation)
 
-Embedding models typically have a fixed context window that determines the maximum number of input tokens that can be embedded. This limit could be a hard limit, equal to the model's maximum input token length, or an effective limit, beyond which the accuracy of the embedding decreases.
+Gömme modelleri genellikle, gömülebilecek maksimum giriş belirteci (token) sayısını belirleyen sabit bir bağlam penceresine sahiptir. Bu sınır, modelin maksimum giriş belirteci uzunluğuna eşit sert bir sınır veya gömmenin doğruluğunun azaldığı etkili bir sınır olabilir.
 
-Since models operate on tokens and applications usually work with text, it can be challenging for an application to ensure that its input stays within the model's token limits. By default, an exception is thrown if the input is too large.
+Modeller belirteçler üzerinde çalıştığı ve uygulamalar genellikle metinlerle çalıştığı için, bir uygulamanın girişinin modelin belirteç sınırları içinde kalmasını sağlamak zor olabilir. Varsayılan olarak, giriş çok büyükse bir istisna (exception) fırlatılır.
 
-To assist with this, NVIDIA NIMs provide a `truncate` parameter that truncates the input on the server side if it's too large.
+Buna yardımcı olmak için NVIDIA NIM'ler, giriş çok büyükse sunucu tarafında girişi kırpan bir `truncate` (kırp) parametresi sağlar.
 
-The `truncate` parameter has three options:
- - "NONE": The default option. An exception is thrown if the input is too large.
- - "START": The server truncates the input from the start (left), discarding tokens as necessary.
- - "END": The server truncates the input from the end (right), discarding tokens as necessary.
-
+`truncate` parametresinin üç seçeneği vardır:
+ - "NONE": Varsayılan seçenek. Giriş çok büyükse bir istisna fırlatılır.
+ - "START": Sunucu, girişi başlangıçtan (soldan) kırpar ve gerektiğinde belirteçleri atar.
+ - "END": Sunucu, girişi sondan (sağdan) kırpar ve gerektiğinde belirteçleri atar.
 
 ```python
 long_text = "AI is amazing, amazing is " * 100
 ```
-
 
 ```python
 strict_embedder = NVIDIAEmbedding()
 try:
     strict_embedder.get_query_embedding(long_text)
 except Exception as e:
-    print("Error:", e)
+    print("Hata:", e)
 ```
-
 
 ```python
 truncating_embedder = NVIDIAEmbedding(truncate="END")

@@ -1,48 +1,43 @@
-# Interacting with Embeddings deployed in Amazon SageMaker Endpoint with LlamaIndex
+# LlamaIndex ile Amazon SageMaker Uç Noktasında (Endpoint) Dağıtılan Gömmelerle (Embeddings) Etkileşim Kurma
 
-An Amazon SageMaker endpoint is a fully managed resource that enables the deployment of machine learning models, for making predictions on new data.
+Bir Amazon SageMaker uç noktası, yeni veriler üzerinde tahminler yapmak amacıyla makine öğrenimi modellerinin dağıtılmasını sağlayan tam yönetilen bir kaynaktır.
 
-This notebook demonstrates how to interact with Embedding endpoints using `SageMakerEmbedding`, unlocking additional llamaIndex features.
-So, It is assumed that an Embedding is deployed on a SageMaker endpoint.
+Bu not defteri, `SageMakerEmbedding` kullanarak Gömme uç noktalarıyla nasıl etkileşim kurulacağını gösterir ve ek LlamaIndex özelliklerinin kullanımını mümkün kılar.
+Bu doğrultuda, bir SageMaker uç noktasında bir Gömme modelinin dağıtılmış olduğu varsayılmaktadır.
 
-## Setting Up
-If you’re opening this Notebook on colab, you will probably need to install LlamaIndex 🦙. 
-
+## Kurulum
+Eğer bu not defterini colab üzerinde açıyorsanız, muhtemelen LlamaIndex'i 🦙 kurmanız gerekecektir.
 
 ```python
 %pip install llama-index-embeddings-sagemaker-endpoint
 ```
 
-
 ```python
 ! pip install llama-index
 ```
 
-You have to specify the endpoint name to interact with.
-
+Etkileşim kurulacak olan uç nokta (endpoint) adını belirtmeniz gerekmektedir.
 
 ```python
-ENDPOINT_NAME = "<-YOUR-ENDPOINT-NAME->"
+ENDPOINT_NAME = "<-UC-NOKTA-ADINIZ->"
 ```
 
-Credentials should be provided to connect to the endpoint. You can either:
--  use an AWS profile by specifying the `profile_name` parameter, if not specified, the default credential profile will be used. 
--  Pass credentials as parameters (`aws_access_key_id`, `aws_secret_access_key`, `aws_session_token`, `region_name`). 
+Uç noktaya bağlanmak için kimlik bilgileri (credentials) sağlanmalıdır. Şunlardan birini yapabilirsiniz:
+- `profile_name` parametresini belirterek bir AWS profili kullanabilirsiniz; belirtilmezse varsayılan kimlik bilgisi profili (default profile) kullanılacaktır.
+- Kimlik bilgilerini parametre olarak geçirebilirsiniz (`aws_access_key_id`, `aws_secret_access_key`, `aws_session_token`, `region_name`).
 
-for more details check [this link](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html).
+Daha fazla ayrıntı için [bu bağlantıyı](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) kontrol edin.
 
-**AWS profile name**
-
+**AWS profil adı**
 
 ```python
 from llama_index.embeddings.sagemaker_endpoint import SageMakerEmbedding
 
-AWS_ACCESS_KEY_ID = "<-YOUR-AWS-ACCESS-KEY-ID->"
-AWS_SECRET_ACCESS_KEY = "<-YOUR-AWS-SECRET-ACCESS-KEY->"
-AWS_SESSION_TOKEN = "<-YOUR-AWS-SESSION-TOKEN->"
-REGION_NAME = "<-YOUR-ENDPOINT-REGION-NAME->"
+AWS_ACCESS_KEY_ID = "<-AWS-ERISIM-ANAHTARI-KIMLIGI->"
+AWS_SECRET_ACCESS_KEY = "<-AWS-GIZLI-ERISIM-ANAHTARI->"
+AWS_SESSION_TOKEN = "<-AWS-OTURUM-BELIRTECI->"
+REGION_NAME = "<-UC-NOKTA-BOLGE-ADI->"
 ```
-
 
 ```python
 embed_model = SageMakerEmbedding(
@@ -54,62 +49,49 @@ embed_model = SageMakerEmbedding(
 )
 ```
 
-**With credentials**:
-
+**Kimlik bilgileri ile**:
 
 ```python
 from llama_index.embeddings.sagemaker_endpoint import SageMakerEmbedding
 
-ENDPOINT_NAME = "<-YOUR-ENDPOINT-NAME->"
-PROFILE_NAME = "<-YOUR-PROFILE-NAME->"
+ENDPOINT_NAME = "<-UC-NOKTA-ADINIZ->"
+PROFILE_NAME = "<-PROFIL-ADINIZ->"
 embed_model = SageMakerEmbedding(
     endpoint_name=ENDPOINT_NAME, profile_name=PROFILE_NAME
-)  # Omit the profile name to use the default profile
+)  # Varsayılan profili kullanmak için profil adını atlayın
 ```
 
-## Basic Usage
+## Temel Kullanım
 
-### Call `get_text_embedding` 
-
+### `get_text_embedding` Çağrısı
 
 ```python
 embeddings = embed_model.get_text_embedding(
-    "An Amazon SageMaker endpoint is a fully managed resource that enables the deployment of machine learning models, specifically LLM (Large Language Models), for making predictions on new data."
+    "Bir Amazon SageMaker uç noktası, yeni veriler üzerinde tahminler yapmak amacıyla makine öğrenimi modellerinin, özellikle de LLM'lerin (Büyük Dil Modelleri) dağıtılmasını sağlayan tamamen yönetilen bir kaynaktır."
 )
 ```
-
 
 ```python
 embeddings
 ```
 
-
-
-
     [0.021565623581409454,
     ...
      0.019147753715515137,]
 
-
-
-### Call `get_text_embedding_batch` 
-
+### `get_text_embedding_batch` Çağrısı
 
 ```python
 embeddings = embed_model.get_text_embedding_batch(
     [
-        "An Amazon SageMaker endpoint is a fully managed resource that enables the deployment of machine learning models",
-        "Sagemaker is integrated with llamaIndex",
+        "Bir Amazon SageMaker uç noktası, makine öğrenimi modellerinin dağıtılmasını sağlayan tamamen yönetilen bir kaynaktır",
+        "Sagemaker, llamaIndex ile entegre edilmiştir",
     ]
 )
 ```
 
-
 ```python
 len(embeddings)
 ```
-
-
-
 
     2

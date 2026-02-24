@@ -1,28 +1,25 @@
-# Together AI Embeddings
+# Together AI Gömmeleri (Embeddings)
 
-This notebook shows how to use `Together AI` for embeddings. Together AI provides access to many state-of-the-art embedding models.
+Bu not defteri, gömmeler (embeddings) için `Together AI`ın nasıl kullanılacağını gösterir. Together AI, pek çok son teknoloji gömme modeline erişim sağlar.
 
-Visit https://together.ai and sign up to get an API key.
+https://together.ai adresini ziyaret edin ve bir API anahtarı almak için kaydolun.
 
-## Setup
+## Kurulum
 
-If you're opening this Notebook on colab, you will probably need to install LlamaIndex 🦙.
-
+Eğer bu not defterini colab üzerinde açıyorsanız, muhtemelen LlamaIndex'i 🦙 kurmanız gerekecektir.
 
 ```python
 %pip install llama-index-embeddings-together
 ```
 
-
 ```python
 !pip install llama-index
 ```
 
-
 ```python
-# You can set the API key in the embeddings or env
+# API anahtarını doğrudan sınıfta veya ortam değişkenlerinde (env) ayarlayabilirsiniz
 # import os
-# os.environ["TOEGETHER_API_KEY"] = "your-api-key"
+# os.environ["TOGETHER_API_KEY"] = "api-anahtarınız"
 
 from llama_index.embeddings.together import TogetherEmbedding
 
@@ -31,21 +28,17 @@ embed_model = TogetherEmbedding(
 )
 ```
 
-## Get Embeddings
-
+## Gömmeleri Al (Get Embeddings)
 
 ```python
-embeddings = embed_model.get_text_embedding("hello world")
+embeddings = embed_model.get_text_embedding("merhaba dünya")
 ```
-
 
 ```python
 print(len(embeddings))
 ```
 
     768
-
-
 
 ```python
 print(embeddings[:5])

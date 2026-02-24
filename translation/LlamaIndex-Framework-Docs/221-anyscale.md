@@ -1,117 +1,103 @@
 # Anyscale
 
-If you're opening this Notebook on colab, you will probably need to install LlamaIndex 🦙.
-
+Eğer bu Not Defterini colab üzerinden açıyorsanız, muhtemelen LlamaIndex'i 🦙 kurmanız gerekecektir.
 
 ```python
 %pip install llama-index-llms-anyscale
 ```
 
-
 ```python
 !pip install llama-index
 ```
-
 
 ```python
 from llama_index.llms.anyscale import Anyscale
 from llama_index.core.llms import ChatMessage
 ```
 
-## Call `chat` with ChatMessage List
-You need to either set env var `ANYSCALE_API_KEY` or set api_key in the class constructor
-
+## ChatMessage Listesi ile `chat` Çağrısı
+`ANYSCALE_API_KEY` ortam değişkenini ayarlamanız veya sınıf yapıcıda (constructor) api_key değerini belirtmeniz gerekir.
 
 ```python
 # import os
-# os.environ['ANYSCALE_API_KEY'] = '<your-api-key>'
+# os.environ['ANYSCALE_API_KEY'] = '<api-anahtarınız>'
 
-llm = Anyscale(api_key="<your-api-key>")
+llm = Anyscale(api_key="<api-anahtarınız>")
 ```
 
-
 ```python
-message = ChatMessage(role="user", content="Tell me a joke")
+message = ChatMessage(role="user", content="Bana bir fıkra anlat")
 resp = llm.chat([message])
 print(resp)
 ```
 
-    assistant: Sure, here's a joke for you:
+    assistant: Tabii, işte bir fıkra:
     
-    Why couldn't the bicycle stand up by itself?
+    Bisiklet neden kendi başına ayakta duramazmış?
     
-    Because it was two-tired!
+    Çünkü çok *yorgunmuş* (iki tekerlekli/tired)!
     
-    I hope that brought a smile to your face! Is there anything else I can assist you with?
+    Umarım yüzünüze bir gülümseme getirebilmişimdir! Size yardımcı olabileceğim başka bir konu var mı?
 
-
-### Streaming
-
+### Akış (Streaming)
 
 ```python
-message = ChatMessage(role="user", content="Tell me a story in 250 words")
+message = ChatMessage(role="user", content="Bana 250 kelimelik bir hikaye anlat")
 resp = llm.stream_chat([message])
 for r in resp:
     print(r.delta, end="")
 ```
 
-    Once upon a time, there was a young girl named Maria who lived in a small village surrounded by lush green forests. Maria was a kind and gentle soul, loved by everyone in the village. She spent most of her days exploring the forests, discovering new species of plants and animals, and helping the villagers with their daily chores.
+    Bir zamanlar, gür yeşil ormanlarla çevrili küçük bir köyde yaşayan Maria adında genç bir kız vardı. Maria, köydeki herkes tarafından sevilen, nazik ve kibar bir ruhtu. Günlerinin çoğunu ormanları keşfederek, yeni bitki ve hayvan türleri keşfederek ve köylülere günlük işlerinde yardım ederek geçirirdi.
     
-    One day, while Maria was out on a walk, she stumbled upon a hidden path she had never seen before. The path was overgrown with weeds and vines, but something about it called to her. She decided to follow it, and it led her deeper and deeper into the forest.
+    Bir gün Maria yürüyüşe çıkmışken, daha önce hiç görmediği gizli bir yola rastladı. Yol yabani otlar ve asmalarla kaplıydı ama içinden bir ses onu oraya çağırdı. Takip etmeye karar verdi ve yol onu ormanın derinliklerine, gittikçe daha derinlerine götürdü.
     
-    As she walked, the trees grew taller and the air grew colder. Maria began to feel a sense of unease, but she was determined to see where the path led. Finally, she came to a clearing, and in the center of it stood an enormous tree, its trunk as wide as a house.
+    Yürüdükçe ağaçlar uzadı ve hava soğudu. Maria bir huzursuzluk hissetmeye başladı ama yolun nereye vardığını görmeye kararlıydı. Sonunda bir açıklığa geldi ve merkezinde gövdesi bir ev kadar geniş, devasa bir ağaç duruyordu.
     
-    Maria approached the tree and saw that it was covered in strange symbols. She reached out to touch one of the symbols, and suddenly, the tree began to glow. The glow grew brighter and brighter, until Maria
+    Maria ağaca yaklaştı ve ağacın garip sembollerle kaplı olduğunu gördü. Sembollerden birine dokunmak için elini uzattı ve aniden ağaç parlamaya başladı. Parlaklık gittikçe güçlendi, ta ki Maria...
 
-## Call `complete` with Prompt
-
+## İstem (Prompt) ile `complete` Çağrısı
 
 ```python
-resp = llm.complete("Tell me a joke")
+resp = llm.complete("Bana bir fıkra anlat")
 print(resp)
 ```
 
-    Sure, here's a joke for you:
+    Tabii, işte bir fıkra:
     
-    Why couldn't the bicycle stand up by itself?
+    Bisiklet neden kendi başına ayakta duramazmış?
     
-    Because it was two-tired!
+    Çünkü çok *yorgunmuş* (iki tekerlekli/tired)!
     
-    I hope that brought a smile to your face!
-
-
+    Umarım yüzünüze bir gülümseme getirebilmiştir!
 
 ```python
-resp = llm.stream_complete("Tell me a story in 250 words")
+resp = llm.stream_complete("Bana 250 kelimelik bir hikaye anlat")
 for r in resp:
     print(r.delta, end="")
 ```
 
-    Once upon a time, there was a young girl named Maria. She lived in a small village surrounded by lush green forests and sparkling rivers. Maria was a kind and gentle soul, loved by everyone in the village. She spent her days helping her parents with their farm work and exploring the surrounding nature.
+    Bir zamanlar Maria adında genç bir kız vardı. Gür yeşil ormanlar ve pırıl pırıl nehirlerle çevrili küçük bir köyde yaşıyordu. Maria, köydeki herkes tarafından sevilen, nazik ve kibar bir ruhtu. Günlerini ailesine çiftlik işlerinde yardım ederek ve çevredeki doğayı keşfederek geçirirdi.
     
-    One day, while wandering in the forest, Maria stumbled upon a hidden path she had never seen before. She decided to follow it, and it led her to a beautiful meadow filled with wildflowers. In the center of the meadow, she found a small pond, where she saw her own reflection in the water.
+    Bir gün ormanda dolaşırken Maria, daha önce hiç görmediği gizli bir yola rastladı. Takip etmeye karar verdi ve yol onu yabani çiçeklerle dolu güzel bir çayıra götürdü. Çayırın ortasında küçük bir gölet buldu; orada sudaki kendi yansımasını gördü.
     
-    As she gazed into the pond, Maria saw a figure approaching her. It was a wise old woman, who introduced herself as the guardian of the meadow. The old woman told Maria that she had been chosen to receive a special gift, one that would bring her great joy and happiness.
+    Gölete bakarken Maria, kendisine doğru bir figürün yaklaştığını gördü. Bu, kendisini çayırın koruyucusu olarak tanıtan bilge, yaşlı bir kadındı. Yaşlı kadın Maria'ya, kendisine büyük bir neşe ve mutluluk getirecek özel bir hediye alması için seçildiğini söyledi.
     
-    The old woman then presented Maria with a small, delicate flower. She told her that this flower had the power to heal any wound, both physical and emotional. Maria was amazed and grateful, and she promised to use the flower wisely.
-    
+    Yaşlı kadın daha sonra Maria'ya küçük, narin bir çiçek sundu. Bu çiçeğin hem fiziksel hem de duygusal her türlü yarayı iyileştirme gücüne sahip olduğunu söyledi. Maria hayran kaldı ve minnettar oldu; çiçeği akıllıca kullanacağına söz verdi.
 
-
-## Model Configuration
-
+## Model Yapılandırması
 
 ```python
 llm = Anyscale(model="codellama/CodeLlama-34b-Instruct-hf")
 ```
 
-
 ```python
-resp = llm.complete("Show me the c++ code to send requests to HTTP Server")
+resp = llm.complete("Bana bir HTTP Sunucusuna istek göndermek için gereken C++ kodunu göster")
 print(resp)
 ```
 
-    To send requests to an HTTP server in C++, you can use the `curl` library. Here's an example of how to use it:
-    ```
+    C++'da bir HTTP sunucusuna istek göndermek için `curl` kütüphanesini kullanabilirsiniz. İşte bunun nasıl kullanılacağına dair bir örnek:
+    ```cpp
     #include <curl/curl.h>
     
     int main() {
@@ -130,6 +116,6 @@ print(resp)
         return 0;
     }
     ```
-    This code initializes the `curl` library, sets the URL and POST fields, performs the request, and cleans up the resources.
+    Bu kod `curl` kütüphanesini başlatır, URL ve POST alanlarını ayarlar, isteği gerçekleştirir ve kaynakları temizler.
     
-    You can also use the `libcurl` library
+    Ayrıca `libcurl` kütüphanesini de kullanabilirsiniz.

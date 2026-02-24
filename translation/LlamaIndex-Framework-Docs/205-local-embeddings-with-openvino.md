@@ -1,25 +1,22 @@
-# Local Embeddings with OpenVINO
+# OpenVINO ile Yerel Gömmeler (Local Embeddings)
 
-[OpenVINO™](https://github.com/openvinotoolkit/openvino) is an open-source toolkit for optimizing and deploying AI inference. The OpenVINO™ Runtime supports various hardware [devices](https://github.com/openvinotoolkit/openvino?tab=readme-ov-file#supported-hardware-matrix) including x86 and ARM CPUs, and Intel GPUs. It can help to boost deep learning performance in Computer Vision, Automatic Speech Recognition, Natural Language Processing and other common tasks.
+[OpenVINO™](https://github.com/openvinotoolkit/openvino), yapay zeka çıkarımını (inference) optimize etmek ve dağıtmak için kullanılan açık kaynaklı bir araç setidir. OpenVINO™ Runtime, x86 ve ARM CPU'lar ile Intel GPU'lar dahil olmak üzere çeşitli donanım [aygıtlarını](https://github.com/openvinotoolkit/openvino?tab=readme-ov-file#supported-hardware-matrix) destekler. Bilgisayarlı Görü, Otomatik Konuşma Tanıma, Doğal Dil İşleme ve diğer yaygın görevlerde derin öğrenme performansını artırmaya yardımcı olabilir.
 
-Hugging Face embedding model can be supported by OpenVINO through ``OpenVINOEmbedding`` or ``OpenVINOGENAIEmbedding``class, and OpenClip model can be through ``OpenVINOClipEmbedding`` class.
+Hugging Face gömme (embedding) modeli OpenVINO tarafından `OpenVINOEmbedding` veya `OpenVINOGENAIEmbedding` sınıfı aracılığıyla desteklenebilir; OpenClip modeli ise `OpenVINOClipEmbedding` sınıfı aracılığıyla desteklenebilir.
 
-If you're opening this Notebook on colab, you will probably need to install LlamaIndex 🦙.
-
+Eğer bu not defterini colab üzerinde açıyorsanız, muhtemelen LlamaIndex'i 🦙 kurmanız gerekecektir.
 
 ```python
 %pip install llama-index-embeddings-openvino
 ```
 
-
 ```python
 !pip install llama-index
 ```
 
-## Model Exporter
+## Model Dışa Aktarıcı (Model Exporter)
 
-It is possible to export your model to the OpenVINO IR format with `create_and_save_openvino_model` function, and load the model from local folder.
-
+`create_and_save_openvino_model` fonksiyonu ile modelinizi OpenVINO IR formatına dışa aktarmanız ve modeli yerel klasörden yüklemeniz mümkündür.
 
 ```python
 from llama_index.embeddings.huggingface_openvino import OpenVINOEmbedding
@@ -29,24 +26,21 @@ OpenVINOEmbedding.create_and_save_openvino_model(
 )
 ```
 
-    /home2/ethan/intel/llama_index/llama_test/lib/python3.10/site-packages/openvino/runtime/__init__.py:10: DeprecationWarning: The `openvino.runtime` module is deprecated and will be removed in the 2026.0 release. Please replace `openvino.runtime` with `openvino`.
+    /home2/ethan/intel/llama_index/llama_test/lib/python3.10/site-packages/openvino/runtime/__init__.py:10: DeprecationWarning: `openvino.runtime` modülü kullanımdan kaldırılmıştır ve 2026.0 sürümünde kaldırılacaktır. Lütfen `openvino.runtime` yerine `openvino` kullanın.
       warnings.warn(
 
+    OpenVINO modeli ./bge_ov dizinine kaydedildi. Şununla kullanın: `embed_model = OpenVINOEmbedding(model_id_or_path='./bge_ov')`.
 
-    Saved OpenVINO model to ./bge_ov. Use it with `embed_model = OpenVINOEmbedding(model_id_or_path='./bge_ov')`.
+## Model Yükleme (Model Loading)
 
-
-## Model Loading
-If you have an Intel GPU, you can specify `device="gpu"` to run inference on it.
-
+Eğer bir Intel GPU'nuz varsa, çıkarımı orada çalıştırmak için `device="gpu"` belirtebilirsiniz.
 
 ```python
 ov_embed_model = OpenVINOEmbedding(model_id_or_path="./bge_ov", device="cpu")
 ```
 
-
 ```python
-embeddings = ov_embed_model.get_text_embedding("Hello World!")
+embeddings = ov_embed_model.get_text_embedding("Merhaba Dünya!")
 print(len(embeddings))
 print(embeddings[:5])
 ```
@@ -54,16 +48,13 @@ print(embeddings[:5])
     384
     [-0.0030246784444898367, -0.012189766392111778, 0.04163273051381111, -0.037758368998765945, 0.02439723163843155]
 
+## OpenVINO GenAI ile Model Yükleme
 
-## Model Loading with OpenVINO GenAI
-
-To avoid the dependencies of PyTorch in runtime, you can load your local embedding model with ``OpenVINOGENAIEmbedding``class.
-
+Çalışma zamanında PyTorch bağımlılıklarından kaçınmak için yerel gömme modelinizi `OpenVINOGENAIEmbedding` sınıfı ile yükleyebilirsiniz.
 
 ```python
 %pip install llama-index-embeddings-openvino-genai
 ```
-
 
 ```python
 from llama_index.embeddings.openvino_genai import OpenVINOGENAIEmbedding
@@ -71,13 +62,11 @@ from llama_index.embeddings.openvino_genai import OpenVINOGENAIEmbedding
 ov_embed_model = OpenVINOGENAIEmbedding(model_path="./bge_ov", device="CPU")
 ```
 
-    /home2/ethan/intel/llama_index/llama_test/lib/python3.10/site-packages/openvino/runtime/__init__.py:10: DeprecationWarning: The `openvino.runtime` module is deprecated and will be removed in the 2026.0 release. Please replace `openvino.runtime` with `openvino`.
+    /home2/ethan/intel/llama_index/llama_test/lib/python3.10/site-packages/openvino/runtime/__init__.py:10: DeprecationWarning: `openvino.runtime` modülü kullanımdan kaldırılmıştır ve 2026.0 sürümünde kaldırılacaktır. Lütfen `openvino.runtime` yerine `openvino` kullanın.
       warnings.warn(
 
-
-
 ```python
-embeddings = ov_embed_model.get_text_embedding("Hello World!")
+embeddings = ov_embed_model.get_text_embedding("Merhaba Dünya!")
 print(len(embeddings))
 print(embeddings[:5])
 ```
@@ -85,15 +74,13 @@ print(embeddings[:5])
     384
     [-0.0030246784444898367, -0.012189766392111778, 0.04163273051381111, -0.037758368998765945, 0.02439723163843155]
 
+## OpenClip Model Dışa Aktarıcı
 
-## OpenClip Model Exporter
-Class `OpenVINOClipEmbedding` can support exporting and loading open_clip models with OpenVINO runtime.
-
+`OpenVINOClipEmbedding` sınıfı, OpenVINO çalışma zamanı ile open_clip modellerini dışa aktarmayı ve yüklemeyi destekleyebilir.
 
 ```python
 %pip install open_clip_torch
 ```
-
 
 ```python
 from llama_index.embeddings.huggingface_openvino import (
@@ -106,9 +93,9 @@ OpenVINOClipEmbedding.create_and_save_openvino_model(
 )
 ```
 
-## MultiModal Model Loading
-If you have an Intel GPU, you can specify `device="GPU"` to run inference on it.
+## Çok Modlu (MultiModal) Model Yükleme
 
+Eğer bir Intel GPU'nuz varsa, çıkarımı orada çalıştırmak için `device="GPU"` belirtebilirsiniz.
 
 ```python
 ov_clip_model = OpenVINOClipEmbedding(
@@ -116,8 +103,7 @@ ov_clip_model = OpenVINOClipEmbedding(
 )
 ```
 
-## Embed images and queries with OpenVINO
-
+## OpenVINO ile görüntüleri ve sorguları gömme
 
 ```python
 from PIL import Image
@@ -127,48 +113,42 @@ from numpy.linalg import norm
 
 image_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStMP8S3VbNCqOQd7QQQcbvC_FLa1HlftCiJw&s"
 im = Image.open(requests.get(image_url, stream=True).raw)
-print("Image:")
+print("Görüntü:")
 display(im)
 
 im.save("logo.jpg")
 image_embeddings = ov_clip_model.get_image_embedding("logo.jpg")
-print("Image dim:", len(image_embeddings))
-print("Image embed:", image_embeddings[:5])
+print("Görüntü boyutu:", len(image_embeddings))
+print("Görüntü gömmesi:", image_embeddings[:5])
 
 text_embeddings = ov_clip_model.get_text_embedding(
-    "Logo of a pink blue llama on dark background"
+    "Koyu arka plan üzerinde pembe mavi bir larkanın (llama) logosu"
 )
-print("Text dim:", len(text_embeddings))
-print("Text embed:", text_embeddings[:5])
+print("Metin boyutu:", len(text_embeddings))
+print("Metin gömmesi:", text_embeddings[:5])
 
 cos_sim = dot(image_embeddings, text_embeddings) / (
     norm(image_embeddings) * norm(text_embeddings)
 )
-print("Cosine similarity:", cos_sim)
+print("Kosinüs benzerliği:", cos_sim)
 ```
 
-    Image:
+    Görüntü:
 
-
-
-    
 ![png](output_19_1.png)
-    
 
+    Görüntü boyutu: 512
+    Görüntü gömmesi: [-0.03019799292087555, -0.09727513045072556, -0.6659489274024963, -0.025658488273620605, 0.05379948765039444]
+    Metin boyutu: 512
+    Metin gömmesi: [-0.15816599130630493, -0.25564345717430115, 0.22376027703285217, -0.34983670711517334, 0.31968361139297485]
+    Kosinüs benzerliği: 0.27307014923203976
 
-    Image dim: 512
-    Image embed: [-0.03019799292087555, -0.09727513045072556, -0.6659489274024963, -0.025658488273620605, 0.05379948765039444]
-    Text dim: 512
-    Text embed: [-0.15816599130630493, -0.25564345717430115, 0.22376027703285217, -0.34983670711517334, 0.31968361139297485]
-    Cosine similarity: 0.27307014923203976
+Daha fazla bilgi için şuralara bakabilirsiniz:
 
+* [OpenVINO LLM kılavuzu](https://docs.openvino.ai/2024/learn-openvino/llm_inference_guide.html).
 
-For more information refer to:
+* [OpenVINO Dokümantasyonu](https://docs.openvino.ai/2024/home.html).
 
-* [OpenVINO LLM guide](https://docs.openvino.ai/2024/learn-openvino/llm_inference_guide.html).
+* [OpenVINO Başlangıç Kılavuzu](https://www.intel.com/content/www/us/en/content-details/819067/openvino-get-started-guide.html).
 
-* [OpenVINO Documentation](https://docs.openvino.ai/2024/home.html).
-
-* [OpenVINO Get Started Guide](https://www.intel.com/content/www/us/en/content-details/819067/openvino-get-started-guide.html).
-
-* [RAG example with LlamaIndex](https://github.com/openvinotoolkit/openvino_notebooks/tree/latest/notebooks/llm-rag-llamaindex).
+* [LlamaIndex ile RAG örneği](https://github.com/openvinotoolkit/openvino_notebooks/tree/latest/notebooks/llm-rag-llamaindex).

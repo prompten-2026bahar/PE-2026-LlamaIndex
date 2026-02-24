@@ -1,75 +1,65 @@
-# PremAI Embeddings
+# PremAI Gömmeleri (Embeddings)
 
-[PremAI](https://premai.io/) is an all-in-one platform that simplifies the creation of robust, production-ready applications powered by Generative AI. By streamlining the development process, PremAI allows you to concentrate on enhancing user experience and driving overall growth for your application. You can quickly start using our platform [here](https://docs.premai.io/quick-start).
+[PremAI](https://premai.io/), Üretken Yapay Zeka (Generative AI) destekli sağlam, üretime hazır uygulamaların oluşturulmasını basitleştiren hepsi bir arada bir platformdur. PremAI, geliştirme sürecini kolaylaştırarak kullanıcı deneyimini iyileştirmeye ve uygulamanızın genel büyümesine odaklanmanıza olanak tanır. Platformumuzu [buradan](https://docs.premai.io/quick-start) hızlıca kullanmaya başlayabilirsiniz.
 
-In this section we are going to dicuss how we can get access to different embedding model using `PremEmbeddings` with llama-index
+Bu bölümde, llama-index ile `PremAIEmbeddings` kullanarak farklı gömme modellerine nasıl erişebileceğimizi ele alacağız.
 
-## Installation and setup
+## Kurulum ve Hazırlık
 
-We start by installing `llama-index` and `premai-sdk`. You can type the following command to install:
+`llama-index` ve `premai-sdk` kurulumu ile başlıyoruz. Kurmak için şu komutu yazabilirsiniz:
 
 ```bash
 pip install premai llama-index
 ```
 
-Before proceeding further, please make sure that you have made an account on PremAI and already created a project. If not, please refer to the [quick start](https://docs.premai.io/introduction) guide to get started with the PremAI platform. Create your first project and grab your API key.
-
+Devam etmeden önce lütfen PremAI üzerinde bir hesap oluşturduğunuzdan ve halihazırda bir proje oluşturduğunuzdan emin olun. Eğer yapmadıysanız, PremAI platformuna başlamak için lütfen [hızlı başlangıç](https://docs.premai.io/introduction) kılavuzuna bakın. İlk projenizi oluşturun ve API anahtarınızı alın.
 
 ```python
 %pip install llama-index-llms-premai
 ```
 
-
 ```python
 from llama_index.embeddings.premai import PremAIEmbeddings
 ```
 
-## Setup PremAIEmbeddings instance in LlamaIndex 
+## LlamaIndex'te PremAIEmbeddings Örneği Kurulumu
 
-Once we imported our required modules, let's setup our client. For now let's assume that our `project_id` is `8`. But make sure you use your project-id, otherwise it will throw error.
+Gerekli modülleri içe aktardıktan sonra istemcimizi kuralım. Şimdilik `project_id` değerimizin `8` olduğunu varsayalım. Ancak mutlaka kendi proje kimliğinizi (project-id) kullandığınızdan emin olun, aksi takdirde hata verecektir.
 
-In order to use llama-index with PremAI, you do not need to pass any model name or set any parameters with our chat-client. By default it will use the model name and parameters used in the [LaunchPad](https://docs.premai.io/get-started/launchpad).
+Llama-index'i PremAI ile kullanmak için sohbet istemcimizde herhangi bir model adı geçirmeniz veya herhangi bir parametre ayarlamanız gerekmez. Varsayılan olarak [LaunchPad](https://docs.premai.io/get-started/launchpad) üzerinde kullanılan model adını ve parametreleri kullanacaktır.
 
-We support lots of state of the art embedding models. You can view our list of supported LLMs and embedding models [here](https://docs.premai.io/get-started/supported-models). For now let's go for `text-embedding-3-large` model for this example.
-
+Pek çok son teknoloji gömme modelini destekliyoruz. Desteklenen LLM'lerin ve gömme modellerinin listesini [buradan](https://docs.premai.io/get-started/supported-models) görüntüleyebilirsiniz. Şimdilik bu örnek için `text-embedding-3-large` modelini kullanalım.
 
 ```python
 import os
 import getpass
 
 if os.environ.get("PREMAI_API_KEY") is None:
-    os.environ["PREMAI_API_KEY"] = getpass.getpass("PremAI API Key:")
+    os.environ["PREMAI_API_KEY"] = getpass.getpass("PremAI API Anahtarı:")
 
 prem_embedding = PremAIEmbeddings(
     project_id=8, model_name="text-embedding-3-large"
 )
 ```
 
-## Calling the Embedding Model
+## Gömme Modelini Çağırma
 
-Now you are all set. Now let's start using our embedding model with a single query followed by multiple queries (which is also called as a document)
-
+Artık her şey hazır. Şimdi önce tek bir sorgu, ardından birden fazla sorgu (belge olarak da adlandırılır) ile gömme modelimizi kullanmaya başlayalım.
 
 ```python
-query = "Hello, this is a test query"
+query = "Merhaba, bu bir test sorgusudur"
 query_result = prem_embedding.get_text_embedding(query)
 ```
 
-
 ```python
-print(f"Dimension of embeddings: {len(query_result)}")
+print(f"Gömmelerin boyutu: {len(query_result)}")
 ```
 
-    Dimension of embeddings: 3072
-
-
+    Gömmelerin boyutu: 3072
 
 ```python
 query_result[:5]
 ```
-
-
-
 
     [-0.02129288576543331,
      0.0008162345038726926,

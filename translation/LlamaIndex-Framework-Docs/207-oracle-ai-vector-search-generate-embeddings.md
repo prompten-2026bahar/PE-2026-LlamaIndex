@@ -1,19 +1,19 @@
-# Oracle AI Vector Search: Generate Embeddings
+# Oracle AI Vector Search: Gömmeler (Embeddings) Oluşturma
 
-Oracle AI Vector Search is designed for Artificial Intelligence (AI) workloads that allows you to query data based on semantics, rather than keywords.
-One of the biggest benefits of Oracle AI Vector Search is that semantic search on unstructured data can be combined with relational search on business data in one single system.
-This is not only powerful but also significantly more effective because you don't need to add a specialized vector database, eliminating the pain of data fragmentation between multiple systems.
+Oracle AI Vector Search, anahtar kelimeler yerine anlambilime (semantics) dayalı olarak verileri sorgulamanıza olanak tanıyan Yapay Zeka (AI) iş yükleri için tasarlanmıştır.
+Oracle AI Vector Search'ün en büyük avantajlarından biri, yapılandırılmamış veriler üzerindeki anlamsal aramanın, iş verileri üzerindeki ilişkisel arama ile tek bir sistemde birleştirilebilmesidir.
+Bu sadece güçlü olmakla kalmaz, aynı zamanda önemli ölçüde daha etkilidir çünkü özel bir vektör veritabanı eklemenize gerek kalmaz ve birden fazla sistem arasındaki veri parçalanması sorununu ortadan kaldırır.
 
-In addition, your vectors can benefit from all of Oracle Database’s most powerful features, like the following:
+Buna ek olarak vektörleriniz, Oracle Database'in aşağıdakiler gibi en güçlü özelliklerinden yararlanabilir:
 
- * [Partitioning Support](https://www.oracle.com/database/technologies/partitioning.html)
- * [Real Application Clusters scalability](https://www.oracle.com/database/real-application-clusters/)
- * [Exadata smart scans](https://www.oracle.com/database/technologies/exadata/software/smartscan/)
- * [Shard processing across geographically distributed databases](https://www.oracle.com/database/distributed-database/)
- * [Transactions](https://docs.oracle.com/en/database/oracle/oracle-database/23/cncpt/transactions.html)
- * [Parallel SQL](https://docs.oracle.com/en/database/oracle/oracle-database/21/vldbg/parallel-exec-intro.html#GUID-D28717E4-0F77-44F5-BB4E-234C31D4E4BA)
- * [Disaster recovery](https://www.oracle.com/database/data-guard/)
- * [Security](https://www.oracle.com/security/database-security/)
+ * [Bölümleme Desteği (Partitioning Support)](https://www.oracle.com/database/technologies/partitioning.html)
+ * [Real Application Clusters ölçeklenebilirliği](https://www.oracle.com/database/real-application-clusters/)
+ * [Exadata akıllı taramaları (smart scans)](https://www.oracle.com/database/technologies/exadata/software/smartscan/)
+ * [Coğrafi olarak dağıtılmış veritabanları genelinde Shard işleme](https://www.oracle.com/database/distributed-database/)
+ * [İşlemler (Transactions)](https://docs.oracle.com/en/database/oracle/oracle-database/23/cncpt/transactions.html)
+ * [Paralel SQL](https://docs.oracle.com/en/database/oracle/oracle-database/21/vldbg/parallel-exec-intro.html#GUID-D28717E4-0F77-44F5-BB4E-234C31D4E4BA)
+ * [Olağanüstü Durum Kurtarma (Disaster recovery)](https://www.oracle.com/database/data-guard/)
+ * [Güvenlik](https://www.oracle.com/security/database-security/)
  * [Oracle Machine Learning](https://www.oracle.com/artificial-intelligence/database-machine-learning/)
  * [Oracle Graph Database](https://www.oracle.com/database/integrated-graph-database/)
  * [Oracle Spatial and Graph](https://www.oracle.com/database/spatial/)
@@ -21,21 +21,21 @@ In addition, your vectors can benefit from all of Oracle Database’s most power
  * [JSON](https://docs.oracle.com/en/database/oracle/oracle-database/23/adjsn/json-in-oracle-database.html)
 
 
-The guide demonstrates how to use Embedding Capabilities within Oracle AI Vector Search to generate embeddings for your documents using OracleEmbeddings.
+Bu kılavuz, OracleEmbeddings kullanarak belgeleriniz için gömmeler oluşturmak amacıyla Oracle AI Vector Search içindeki Gömme Yeteneklerinin nasıl kullanılacağını göstermektedir.
 
-If you are just starting with Oracle Database, consider exploring the [free Oracle 23 AI](https://www.oracle.com/database/free/#resources) which provides a great introduction to setting up your database environment. While working with the database, it is often advisable to avoid using the system user by default; instead, you can create your own user for enhanced security and customization. For detailed steps on user creation, refer to our [end-to-end guide](https://github.com/run-llama/llama_index/blob/main/docs/examples/cookbooks/oracleai_demo.ipynb) which also shows how to set up a user in Oracle. Additionally, understanding user privileges is crucial for managing database security effectively. You can learn more about this topic in the official [Oracle guide](https://docs.oracle.com/en/database/oracle/oracle-database/19/admqs/administering-user-accounts-and-security.html#GUID-36B21D72-1BBB-46C9-A0C9-F0D2A8591B8D) on administering user accounts and security.
+Oracle Database'e yeni başlıyorsanız, veritabanı ortamınızı kurmaya yönelik harika bir giriş sağlayan [ücretsiz Oracle 23 AI](https://www.oracle.com/database/free/#resources) sürümünü keşfetmeyi düşünebilirsiniz. Veritabanıyla çalışırken, varsayılan olarak sistem kullanıcısını (system user) kullanmaktan kaçınmanız genellikle tavsiye edilir; bunun yerine gelişmiş güvenlik ve özelleştirme için kendi kullanıcınızı oluşturabilirsiniz. Kullanıcı oluşturmaya ilişkin ayrıntılı adımlar için, Oracle'da bir kullanıcının nasıl kurulacağını da gösteren [uçtan uca kılavuzumuza](https://github.com/run-llama/llama_index/blob/main/docs/examples/cookbooks/oracleai_demo.ipynb) bakabilirsiniz. Ek olarak, veritabanı güvenliğini etkili bir şekilde yönetmek için kullanıcı yetkilerini (privileges) anlamak çok önemlidir. Kullanıcı hesaplarını ve güvenliğini yönetme konusundaki resmi [Oracle kılavuzundan](https://docs.oracle.com/en/database/oracle/oracle-database/19/admqs/administering-user-accounts-and-security.html#GUID-36B21D72-1BBB-46C9-A0C9-F0D2A8591B8D) bu konu hakkında daha fazla bilgi edinebilirsiniz.
 
-### Prerequisites
+### Ön Koşullar
 
-Ensure you have the Oracle Python Client driver installed to facilitate the integration of llama_index with Oracle AI Vector Search.
+Llama_index'in Oracle AI Vector Search ile entegrasyonunu kolaylaştırmak için Oracle Python Client sürücüsünün kurulu olduğundan emin olun.
 
 
 ```python
 %pip install llama-index-embeddings-oracleai
 ```
 
-### Connect to Oracle Database
-The following sample code will show how to connect to Oracle Database. By default, python-oracledb runs in a ‘Thin’ mode which connects directly to Oracle Database. This mode does not need Oracle Client libraries. However, some additional functionality is available when python-oracledb uses them. Python-oracledb is said to be in ‘Thick’ mode when Oracle Client libraries are used. Both modes have comprehensive functionality supporting the Python Database API v2.0 Specification. See the following [guide](https://python-oracledb.readthedocs.io/en/latest/user_guide/appendix_a.html#featuresummary) that talks about features supported in each mode. You might want to switch to thick-mode if you are unable to use thin-mode.
+### Oracle Database'e Bağlanma
+Aşağıdaki örnek kod, Oracle Database'e nasıl bağlanılacağını gösterecektir. Varsayılan olarak python-oracledb, doğrudan Oracle Database'e bağlanan 'Thin' modunda çalışır. Bu mod Oracle Client kütüphanelerine ihtiyaç duymaz. Ancak python-oracledb bu kütüphaneleri kullandığında bazı ek işlevler kullanılabilir hale gelir. Oracle Client kütüphaneleri kullanıldığında python-oracledb'nin 'Thick' modunda olduğu söylenir. Her iki mod da Python Database API v2.0 Spesifikasyonunu destekleyen kapsamlı işlevselliğe sahiptir. Her modda desteklenen özellikleri anlatan şu [kılavuza](https://python-oracledb.readthedocs.io/en/latest/user_guide/appendix_a.html#featuresummary) bakabilirsiniz. Thin modunu kullanamıyorsanız Thick moduna geçmek isteyebilirsiniz.
 
 
 ```python
@@ -43,56 +43,56 @@ import sys
 
 import oracledb
 
-# Update the following variables with your Oracle database credentials and connection details
-username = "<username>"
-password = "<password>"
-dsn = "<hostname>/<service_name>"
+# Aşağıdaki değişkenleri Oracle veritabanı kimlik bilgileriniz ve bağlantı ayrıntılarınızla güncelleyin
+username = "<kullanıcı_adı>"
+password = "<şifre>"
+dsn = "<ana_makine_adı>/<servis_adı>"
 
 try:
     conn = oracledb.connect(user=username, password=password, dsn=dsn)
-    print("Connection successful!")
+    print("Bağlantı başarılı!")
 except Exception as e:
-    print("Connection failed!")
+    print("Bağlantı başarısız!")
     sys.exit(1)
 ```
 
-For embedding generation, several provider options are available to users, including embedding generation within the database and third-party services such as OcigenAI, Hugging Face, and OpenAI. Users opting for third-party providers must establish credentials that include the requisite authentication information. Alternatively, if users select 'database' as their provider, they are required to load an ONNX model into the Oracle Database to facilitate embeddings.
+Gömme oluşturma için, veritabanı içinde gömme oluşturma ve OcigenAI, Hugging Face ve OpenAI gibi üçüncü taraf hizmetler dahil olmak üzere kullanıcılara çeşitli sağlayıcı seçenekleri sunulur. Üçüncü taraf sağlayıcıları tercih eden kullanıcılar, gerekli kimlik doğrulama bilgilerini içeren kimlik bilgileri oluşturmalıdır. Alternatif olarak, kullanıcılar sağlayıcı olarak 'database' seçeneğini belirlerlerse, gömmeleri kolaylaştırmak için Oracle Database'e bir ONNX modeli yüklemeleri gerekir.
 
-### Load ONNX Model
+### ONNX Modelini Yükleme
 
-Oracle accommodates a variety of embedding providers, enabling users to choose between proprietary database solutions and third-party services such as OCIGENAI and HuggingFace. This selection dictates the methodology for generating and managing embeddings.
+Oracle, kullanıcılara tescilli veritabanı çözümleri ile OCIGENAI ve HuggingFace gibi üçüncü taraf hizmetler arasında seçim yapma imkanı vererek çeşitli gömme sağlayıcılarını destekler. Bu seçim, gömmelerin oluşturulması ve yönetilmesi metodolojisini belirler.
 
-***Important*** : Should users opt for the database option, they must upload an ONNX model into the Oracle Database. Conversely, if a third-party provider is selected for embedding generation, uploading an ONNX model to Oracle Database is not required.
+***Önemli***: Kullanıcılar veritabanı seçeneğini tercih ederlerse, Oracle Database'e bir ONNX modeli yüklemeleri gerekir. Aksine, gömme oluşturma için üçüncü taraf bir sağlayıcı seçilirse, Oracle Database'e bir ONNX modeli yüklemek gerekli değildir.
 
-A significant advantage of utilizing an ONNX model directly within Oracle is the enhanced security and performance it offers by eliminating the need to transmit data to external parties. Additionally, this method avoids the latency typically associated with network or REST API calls.
+Bir ONNX modelini doğrudan Oracle içinde kullanmanın önemli bir avantajı, verileri dış taraflara iletme ihtiyacını ortadan kaldırarak sunduğu gelişmiş güvenlik ve performanstır. Ek olarak bu yöntem, genellikle ağ veya REST API çağrılarıyla ilişkili olan gecikmeleri (latency) önler.
 
-Below is the example code to upload an ONNX model into Oracle Database:
+Aşağıda, Oracle Database'e bir ONNX modeli yüklemek için örnek kod verilmiştir:
 
 
 ```python
 from llama_index.embeddings.oracleai import OracleEmbeddings
 
-# please update with your related information
-# make sure that you have onnx file in the system
+# Lütfen ilgili bilgilerinizle güncelleyin
+# Sistemde onnx dosyanız olduğundan emin olun
 onnx_dir = "DEMO_DIR"
 onnx_file = "tinybert.onnx"
 model_name = "demo_model"
 
 try:
     OracleEmbeddings.load_onnx_model(conn, onnx_dir, onnx_file, model_name)
-    print("ONNX model loaded.")
+    print("ONNX modeli yüklendi.")
 except Exception as e:
-    print("ONNX model loading failed!")
+    print("ONNX modeli yükleme başarısız!")
     sys.exit(1)
 ```
 
-### Create Credential
+### Kimlik Bilgisi Oluşturma (Create Credential)
 
-When selecting third-party providers for generating embeddings, users are required to establish credentials to securely access the provider's endpoints.
+Gömmeler oluşturmak için üçüncü taraf sağlayıcılar seçildiğinde, sağlayıcının uç noktalarına güvenli bir şekilde erişmek için kullanıcıların kimlik bilgileri oluşturması gerekir.
 
-***Important:*** No credentials are necessary when opting for the 'database' provider to generate embeddings. However, should users decide to utilize a third-party provider, they must create credentials specific to the chosen provider.
+***Önemli:*** Gömme oluşturmak için 'database' sağlayıcısını seçtiğinizde herhangi bir kimlik bilgisine (credentials) gerek yoktur. Ancak, kullanıcılar üçüncü taraf bir sağlayıcıyı kullanmaya karar verirlerse, seçilen sağlayıcıya özgü kimlik bilgileri oluşturmalıdırlar.
 
-Below is an illustrative example:
+Aşağıda açıklayıcı bir örnek verilmiştir:
 
 
 ```python
@@ -106,7 +106,7 @@ try:
            -- HuggingFace
            dbms_vector_chain.drop_credential(credential_name  => 'HF_CRED');
            jo := json_object_t();
-           jo.put('access_token', '<access_token>');
+           jo.put('access_token', '<erişim_belirteci>');
            dbms_vector_chain.create_credential(
                credential_name   =>  'HF_CRED',
                params            => json(jo.to_string));
@@ -126,32 +126,32 @@ try:
        """
     )
     cursor.close()
-    print("Credentials created.")
+    print("Kimlik bilgileri oluşturuldu.")
 except Exception as ex:
     cursor.close()
     raise
 ```
 
-### Generate Embeddings
+### Gömmeler Oluşturma (Generate Embeddings)
 
-Oracle AI Vector Search provides multiple methods for generating embeddings, utilizing either locally hosted ONNX models or third-party APIs. For comprehensive instructions on configuring these alternatives, please refer to the [Oracle AI Vector Search Guide](https://docs.oracle.com/en/database/oracle/oracle-database/23/arpls/dbms_vector_chain1.html#GUID-C6439E94-4E86-4ECD-954E-4B73D53579DE).
+Oracle AI Vector Search, yerel olarak barındırılan ONNX modellerini veya üçüncü taraf API'lerini kullanarak gömmeler oluşturmak için birden fazla yöntem sunar. Bu alternatiflerin yapılandırılmasına ilişkin kapsamlı talimatlar için lütfen [Oracle AI Vector Search Kılavuzuna](https://docs.oracle.com/en/database/oracle/oracle-database/23/arpls/dbms_vector_chain1.html#GUID-C6439E94-4E86-4ECD-954E-4B73D53579DE) bakın.
 
-***Note:*** Users may need to configure a proxy to utilize third-party embedding generation providers, excluding the 'database' provider that utilizes an ONNX model.
+***Not:*** Kullanıcıların, ONNX modeli kullanan 'database' sağlayıcısı hariç, üçüncü taraf gömme oluşturma sağlayıcılarını kullanmak için bir ara sunucu (proxy) yapılandırması gerekebilir.
 
 
 ```python
-# proxy to be used when we instantiate summary and embedder object
-proxy = "<proxy>"
+# özet ve gömücü nesnesini örneklendirirken kullanılacak proxy
+proxy = "<ara_sunucu>"
 ```
 
-The following sample code will show how to generate embeddings:
+Aşağıdaki örnek kod, gömmelerin nasıl oluşturulacağını gösterecektir:
 
 
 ```python
 from llama_index.embeddings.oracleai import OracleEmbeddings
 
 """
-# using ocigenai
+# ocigenai kullanarak
 embedder_params = {
     "provider": "ocigenai",
     "credential_name": "OCI_CRED",
@@ -159,7 +159,7 @@ embedder_params = {
     "model": "cohere.embed-english-light-v3.0",
 }
 
-# using huggingface
+# huggingface kullanarak
 embedder_params = {
     "provider": "huggingface", 
     "credential_name": "HF_CRED", 
@@ -169,16 +169,16 @@ embedder_params = {
 }
 """
 
-# using ONNX model loaded to Oracle Database
+# Oracle Database'e yüklenen ONNX modelini kullanarak
 embedder_params = {"provider": "database", "model": "demo_model"}
 
-# Remove proxy if not required
+# Gerekli değilse proxy'yi kaldırın
 embedder = OracleEmbeddings(conn=conn, params=embedder_params, proxy=proxy)
-embed = embedder._get_text_embedding("Hello World!")
+embed = embedder._get_text_embedding("Merhaba Dünya!")
 
-""" verify """
-print(f"Embedding generated by OracleEmbeddings: {embed}")
+""" doğrulama """
+print(f"OracleEmbeddings tarafından oluşturulan gömme: {embed}")
 ```
 
-### End to End Demo
-Please refer to our complete demo guide [Oracle AI Vector Search End-to-End Demo Guide](https://github.com/run-llama/llama_index/blob/main/docs/examples/cookbooks/oracleai_demo.ipynb) to build an end to end RAG pipeline with the help of Oracle AI Vector Search.
+### Uçtan Uca Demo
+Oracle AI Vector Search yardımıyla uçtan uca bir RAG boru hattı (pipeline) oluşturmak için lütfen tam demo kılavuzumuza bakın: [Oracle AI Vector Search Uçtan Uca Demo Kılavuzu](https://github.com/run-llama/llama_index/blob/main/docs/examples/cookbooks/oracleai_demo.ipynb).

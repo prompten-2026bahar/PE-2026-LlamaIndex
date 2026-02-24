@@ -1,20 +1,18 @@
-# Optimized Embedding Model using Optimum-Intel
+# Optimum-Intel kullanarak Optimize Edilmiş Gömme Modeli
 
-LlamaIndex has support for loading quantized embedding models for Intel, using the [Optimum-Intel library](https://huggingface.co/docs/optimum/main/en/intel/index). 
+LlamaIndex, [Optimum-Intel kütüphanesini](https://huggingface.co/docs/optimum/main/en/intel/index) kullanarak Intel için kuantize edilmiş (quantized) gömme modellerini yükleme desteğine sahiptir.
 
-Optimized models are smaller and faster, with minimal accuracy loss, see the [documentation](https://huggingface.co/docs/optimum/main/en/intel/optimization_inc) and an [optimization guide](https://huggingface.co/docs/optimum/main/en/intel/optimization_inc) using the IntelLabs/fastRAG library. 
+Optimize edilmiş modeller, minimum doğruluk kaybıyla daha küçük ve daha hızlıdır; [dokümantasyona](https://huggingface.co/docs/optimum/main/en/intel/optimization_inc) ve IntelLabs/fastRAG kütüphanesini kullanan [optimizasyon kılavuzuna](https://huggingface.co/docs/optimum/main/en/intel/optimization_inc) bakabilirsiniz.
 
-Optimization is based on math instructions in the Xeon® 4th generation or newer processors. 
+Optimizasyon, Xeon® 4. nesil veya daha yeni işlemcilerdeki matematik komutlarına (math instructions) dayanmaktadır.
 
-In order to be able to load and use the quantized models, install the required dependency `pip install optimum[exporters] optimum-intel neural-compressor intel_extension_for_pytorch`. 
+Kuantize edilmiş modelleri yükleyebilmek ve kullanabilmek için gerekli bağımlılığı kurun: `pip install optimum[exporters] optimum-intel neural-compressor intel_extension_for_pytorch`.
 
-Loading is done using the class `IntelEmbedding`; usage is similar to any HuggingFace local embedding model; See example:
-
+Yükleme, `IntelEmbedding` sınıfı kullanılarak yapılır; kullanımı herhangi bir HuggingFace yerel gömme modeline benzer. Örneğe bakın:
 
 ```python
 %pip install llama-index-embeddings-huggingface-optimum-intel
 ```
-
 
 ```python
 from llama_index.embeddings.huggingface_optimum_intel import IntelEmbedding
@@ -22,9 +20,8 @@ from llama_index.embeddings.huggingface_optimum_intel import IntelEmbedding
 embed_model = IntelEmbedding("Intel/bge-small-en-v1.5-rag-int8-static")
 ```
 
-
 ```python
-embeddings = embed_model.get_text_embedding("Hello World!")
+embeddings = embed_model.get_text_embedding("Merhaba Dünya!")
 print(len(embeddings))
 print(embeddings[:5])
 ```

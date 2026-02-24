@@ -1,63 +1,60 @@
-# TextEmbed - Embedding Inference Server
+# TextEmbed - Gömme Çıkarım Sunucusu (Embedding Inference Server)
 
-Maintained by Keval Dekivadiya, TextEmbed is licensed under the [Apache-2.0 License](https://opensource.org/licenses/Apache-2.0).
+Keval Dekivadiya tarafından sürdürülen TextEmbed, [Apache-2.0 Lisansı](https://opensource.org/licenses/Apache-2.0) altında lisanslanmıştır.
 
-TextEmbed is a high-throughput, low-latency REST API designed for serving vector embeddings. It supports a wide range of sentence-transformer models and frameworks, making it suitable for various applications in natural language processing.
+TextEmbed, vektör gömmelerini (embeddings) sunmak için tasarlanmış yüksek veri çıkışlı, düşük gecikmeli bir REST API'dir. Çok çeşitli sentence-transformer modellerini ve çerçevelerini destekleyerek doğal dil işlemedeki çeşitli uygulamalar için uygun hale getirir.
 
-## Features
+## Özellikler
 
-- **High Throughput & Low Latency**: Designed to handle a large number of requests efficiently.
-- **Flexible Model Support**: Works with various sentence-transformer models.
-- **Scalable**: Easily integrates into larger systems and scales with demand.
-- **Batch Processing**: Supports batch processing for better and faster inference.
-- **OpenAI Compatible REST API Endpoint**: Provides an OpenAI compatible REST API endpoint.
-- **Single Line Command Deployment**: Deploy multiple models via a single command for efficient deployment.
-- **Support for Embedding Formats**: Supports binary, float16, and float32 embeddings formats for faster retrieval.
+- **Yüksek Veri Çıkışı ve Düşük Gecikme**: Çok sayıda isteği verimli bir şekilde işlemek için tasarlanmıştır.
+- **Esnek Model Desteği**: Çeşitli sentence-transformer modelleriyle çalışır.
+- **Ölçeklenebilir**: Daha büyük sistemlere kolayca entegre olur ve talebe göre ölçeklenir.
+- **Toplu İşlem (Batch Processing)**: Daha iyi ve daha hızlı çıkarım için toplu işlemeyi destekler.
+- **OpenAI Uyumlu REST API Uç Noktası**: OpenAI uyumlu bir REST API uç noktası sağlar.
+- **Tek Satırlık Komutla Dağıtım**: Verimli dağıtım için tek bir komutla birden fazla modeli dağıtın.
+- **Gömme Formatları Desteği**: Daha hızlı geri çağırma için binary, float16 ve float32 gömme formatlarını destekler.
 
-## Getting Started
+## Başlarken
 
-### Prerequisites
+### Ön Koşullar
 
-Ensure you have Python 3.10 or higher installed. You will also need to install the required dependencies.
+Python 3.10 veya daha yüksek bir sürümün kurulu olduğundan emin olun. Ayrıca gerekli bağımlılıkları kurmanız gerekecektir.
 
-### Installation via PyPI
+### PyPI üzerinden Kurulum
 
-Install the required dependencies:
-
+Gerekli bağımlılıkları kurun:
 
 ```python
 !pip install -U textembed
 ```
 
-### Start the TextEmbed Server
+### TextEmbed Sunucusunu Başlatma
 
-Start the TextEmbed server with your desired models:
-
+İstediğiniz modellerle TextEmbed sunucusunu başlatın:
 
 ```python
 !python -m textembed.server --models sentence-transformers/all-MiniLM-L12-v2 --workers 4 --api-key TextEmbed
 ```
 
-### Example Usage with llama-index
+### llama-index ile Örnek Kullanım
 
-Here's a simple example to get you started with llama-index:
-
+İşte llama-index ile başlamanıza yardımcı olacak basit bir örnek:
 
 ```python
 from llama_index.embeddings.textembed import TextEmbedEmbedding
 
-# Initialize the TextEmbedEmbedding class
+# TextEmbedEmbedding sınıfını başlatın
 embed = TextEmbedEmbedding(
     model_name="sentence-transformers/all-MiniLM-L12-v2",
     base_url="http://0.0.0.0:8000/v1",
     auth_token="TextEmbed",
 )
 
-# Get embeddings for a batch of texts
+# Bir grup metin için gömmeleri alın
 embeddings = embed.get_text_embedding_batch(
     [
-        "It is raining cats and dogs here!",
-        "India has a diverse cultural heritage.",
+        "Burada bardaktan boşalırcasına yağmur yağıyor!",
+        "Hindistan zengin bir kültürel mirasa sahiptir.",
     ]
 )
 
@@ -66,5 +63,4 @@ print(embeddings)
 
     [[0.07680495083332062, -0. ...044137585908174515]]
 
-
-For more information, please read the [documentation](https://github.com/kevaldekivadiya2415/textembed/blob/main/docs/setup.md).
+Daha fazla bilgi için lütfen [dokümantasyonu](https://github.com/kevaldekivadiya2415/textembed/blob/main/docs/setup.md) okuyun.

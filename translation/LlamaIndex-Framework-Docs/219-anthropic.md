@@ -1,22 +1,20 @@
 # Anthropic
 
-Anthropic offers many state-of-the-art models from the haiku, sonnet, and opus families.
+Anthropic; haiku, sonnet ve opus ailelerinden pek çok son teknoloji model sunar.
 
-Read on to learn how to use these models with LlamaIndex!
+Bu modelleri LlamaIndex ile nasıl kullanacağınızı öğrenmek için okumaya devam edin!
 
-If you're opening this Notebook on colab, you will probably need to install LlamaIndex 🦙.
-
+Eğer bu not defterini colab üzerinde açıyorsanız, muhtemelen LlamaIndex'i 🦙 kurmanız gerekecektir.
 
 ```python
 %pip install llama-index-llms-anthropic
 ```
 
-#### Set Tokenizer
+#### Belirteç Oluşturucuyu (Tokenizer) Ayarla
 
-First we want to set the tokenizer, which is slightly different than TikToken. This ensures that token counting is accurate throughout the library.
+Öncelikle, TikToken'dan biraz farklı olan belirteç oluşturucuyu ayarlamak istiyoruz. Bu, kitaplık genelinde belirteç sayımının doğru olmasını sağlar.
 
-**NOTE**: Anthropic recently updated their token counting API. Older models like claude-2.1 are no longer supported for token counting in the latest versions of the Anthropic python client.
-
+**NOT**: Anthropic yakın zamanda belirteç sayma API'sini güncelledi. claude-2.1 gibi eski modeller, Anthropic python istemcisinin en yeni sürümlerinde belirteç sayımı için artık desteklenmemektedir.
 
 ```python
 from llama_index.llms.anthropic import Anthropic
@@ -26,8 +24,7 @@ tokenizer = Anthropic().tokenizer
 Settings.tokenizer = tokenizer
 ```
 
-## Basic Usage
-
+## Temel Kullanım
 
 ```python
 import os
@@ -35,42 +32,38 @@ import os
 os.environ["ANTHROPIC_API_KEY"] = "sk-..."
 ```
 
-You can call `complete` with a prompt:
-
+Bir istemle (prompt) `complete` çağrısı yapabilirsiniz:
 
 ```python
 from llama_index.llms.anthropic import Anthropic
 
-# To customize your API key, do this
-# otherwise it will lookup ANTHROPIC_API_KEY from your env variable
+# API anahtarınızı özelleştirmek için bunu yapın,
+# aksi takdirde ortam değişkeninizden ANTHROPIC_API_KEY aranacaktır
 # llm = Anthropic(api_key="<api_key>")
 llm = Anthropic(model="claude-sonnet-4-0")
 
-resp = llm.complete("Who is Paul Graham?")
+resp = llm.complete("Paul Graham kimdir?")
 ```
-
 
 ```python
 print(resp)
 ```
 
-    Paul Graham is a computer programmer, entrepreneur, venture capitalist, and essayist. Here are the key things he's known for:
+    Paul Graham bir bilgisayar programcısı, girişimci, risk sermayedarı ve denemecidir. İşte tanındığı başlıca noktalar:
     
-    **Y Combinator**: He co-founded this highly influential startup accelerator in 2005, which has helped launch companies like Airbnb, Dropbox, Stripe, and Reddit. Y Combinator provides seed funding and mentorship to early-stage startups.
+    **Y Combinator**: 2005 yılında Airbnb, Dropbox, Stripe ve Reddit gibi şirketlerin kurulmasına yardımcı olan bu oldukça etkili girişim hızlandırıcısının kurucu ortaklarındandır. Y Combinator, erken aşamadaki girişimlere tohum yatırımı ve mentörlük sağlar.
     
-    **Programming**: He's a respected figure in the programming community, particularly known for his work with Lisp programming language and for co-creating the first web-based application, Viaweb, in the 1990s (which was sold to Yahoo and became Yahoo Store).
+    **Programlama**: Programlama topluluğunda saygın bir figürdür, özellikle Lisp programlama dili üzerindeki çalışmalarıyla ve 1990'larda ilk web tabanlı uygulama olan Viaweb'i (Yahoo'ya satılarak Yahoo Store olmuştur) ortaklaşa oluşturmasıyla tanınır.
     
-    **Writing**: Graham is well-known for his thoughtful essays on startups, technology, programming, and society, published on his website paulgraham.com. His essays are widely read in tech circles and cover topics like how to start a startup, the nature of innovation, and social commentary.
+    **Yazarlık**: Graham, paulgraham.com adresindeki web sitesinde yayınladığı girişimler, teknoloji, programlama ve toplum üzerine düşünceli denemeleriyle tanınır. Denemeleri teknoloji çevrelerinde geniş çapta okunur ve bir girişimin nasıl kurulacağı, inovasyonun doğası ve sosyal yorumlar gibi konuları kapsar.
     
-    **Books**: He's authored several books including "Hackers & Painters" and "On Lisp."
+    **Kitaplar**: "Hackers & Painters" ve "On Lisp" dahil olmak üzere birkaç kitabın yazarıdır.
     
-    **Influence**: He's considered one of the most influential people in Silicon Valley's startup ecosystem, both through Y Combinator's impact and his writings on entrepreneurship and technology.
+    **Etki**: Hem Y Combinator'ın etkisiyle hem de girişimcilik ve teknoloji üzerine yazılarıyla Silikon Vadisi'nin girişim ekosistemindeki en etkili kişilerden biri olarak kabul edilir.
     
-    Graham is known for his analytical thinking and contrarian perspectives on business, technology, and culture.
+    Graham, analitik düşüncesi ve iş dünyası, teknoloji ve kültür hakkındaki aykırı perspektifleriyle tanınır.
 
-
-You can also call `chat` with a list of chat messages:
-
+Sohbet mesajlarının bir listesiyle `chat` çağrısı da yapabilirsiniz:
 
 ```python
 from llama_index.core.llms import ChatMessage
@@ -78,9 +71,9 @@ from llama_index.llms.anthropic import Anthropic
 
 messages = [
     ChatMessage(
-        role="system", content="You are a pirate with a colorful personality"
+        role="system", content="Sen renkli bir kişiliğe sahip bir korsansın"
     ),
-    ChatMessage(role="user", content="Tell me a story"),
+    ChatMessage(role="user", content="Bana bir hikaye anlat"),
 ]
 llm = Anthropic(model="claude-sonnet-4-0")
 resp = llm.chat(messages)
@@ -88,60 +81,57 @@ resp = llm.chat(messages)
 print(resp)
 ```
 
-    assistant: Ahoy there, matey! *adjusts tricorn hat and strokes beard* 
+    assistant: Ahoy orada, ahbap! *üç köşeli şapkasını düzeltir ve sakalını sıvazlar* 
     
-    Let me spin ye a tale from me seafarin' days, when the ocean was as wild as a kraken's temper and twice as unpredictable!
+    Sana denizcilik günlerimden, okyanusun bir krakenin öfkesi kadar vahşi ve iki kat daha öngörülemez olduğu zamanlardan bir hikaye anlatayım!
     
-    **The Tale of the Singing Compass**
+    **Şarkı Söyleyen Pusulanın Hikayesi**
     
-    'Twas a foggy mornin' when me crew and I discovered the strangest treasure - not gold or jewels, mind ye, but a compass that hummed sea shanties! Aye, ye heard right! This peculiar little instrument would warble different tunes dependin' on which direction it pointed.
+    Mürettebatımla birlikte en tuhaf hazineyi keşfettiğimiz sisli bir sabahtı - altın ya da mücevher değil, dikkat et, deniz türküleri mırıldanan bir pusula! Evet, doğru duydun! Bu garip küçük alet, hangi yöne baktığına bağlı olarak farklı ezgiler mırıldanırdı.
     
-    North brought forth a melancholy ballad about lost loves, while South sang a jaunty tune that made even our grumpiest sailor, One-Eyed Pete, tap his peg leg. But here's the curious part - when it pointed West, it sang a mysterious melody none of us had ever heard, with words in an ancient tongue.
+    Kuzey, kayıp aşklar hakkında melankolik bir balad getirirken, Güney, en huysuz denizcimiz Tek Gözlü Pete'in bile tahta bacağına tempo tutturmasına neden olan neşeli bir melodi söylerdi. Ama işin ilginç yanı şuydu - Batı'yı gösterdiğinde, hiçbirimizin daha önce duymadığı, antik bir dilde sözleri olan gizemli bir melodi söylerdi.
     
-    Bein' the adventurous sort (and perhaps a wee bit foolish), we followed that western song for three days and three nights. The compass led us through treacherous waters, past islands that seemed to shimmer like mirages, until we reached a hidden cove where the water glowed like liquid emeralds.
+    Maceracı tipler olduğumuz için (ve belki biraz da aptal), bu batı şarkısını üç gün üç gece takip ettik. Pusula bizi tehlikeli sulardan, seraplar gibi parıldayan adaların yanından geçirdi ve sonunda suyun sıvı zümrütler gibi parladığı gizli bir koya ulaştık.
     
-    And there, me hearty friend, we found the greatest treasure of all - not riches, but a family of merfolk who had been waitin' centuries for someone to return their enchanted compass! They rewarded our kindness with safe passage through any storm and the secret locations of three genuine treasure islands.
+    Ve orada, yürekli dostum, en büyük hazineyi bulduk - zenginlik değil, efsunlu pusulalarını birinin iade etmesini yüzyıllardır bekleyen bir deniz kızı ailesi! Nezaketimizi, herhangi bir fırtınadan güvenli bir geçişle ve üç gerçek hazine adasının gizli yerleriyle ödüllendirdiler.
     
-    *winks and takes a swig from an imaginary bottle*
+    *göz kırpar ve hayali bir şişeden bir yudum alır*
     
-    Sometimes the best adventures come from followin' the strangest songs, savvy?
+    Bazen en iyi maceralar en tuhaf şarkıları takip etmekten gelir, anladın mı?
 
+## Akış (Streaming) Desteği
 
-## Streaming Support
-
-Every method supports streaming through the `stream_` prefix.
-
+Her metot, `stream_` ön eki aracılığıyla akışı destekler.
 
 ```python
 from llama_index.llms.anthropic import Anthropic
 
 llm = Anthropic(model="claude-sonnet-4-0")
 
-resp = llm.stream_complete("Who is Paul Graham?")
+resp = llm.stream_complete("Paul Graham kimdir?")
 for r in resp:
     print(r.delta, end="")
 ```
 
-    Paul Graham is a computer programmer, entrepreneur, venture capitalist, and essayist. Here are the key things he's known for:
+    Paul Graham bir bilgisayar programcısı, girişimci, risk sermayedarı ve denemecidir. İşte tanındığı başlıca noktalar:
     
-    **Y Combinator Co-founder**: He co-founded Y Combinator in 2005, one of the most successful startup accelerators in the world. Y Combinator has funded companies like Airbnb, Dropbox, Stripe, Reddit, and hundreds of others.
+    **Y Combinator Kurucu Ortağı**: 2005 yılında dünyanın en başarılı girişim hızlandırıcılarından biri olan Y Combinator'ı kurmuştur. Y Combinator; Airbnb, Dropbox, Stripe, Reddit ve yüzlerce başka şirketi finanse etmiştir.
     
-    **Programming and Lisp**: He's a strong advocate for the Lisp programming language and wrote influential books including "On Lisp" and "ANSI Common Lisp."
+    **Programlama ve Lisp**: Lisp programlama dilinin güçlü bir savunucusudur ve "On Lisp" ile "ANSI Common Lisp" dahil olmak üzere etkili kitaplar yazmıştır.
     
-    **Viaweb**: In the 1990s, he co-founded Viaweb, one of the first web-based software companies, which was acquired by Yahoo in 1998 and became Yahoo Store.
+    **Viaweb**: 1990'larda, ilk web tabanlı yazılım şirketlerinden biri olan Viaweb'i kurmuştur; şirket 1998'de Yahoo tarafından satın alınmış ve Yahoo Store olmuştur.
     
-    **Essays**: He's written many influential essays on startups, programming, and technology, published on his website paulgraham.com. His essays are widely read in the tech community and cover topics like how to start a startup, what makes a good programmer, and the nature of innovation.
+    **Denemeler**: paulgraham.com adresindeki web sitesinde yayınladığı girişimler, programlama ve teknoloji üzerine etkili birçok deneme yazmıştır. Denemeleri teknoloji topluluğunda geniş çapta okunur ve bir girişimin nasıl kurulacağı, neyin iyi bir programcı yaptığı ve inovasyonun doğası gibi konuları kapsar.
     
-    **Art and Academia**: He has a PhD in Computer Science from Harvard and also studied painting at the Rhode Island School of Design and the Accademia di Belle Arti in Florence.
+    **Sanat ve Akademi**: Harvard'da Bilgisayar Bilimi alanında doktorası vardır ve ayrıca Rhode Island Tasarım Okulu ile Floransa'daki Accademia di Belle Arti'de resim eğitimi almıştır.
     
-    Graham is considered one of the most influential figures in the startup ecosystem and has helped shape modern thinking about entrepreneurship and technology startups.
-
+    Graham, girişim ekosistemindeki en etkili figürlerden biri olarak kabul edilir ve girişimcilik ile teknoloji girişimleri hakkındaki modern düşünceyi şekillendirmeye yardımcı olmuştur.
 
 ```python
 from llama_index.core.llms import ChatMessage
 
 messages = [
-    ChatMessage(role="user", content="Who is Paul Graham?"),
+    ChatMessage(role="user", content="Paul Graham kimdir?"),
 ]
 
 resp = llm.stream_chat(messages)
@@ -149,112 +139,107 @@ for r in resp:
     print(r.delta, end="")
 ```
 
-    Paul Graham is a computer programmer, entrepreneur, venture capitalist, and essayist. Here are the key things he's known for:
+    Paul Graham bir bilgisayar programcısı, girişimci, risk sermayedarı ve denemecidir. İşte tanındığı başlıca noktalar:
     
-    **Y Combinator**: He co-founded this highly influential startup accelerator in 2005, which has helped launch companies like Airbnb, Dropbox, Stripe, and Reddit. Y Combinator provides seed funding and mentorship to early-stage startups.
+    **Y Combinator**: 2005 yılında Airbnb, Dropbox, Stripe ve Reddit gibi şirketlerin kurulmasına yardımcı olan bu oldukça etkili girişim hızlandırıcısının kurucu ortaklarındandır. Y Combinator, erken aşamadaki girişimlere tohum yatırımı ve mentörlük sağlar.
     
-    **Programming**: He's a respected figure in the programming community, particularly known for his work with Lisp programming language and for co-creating the first web-based application, Viaweb, in the 1990s (which was sold to Yahoo and became Yahoo Store).
+    **Programlama**: Programlama topluluğunda saygın bir figürdür, özellikle Lisp programlama dili üzerindeki çalışmalarıyla ve 1990'larda ilk web tabanlı uygulama olan Viaweb'i (Yahoo'ya satılarak Yahoo Store olmuştur) ortaklaşa oluşturmasıyla tanınır.
     
-    **Writing**: Graham is well-known for his thoughtful essays on startups, technology, programming, and entrepreneurship, published on his website paulgraham.com. His essays are widely read in tech circles and cover topics like how to start a startup, the nature of innovation, and technology trends.
+    **Yazarlık**: Graham, paulgraham.com adresindeki web sitesinde yayınladığı girişimler, teknoloji, programlama ve girişimcilik üzerine düşünceli denemeleriyle tanınır. Denemeleri teknoloji çevrelerinde geniş çapta okunur ve bir girişimin nasıl kurulacağı, inovasyonun doğası ve teknoloji trendleri gibi konuları kapsar.
     
-    **Influence**: He's considered one of the most influential people in Silicon Valley's startup ecosystem, both through Y Combinator's success and his writings that have shaped how many people think about entrepreneurship and technology.
+    **Etki**: Hem Y Combinator'ın başarısıyla hem de birçok insanın girişimcilik ve teknoloji hakkındaki düşüncelerini şekillendiren yazılarıyla Silikon Vadisi'nin girişim ekosistemindeki en etkili kişilerden biri olarak kabul edilir.
     
-    His combination of technical expertise, business acumen, and clear writing has made him a prominent voice in the tech industry for over two decades.
+    Teknik uzmanlığı, iş zekası ve net yazım tarzının kombinasyonu, onu yirmi yılı aşkın bir süredir teknoloji endüstrisinde önde gelen bir ses haline getirmiştir.
 
-## Async Usage
+## Asenkron Kullanım
 
-Every synchronous method has an async counterpart.
-
+Her senkron metodun asenkron bir karşılığı vardır.
 
 ```python
 from llama_index.llms.anthropic import Anthropic
 
 llm = Anthropic(model="claude-sonnet-4-0")
 
-resp = await llm.astream_complete("Who is Paul Graham?")
+resp = await llm.astream_complete("Paul Graham kimdir?")
 async for r in resp:
     print(r.delta, end="")
 ```
 
-    Paul Graham is a computer programmer, entrepreneur, venture capitalist, and essayist. Here are the key things he's known for:
+    Paul Graham bir bilgisayar programcısı, girişimci, risk sermayedarı ve denemecidir. İşte tanındığı başlıca noktalar:
     
-    **Y Combinator**: He co-founded this highly influential startup accelerator in 2005, which has helped launch companies like Airbnb, Dropbox, Stripe, and Reddit. Y Combinator provides seed funding and mentorship to early-stage startups.
+    **Y Combinator**: 2005 yılında Airbnb, Dropbox, Stripe ve Reddit gibi şirketlerin kurulmasına yardımcı olan bu oldukça etkili girişim hızlandırıcısının kurucu ortaklarındandır. Y Combinator, erken aşamadaki girişimlere tohum yatırımı ve mentörlük sağlar.
     
-    **Programming**: He's a respected figure in the programming community, particularly known for his work with Lisp programming language. He wrote influential books like "On Lisp" and "ANSI Common Lisp."
+    **Programlama**: Programlama topluluğunda saygın bir figürdür, özellikle Lisp programlama dili üzerindeki çalışmalarıyla tanınır. "On Lisp" ve "ANSI Common Lisp" gibi etkili kitaplar yazmıştır.
     
-    **Essays**: Graham writes widely-read essays on startups, technology, programming, and society, published on his website paulgraham.com. His essays like "Do Things That Don't Scale" and "How to Start a Startup" are considered essential reading in the tech world.
+    **Denemeler**: Graham, paulgraham.com adresindeki web sitesinde yayınladığı girişimler, teknoloji, programlama ve toplum üzerine geniş çapta okunan denemeler yazar. "Do Things That Don't Scale" ve "How to Start a Startup" gibi denemeleri teknoloji dünyasında temel okuma parçaları olarak kabul edilir.
     
-    **Entrepreneur**: Before Y Combinator, he co-founded Viaweb (one of the first web-based applications for building online stores), which was acquired by Yahoo in 1998 for about $49 million and became Yahoo Store.
+    **Girişimcilik**: Y Combinator'dan önce, 1998 yılında Yahoo tarafından yaklaşık 49 milyon dolara satın alınan ve Yahoo Store olan Viaweb'i (çevrimiçi mağazalar kurmak için ilk web tabanlı uygulamalardan biri) kurmuştur.
     
-    **Art background**: Interestingly, he also has a background in art and studied painting, which influences his perspective on creativity and aesthetics in technology.
+    **Sanat geçmişi**: İlginç bir şekilde, sanat alanında da bir geçmişi vardır ve resim eğitimi almıştır; bu deneyimi teknolojideki yaratıcılık ve estetik bakış açısını etkiler.
     
-    Graham is considered one of the most influential voices in Silicon Valley and the broader startup ecosystem.
-
+    Graham, Silikon Vadisi'nde ve daha geniş girişim ekosisteminde en etkili seslerden biri olarak kabul edilir.
 
 ```python
 messages = [
-    ChatMessage(role="user", content="Who is Paul Graham?"),
+    ChatMessage(role="user", content="Paul Graham kimdir?"),
 ]
 
 resp = await llm.achat(messages)
 print(resp)
 ```
 
-    assistant: Paul Graham is a computer programmer, entrepreneur, venture capitalist, and essayist. Here are the key things he's known for:
+    assistant: Paul Graham bir bilgisayar programcısı, girişimci, risk sermayedarı ve denemecidir. İşte tanındığı başlıca noktalar:
     
-    **Y Combinator**: He co-founded this highly influential startup accelerator in 2005, which has helped launch companies like Airbnb, Dropbox, Stripe, and Reddit. Y Combinator provides seed funding and mentorship to early-stage startups.
+    **Y Combinator**: 2005 yılında Airbnb, Dropbox, Stripe ve Reddit gibi şirketlerin kurulmasına yardımcı olan bu oldukça etkili girişim hızlandırıcısının kurucu ortaklarındandır. Y Combinator, erken aşamadaki girişimlere tohum yatırımı ve mentörlük sağlar.
     
-    **Programming**: He's a respected figure in the programming community, particularly known for his work with Lisp programming language and for co-creating the first web-based application, Viaweb, in the 1990s (which was sold to Yahoo and became Yahoo Store).
+    **Programlama**: Programlama topluluğunda saygın bir figürdür, özellikle Lisp programlama dili üzerindeki çalışmalarıyla ve 1990'larda ilk web tabanlı uygulama olan Viaweb'i (Yahoo'ya satılarak Yahoo Store olmuştur) ortaklaşa oluşturmasıyla tanınır.
     
-    **Writing**: Graham is well-known for his thoughtful essays on startups, technology, programming, and society, published on his website paulgraham.com. His essays are widely read in tech circles and cover topics like how to start a startup, the nature of innovation, and social commentary.
+    **Yazarlık**: Graham, paulgraham.com adresindeki web sitesinde yayınladığı girişimler, teknoloji, programlama ve toplum üzerine düşünceli denemeleriyle tanınır. Denemeleri teknoloji çevrelerinde geniş çapta okunur ve bir girişimin nasıl kurulacağı, inovasyonun doğası ve sosyal yorumlar gibi konuları kapsar.
     
-    **Books**: He's authored several books including "Hackers & Painters" and "On Lisp."
+    **Kitaplar**: "Hackers & Painters" ve "On Lisp" dahil olmak üzere birkaç kitabın yazarıdır.
     
-    **Influence**: He's considered one of the most influential people in Silicon Valley's startup ecosystem, both through Y Combinator's impact and his writings on entrepreneurship and technology.
+    **Etki**: Hem Y Combinator'ın etkisiyle hem de girişimcilik ve teknoloji üzerine yazılarıyla Silikon Vadisi'nin girişim ekosistemindeki en etkili kişilerden biri olarak kabul edilir.
     
-    Graham is known for his analytical thinking and contrarian perspectives on business, technology, and culture.
+    Graham, analitik düşüncesi ve iş dünyası, teknoloji ve kültür hakkındaki aykırı perspektifleriyle tanınır.
 
 
-## Vertex AI Support
 
-By providing the `region` and `project_id` parameters (either through environment variables or directly), you can use an Anthropic model through Vertex AI.
+## Vertex AI Desteği
 
+`region` ve `project_id` parametrelerini (ortam değişkenleri aracılığıyla veya doğrudan) sağlayarak, Vertex AI üzerinden bir Anthropic modelini kullanabilirsiniz.
 
 ```python
 import os
 
-os.environ["ANTHROPIC_PROJECT_ID"] = "YOUR PROJECT ID HERE"
-os.environ["ANTHROPIC_REGION"] = "YOUR PROJECT REGION HERE"
+os.environ["ANTHROPIC_PROJECT_ID"] = "PROJE KİMLİĞİNİZ BURAYA"
+os.environ["ANTHROPIC_REGION"] = "PROJE BÖLGENİZ BURAYA"
 ```
 
-Do keep in mind that setting region and project_id here will make Anthropic use the Vertex AI client
+Bölge ve proje kimliğini burada ayarlamanın, Anthropic'in Vertex AI istemcisini kullanmasını sağlayacağını unutmayın.
 
-## Bedrock Support
+## Bedrock Desteği
 
-LlamaIndex also supports Anthropic models through AWS Bedrock.
-
+LlamaIndex ayrıca AWS Bedrock üzerinden Anthropic modellerini de destekler.
 
 ```python
 from llama_index.llms.anthropic import Anthropic
 
-# Note: this assumes you have standard AWS credentials configured in your environment
+# Not: Bu, ortamınızda standart AWS kimlik bilgilerinin yapılandırıldığını varsayar
 llm = Anthropic(
     model="anthropic.claude-3-7-sonnet-20250219-v1:0",
     aws_region="us-east-1",
 )
 
-resp = llm.complete("Who is Paul Graham?")
+resp = llm.complete("Paul Graham kimdir?")
 ```
 
-## Multi-Modal Support
+## Çok Modlu (Multi-Modal) Destek
 
-Using `ChatMessage` objects, you can pass in images and text to the LLM.
-
+`ChatMessage` nesnelerini kullanarak, LLM'e görüntüler ve metinler gönderebilirsiniz.
 
 ```python
 !wget https://cdn.pixabay.com/photo/2021/12/12/20/00/play-6865967_640.jpg -O image.jpg
 ```
-
 
 ```python
 from llama_index.core.llms import ChatMessage, TextBlock, ImageBlock
@@ -267,7 +252,7 @@ messages = [
         role="user",
         blocks=[
             ImageBlock(path="image.jpg"),
-            TextBlock(text="What is in this image?"),
+            TextBlock(text="Bu görselde ne var?"),
         ],
     )
 ]
@@ -276,15 +261,13 @@ resp = llm.chat(messages)
 print(resp)
 ```
 
-    assistant: This image shows four wooden dice on a dark fabric surface. The dice appear to be made of light-colored wood and have the traditional black dots (pips) marking the numbers on each face. They are scattered casually on what looks like a dark blue or black cloth background.
+    assistant: Bu görselde, koyu renkli bir kumaş yüzey üzerinde dört adet ahşap zar görülmektedir. Zarlar açık renkli ahşaptan yapılmış gibi görünüyor ve her bir yüzdeki sayıları belirten geleneksel siyah noktalara (pip) sahip. Koyu mavi veya siyah bir kumaş arka plan gibi görünen bir yere rastgele dağılmış durumdalar.
 
+## İstem Önbelleğe Alma (Prompt Caching)
 
-## Prompt Caching
+Anthropic modelleri, istem önbelleğe alma fikrini destekler - bu yöntemde bir istem birden çok kez tekrarlanırsa veya bir istemin başlangıcı tekrarlanırsa, LLM yanıtı hızlandırmak ve maliyetleri düşürmek için önceden hesaplanmış dikkat (attention) sonuçlarını yeniden kullanabilir.
 
-Anthropic models support the idea of prompt cahcing -- wherein if a prompt is repeated multiple times, or the start of a prompt is repeated, the LLM can reuse pre-calculated attention results to speed up the response and lower costs.
-
-To enable prompt caching, you can set `cache_control` on your `ChatMessage` objects, or set `cache_idx` on the LLM to always cache the first X messages (with -1 being all messages).
-
+İstem önbelleğe almayı etkinleştirmek için, `ChatMessage` nesnelerinizde `cache_control` ayarını yapabilir veya her zaman ilk X mesajı önbelleğe almak için LLM üzerinde `cache_idx` ayarını yapabilirsiniz (-1 tüm mesajlar anlamına gelir).
 
 ```python
 from llama_index.core.llms import ChatMessage
@@ -292,27 +275,26 @@ from llama_index.llms.anthropic import Anthropic
 
 llm = Anthropic(model="claude-sonnet-4-0")
 
-# cache individual message(s)
+# münferit mesajları önbelleğe al
 messages = [
     ChatMessage(
         role="user",
-        content="<some very long prompt>",
+        content="<bazı çok uzun istemler>",
         additional_kwargs={"cache_control": {"type": "ephemeral"}},
     ),
 ]
 
 resp = llm.chat(messages)
 
-# cache first X messages (with -1 being all messages)
+# ilk X mesajı önbelleğe al (-1 tüm mesajlar anlamına gelir)
 llm = Anthropic(model="claude-sonnet-4-0", cache_idx=-1)
 
 resp = llm.chat(messages)
 ```
 
-## Structured Prediction
+## Yapılandırılmış Tahmin (Structured Prediction)
 
-LlamaIndex provides an intuitive interface for converting any Anthropic LLMs into a structured LLM through `structured_predict` - simply define the target Pydantic class (can be nested), and given a prompt, we extract out the desired object.
-
+LlamaIndex, `structured_predict` aracılığıyla herhangi bir Anthropic LLM'ini yapılandırılmış bir LLM'e dönüştürmek için sezgisel bir arayüz sağlar - sadece hedef Pydantic sınıfını (iç içe olabilir) tanımlayın ve bir istem verildiğinde, istenen nesneyi dışarı çıkaralım.
 
 ```python
 from llama_index.llms.anthropic import Anthropic
@@ -322,14 +304,14 @@ from typing import List
 
 
 class MenuItem(BaseModel):
-    """A menu item in a restaurant."""
+    """Bir restorandaki menü öğesi."""
 
     course_name: str
     is_vegetarian: bool
 
 
 class Restaurant(BaseModel):
-    """A restaurant with name, city, and cuisine."""
+    """Adı, şehri ve mutfağı olan bir restoran."""
 
     name: str
     city: str
@@ -339,42 +321,35 @@ class Restaurant(BaseModel):
 
 llm = Anthropic(model="claude-sonnet-4-0")
 prompt_tmpl = PromptTemplate(
-    "Generate a restaurant in a given city {city_name}"
+    "Verilen bir şehirde ({city_name}) bir restoran oluştur"
 )
 
-# Option 1: Use `as_structured_llm`
+# Seçenek 1: `as_structured_llm` kullanın
 restaurant_obj = (
     llm.as_structured_llm(Restaurant)
     .complete(prompt_tmpl.format(city_name="Miami"))
     .raw
 )
-# Option 2: Use `structured_predict`
+# Seçenek 2: `structured_predict` kullanın
 # restaurant_obj = llm.structured_predict(Restaurant, prompt_tmpl, city_name="Miami")
 ```
-
 
 ```python
 restaurant_obj
 ```
 
-
-
-
     Restaurant(name='Ocean Breeze Bistro', city='Miami', cuisine='Seafood', menu_items=[MenuItem(course_name='Grilled Mahi-Mahi with Mango Salsa', is_vegetarian=False), MenuItem(course_name='Coconut Shrimp with Pineapple Dipping Sauce', is_vegetarian=False), MenuItem(course_name='Quinoa and Black Bean Bowl', is_vegetarian=True), MenuItem(course_name='Key Lime Pie', is_vegetarian=True), MenuItem(course_name='Lobster Bisque', is_vegetarian=False), MenuItem(course_name='Grilled Vegetable Platter with Chimichurri', is_vegetarian=True)])
 
+#### Akışlı Yapılandırılmış Tahmin (Structured Prediction with Streaming)
 
-
-#### Structured Prediction with Streaming
-
-Any LLM wrapped with `as_structured_llm` supports streaming through `stream_chat`.
-
+`as_structured_llm` ile sarmalanmış herhangi bir LLM, `stream_chat` aracılığıyla akışı destekler.
 
 ```python
 from llama_index.core.llms import ChatMessage
 from IPython.display import clear_output
 from pprint import pprint
 
-input_msg = ChatMessage.from_str("Generate a restaurant in San Francisco")
+input_msg = ChatMessage.from_str("San Francisco'da bir restoran oluştur")
 
 sllm = llm.as_structured_llm(Restaurant)
 stream_output = sllm.stream_chat([input_msg])
@@ -399,20 +374,16 @@ restaurant_obj
                     {'course_name': 'Chocolate Lava Cake', 'is_vegetarian': True}],
      'name': 'Golden Gate Bistro'}
 
-
-
-
-
     Restaurant(name='Golden Gate Bistro', city='San Francisco', cuisine='California Fusion', menu_items=[MenuItem(course_name='Dungeness Crab Cakes', is_vegetarian=False), MenuItem(course_name='Roasted Beet and Arugula Salad', is_vegetarian=True), MenuItem(course_name='Grilled Pacific Salmon', is_vegetarian=False), MenuItem(course_name='Wild Mushroom Risotto', is_vegetarian=True), MenuItem(course_name='Grass-Fed Beef Tenderloin', is_vegetarian=False), MenuItem(course_name='Chocolate Lava Cake', is_vegetarian=True)])
 
 
 
-## Model Thinking
 
-With `claude-3.7 Sonnet`, you can enable the model to "think" harder about a task, generating a chain-of-thought response before writing out the final answer.
+## Model Düşünme (Model Thinking)
 
-You can enable this by passing in the `thinking_dict` parameter to the constructor, specififying the amount of tokens to reserve for the thinking process.
+`claude-3.7 Sonnet` ile, modelin bir görev hakkında daha derin "düşünmesini" sağlayabilir ve nihai cevabı yazmadan önce bir düşünce zinciri (chain-of-thought) yanıtı üretmesini temin edebilirsiniz.
 
+Bunu, yapıcıya (constructor) `thinking_dict` parametresini geçirerek ve düşünme süreci için ayrılacak belirteç miktarını belirterek etkinleştirebilirsiniz.
 
 ```python
 from llama_index.llms.anthropic import Anthropic
@@ -420,14 +391,13 @@ from llama_index.core.llms import ChatMessage
 
 llm = Anthropic(
     model="claude-sonnet-4-0",
-    # max_tokens must be greater than budget_tokens
+    # max_tokens, budget_tokens'tan büyük olmalıdır
     max_tokens=64000,
-    # temperature must be 1.0 for thinking to work
+    # düşünmenin çalışması için temperature 1.0 olmalıdır
     temperature=1.0,
     thinking_dict={"type": "enabled", "budget_tokens": 1600},
 )
 ```
-
 
 ```python
 messages = [
@@ -443,32 +413,30 @@ print()
 print(r.message.content)
 ```
 
-    I'll solve this step by step.
+    Bunu adım adım çözeceğim.
     
-    First, let me calculate the numerator:
-    1234 × 3421 = 4,221,514
+    Önce, payı hesaplayalım:
+    1234 × 3421 = 4.221.514
     
-    Next, let me calculate the denominator:
-    231 + 2341 = 2,572
+    Sonra, paydayı hesaplayalım:
+    231 + 2341 = 2.572
     
-    Now I can divide:
-    4,221,514 ÷ 2,572 = 1,641.42 (rounded to 2 decimal places)
+    Şimdi bölme işlemini yapabilirim:
+    4.221.514 ÷ 2.572 = 1.641,42 (2 ondalık basamağa yuvarlanmış)
     
-    Therefore: (1234 × 3421) ÷ (231 + 2341) = **1,641.42**
-    I'll solve this step by step.
+    Dolayısıyla: (1234 × 3421) ÷ (231 + 2341) = **1.641,42**
+    Bunu adım adım çözeceğim.
     
-    First, let me calculate the numerator:
-    1234 × 3421 = 4,221,514
+    Önce, payı hesaplayalım:
+    1234 × 3421 = 4.221.514
     
-    Next, let me calculate the denominator:
-    231 + 2341 = 2,572
+    Sonra, paydayı hesaplayalım:
+    231 + 2341 = 2.572
     
-    Now I can divide:
-    4,221,514 ÷ 2,572 = 1,641.42 (rounded to 2 decimal places)
+    Şimdi bölme işlemini yapabilirim:
+    4.221.514 ÷ 2.572 = 1.641,42 (2 ondalık basamağa yuvarlanmış)
     
-    Therefore: (1234 × 3421) ÷ (231 + 2341) = **1,641.42**
-
-
+    Dolayısıyla: (1234 × 3421) ÷ (231 + 2341) = **1.641,42**
 
 ```python
 print(r.message.additional_kwargs["thinking"]["signature"])
@@ -476,66 +444,62 @@ print(r.message.additional_kwargs["thinking"]["signature"])
 
     EsgICkYIAxgCKkBcW71ZZ3zt/vVxd0Aw2evRNOsyewVAaXXFcHa2zRC5O/TG/Db+RfgHqKNF7EWL0WuJKRXJZ20Y/...
 
-
-We can also expose the exact thinking process:
-
+Tam düşünme sürecini de ortaya çıkarabiliriz:
 
 ```python
 print(r.message.additional_kwargs["thinking"]["thinking"])
 ```
 
-    I need to calculate (1234 * 3421) / (231 + 2341).
+    (1234 * 3421) / (231 + 2341) işlemini hesaplamam gerekiyor.
     
-    Let me do this step by step.
+    Adım adım yapayım.
     
-    First, let me calculate the numerator: 1234 * 3421
+    Önce payı hesaplayalım: 1234 * 3421
     1234 * 3421
     = 1234 * (3000 + 400 + 20 + 1)
     = 1234 * 3000 + 1234 * 400 + 1234 * 20 + 1234 * 1
-    = 3,702,000 + 493,600 + 24,680 + 1,234
-    = 4,221,514
+    = 3.702.000 + 493.600 + 24.680 + 1.234
+    = 4.221.514
     
-    Now let me calculate the denominator: 231 + 2341
-    231 + 2341 = 2,572
+    Şimdi paydayı hesaplayalım: 231 + 2341
+    231 + 2341 = 2.572
     
-    So the expression becomes:
-    4,221,514 / 2,572
+    İşlem şuna dönüşüyor:
+    4.221.514 / 2.572
     
-    Let me do this division:
-    4,221,514 ÷ 2,572 = 1,641.4...
+    Bölmeyi yapalım:
+    4.221.514 ÷ 2.572 = 1.641,4...
     
-    Let me be more precise:
-    4,221,514 ÷ 2,572 = 1,641.42...
+    Daha kesin olalım:
+    4.221.514 ÷ 2.572 = 1.641,42...
     
-    Actually, let me double-check my multiplication:
+    Aslında çarpmamı tekrar kontrol edeyim:
     1234 * 3421
     
     1234
     ×3421
     -----
     1234 (1234 × 1)
-    2468 (1234 × 2, shifted one place)
-    4936 (1234 × 4, shifted two places)
-    3702 (1234 × 3, shifted three places)
+    2468 (1234 × 2, bir basamak kaydırılmış)
+    4936 (1234 × 4, iki basamak kaydırılmış)
+    3702 (1234 × 3, üç basamak kaydırılmış)
     -----
     
-    Let me be more careful:
+    Daha dikkatli olayım:
     1234 × 1 = 1234
     1234 × 20 = 24680
     1234 × 400 = 493600
     1234 × 3000 = 3702000
     
-    1234 + 24680 + 493600 + 3702000 = 4,221,514
+    1234 + 24680 + 493600 + 3702000 = 4.221.514
     
-    That's correct.
+    Bu doğru.
     
-    Now 4,221,514 ÷ 2,572 ≈ 1,641.42
+    Şimdi 4.221.514 ÷ 2.572 ≈ 1.641,42
 
+## Araç/Fonksiyon Çağırma (Tool/Function Calling)
 
-## Tool/Function Calling
-
-Anthropic supports direct tool/function calling through the API. Using LlamaIndex, we can implement some core agentic tool calling patterns.
-
+Anthropic, API üzerinden doğrudan araç/fonksiyon çağırmayı destekler. LlamaIndex kullanarak bazı temel otonom araç çağırma modellerini uygulayabiliriz.
 
 ```python
 from llama_index.core.tools import FunctionTool
@@ -547,30 +511,27 @@ llm = Anthropic(model="claude-sonnet-4-0")
 
 
 def get_current_time() -> dict:
-    """Get the current time"""
+    """Mevcut saati getirir"""
     return {"time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
 
-# uses the tool name, any type annotations, and docstring to describe the tool
+# aracı tanımlamak için araç adını, varsa tip ek açıklamalarını ve docstring'i kullanır
 tool = FunctionTool.from_defaults(fn=get_current_time)
 ```
 
-We can simply do a single pass to call the tool and get the result:
-
+Aracı çağırmak ve sonucu almak için basitçe tek bir geçiş yapabiliriz:
 
 ```python
-resp = llm.predict_and_call([tool], "What is the current time?")
+resp = llm.predict_and_call([tool], "Şu an saat kaç?")
 print(resp)
 ```
 
     {'time': '2025-05-22 12:45:48'}
 
-
-We can also use lower-level APIs to implement an agentic tool-calling loop!
-
+Otonom bir araç çağırma döngüsü uygulamak için daha düşük seviyeli API'leri de kullanabiliriz!
 
 ```python
-chat_history = [ChatMessage(role="user", content="What is the current time?")]
+chat_history = [ChatMessage(role="user", content="Şu an saat kaç?")]
 tools_by_name = {t.metadata.name: t for t in [tool]}
 
 resp = llm.chat_with_tools([tool], chat_history=chat_history)
@@ -582,21 +543,21 @@ if not tool_calls:
     print(resp)
 else:
     while tool_calls:
-        # add the LLM's response to the chat history
+        # LLM'in yanıtını sohbet geçmişine ekle
         chat_history.append(resp.message)
 
         for tool_call in tool_calls:
             tool_name = tool_call.tool_name
             tool_kwargs = tool_call.tool_kwargs
 
-            print(f"Calling {tool_name} with {tool_kwargs}")
+            print(f"{tool_name} aracı {tool_kwargs} ile çağrılıyor")
             tool_output = tool.call(**tool_kwargs)
-            print("Tool output: ", tool_output)
+            print("Araç çıktısı: ", tool_output)
             chat_history.append(
                 ChatMessage(
                     role="tool",
                     content=str(tool_output),
-                    # most LLMs like Anthropic, OpenAI, etc. need to know the tool call id
+                    # Anthropic, OpenAI vb. çoğu LLM'in araç çağrı kimliğini (id) bilmesi gerekir
                     additional_kwargs={"tool_call_id": tool_call.tool_id},
                 )
             )
@@ -605,20 +566,18 @@ else:
             tool_calls = llm.get_tool_calls_from_response(
                 resp, error_on_no_tool_call=False
             )
-    print("Final response: ", resp.message.content)
+    print("Nihai yanıt: ", resp.message.content)
 ```
 
-    Calling get_current_time with {}
-    Tool output:  {'time': '2025-05-22 12:45:51'}
-    Final response:  The current time is 12:45:51 on May 22, 2025.
+    get_current_time aracı {} ile çağrılıyor
+    Araç çıktısı:  {'time': '2025-05-22 12:45:51'}
+    Nihai yanıt:  Şu anki saat 22 Mayıs 2025, 12:45:51.
 
+## Sunucu Tarafı Araç Çağırma (Server-Side Tool Calling)
 
-## Server-Side Tool Calling
+Anthropic artık en yeni sürümlerde sunucu tarafı araç çağırmayı da destekliyor.
 
-Anthropic now also supports server-side tool calling in latest versions. 
-
-Here's an example of how to use it:
-
+İşte bunun nasıl kullanılacağına dair bir örnek:
 
 ```python
 from llama_index.llms.anthropic import Anthropic
@@ -630,102 +589,101 @@ llm = Anthropic(
         {
             "type": "web_search_20250305",
             "name": "web_search",
-            "max_uses": 3,  # Limit to 3 searches
+            "max_uses": 3,  # Maksimum 3 arama ile sınırla
         }
     ],
 )
 
-# Get response with citations
-response = llm.complete("What are the latest AI research trends?")
+# Atıflar (citations) ile yanıt al
+response = llm.complete("En son yapay zeka araştırma trendleri nelerdir?")
 
-# Access the main response content
+# Ana yanıt içeriğine eriş
 print(response.text)
 
-# Access citations if available
+# Varsa atıflara eriş
 for citation in response.citations:
-    print(f"Source: {citation.get('url')} - {citation.get('cited_text')}")
+    print(f"Kaynak: {citation.get('url')} - {citation.get('cited_text')}")
 ```
 
-    Based on the latest research and industry reports, here are the key AI trends shaping 2025:
+    En son araştırma ve endüstri raporlarına dayanarak, 2025'i şekillendiren temel yapay zeka trendleri şunlardır:
     
-    ## 1. Agentic AI Takes Center Stage
+    ## 1. Otonom YZ (Agentic AI) Ön Plana Çıkıyor
     
-    Agentic AI - AI systems that can perform tasks independently with minimal human intervention - is emerging as the most significant trend for 2025. "Think of agents as the apps of the AI era," according to Microsoft executives. Early implementations will focus on small, structured internal tasks like password changes or vacation requests, with companies being cautious about deploying agents for customer-facing activities involving real money.
+    Otonom YZ - asgari insan müdahalesiyle bağımsız olarak görevleri yerine getirebilen YZ sistemleri - 2025'in en önemli trendi olarak ortaya çıkıyor. Microsoft yöneticilerine göre, "aracıları (agent) YZ çağının uygulamaları olarak düşünün." Erken uygulamalar, parola değişiklikleri veya izin talepleri gibi küçük, yapılandırılmış dahili görevlere odaklanacak; şirketler ise gerçek para içeren müşteri odaklı etkinlikler için aracıları kullanma konusunda temkinli davranacak.
     
-    ## 2. Advanced Reasoning Capabilities
+    ## 2. Gelişmiş Muhakeme Yetenekleri
     
-    AI models with advanced reasoning capabilities, like OpenAI's o1, can solve complex problems with logical steps similar to human thinking, making them particularly useful in science, coding, math, law, and medicine. Tech companies are competing to develop frontier models that push boundaries in natural-language processing, image generation, and coding.
+    OpenAI'nin o1 modeli gibi gelişmiş muhakeme yeteneklerine sahip YZ modelleri, karmaşık problemleri insan düşüncesine benzer mantıksal adımlarla çözebilir; bu da onları özellikle bilim, kodlama, matematik, hukuk ve tıp alanlarında yararlı kılar. Teknoloji şirketleri, doğal dil işleme, görüntü oluşturma ve kodlama alanlarında sınırları zorlayan öncü modeller geliştirmek için yarışıyor.
     
-    ## 3. Focus on Measurable ROI and Enterprise Adoption
+    ## 3. Ölçülebilir ROI ve Kurumsal Benimsemeye Odaklanma
     
-    In 2025, businesses are pushing harder for measurable outcomes from generative AI: reduced costs, demonstrable ROI, and efficiency gains. Despite over 90% of organizations increasing their generative AI use, only 8% consider their initiatives mature, indicating significant room for growth in practical implementation.
+    2025'te işletmeler, üretken YZ'den ölçülebilir sonuçlar bekliyor: maliyetlerin düşürülmesi, kanıtlanabilir yatırım getirisi (ROI) ve verimlilik artışı. Kuruluşların %90'ından fazlasının üretken YZ kullanımını artırmasına rağmen, girişimlerini sadece %8'inin olgun sayması, pratik uygulamada önemli bir büyüme alanı olduğunu gösteriyor.
     
-    ## 4. Scientific Discovery and Materials Science
+    ## 4. Bilimsel Keşif ve Malzeme Bilimi
     
-    AI is increasingly being applied to scientific discovery, with materials science emerging as a promising area following AI's success in protein research. Meta has released massive datasets and models to help scientists discover new materials faster.
+    YZ, bilimsel keşiflerde giderek daha fazla uygulanıyor; malzeme bilimi, YZ'nin protein araştırmalarındaki başarısının ardından gelecek vaat eden bir alan olarak ortaya çıkıyor. Meta, bilim insanlarının yeni malzemeleri daha hızlı keşfetmelerine yardımcı olmak için devasa veri kümeleri ve modeller yayınladı.
     
-    ## 5. Multimodal AI and Beyond Chatbots
+    ## 5. Çok Modlu YZ ve Sohbet Robotlarının Ötesi
     
-    As AI technology matures, developers and businesses are looking beyond chatbots toward building sophisticated software applications on top of large language models rather than deploying chatbots as standalone tools.
+    YZ teknolojisi olgunlaştıkça, geliştiriciler ve işletmeler, sohbet robotlarını bağımsız araçlar olarak kullanmak yerine büyük dil modellerinin üzerine gelişmiş yazılım uygulamaları oluşturmaya yöneliyor.
     
-    ## 6. Dramatic Cost Reductions
+    ## 6. Dramatik Maliyet Düşüşleri
     
-    Inference costs are falling dramatically - from $20 per million tokens to $0.07 per million tokens in less than a year, with the cost for GPT-3.5-level performance dropping over 280-fold between November 2022 and October 2024.
+    Çıkarım (inference) maliyetleri hızla düşüyor - bir yıldan kısa bir sürede milyon belirteç başına 20 dolardan 0,07 dolara geriledi; GPT-3.5 düzeyindeki performans maliyeti Kasım 2022 ile Ekim 2024 arasında 280 kattan fazla azaldı.
     
-    ## 7. Closing Performance Gaps
+    ## 7. Performans Farklarının Kapanması
     
-    The performance gap between top U.S. and Chinese AI models has narrowed from 9.26% to just 1.70% in one year, while open-weight models are closing the gap with closed models, reducing the performance difference from 8% to 1.7% on some benchmarks.
+    En iyi ABD ve Çin YZ modelleri arasındaki performans farkı bir yıl içinde %9,26'dan sadece %1,70'e indi; açık ağırlıklı modeller ise kapalı modellerle aradaki farkı kapatıyor ve bazı kıyaslamalarda performans farkını %8'den %1,7'ye indiriyor.
     
-    ## 8. Increased Regulatory Activity
+    ## 8. Artan Düzenleyici Faaliyetler
     
-    U.S. federal agencies introduced 59 AI-related regulations in 2024 - more than double the number in 2023 - while globally, legislative mentions of AI rose 21.3% across 75 countries.
+    ABD federal kurumları 2024'te 59 YZ ile ilgili düzenleme getirdi - bu sayı 2023'tekinin iki katından fazla - küresel çapta ise YZ'den bahseden yasal düzenlemeler 75 ülkede %21,3 arttı.
     
-    ## 9. Data Management Revolution
+    ## 9. Veri Yönetimi Devrimi
     
-    Generative AI is making unstructured data important again, with 94% of data and AI leaders saying AI interest is leading to greater focus on data, driving a "data lakehouse revolution" that combines data lakes' flexibility with data warehouses' structure.
+    Üretken YZ, yapılandırılmamış verileri yeniden önemli hale getiriyor; veri ve YZ liderlerinin %94'ü YZ ilgisinin veriye olan odağı artırdığını, veri göllerinin esnekliğini veri ambarlarının yapısıyla birleştiren bir "veri göl evi devrimi"ni tetiklediğini söylüyor.
     
-    ## 10. Defense and Military Applications
+    ## 10. Savunma ve Askeri Uygulamalar
     
-    Defense-tech companies are capitalizing on classified military data to train AI models, with mainstream AI companies like OpenAI pivoting toward military partnerships, joining Microsoft, Amazon, and Google in working with the Pentagon.
+    Savunma teknolojisi şirketleri, YZ modellerini eğitmek için gizli askeri verilerden yararlanıyor; OpenAI gibi ana akım YZ şirketleri askeri ortaklıklara yönelerek Pentagon ile çalışan Microsoft, Amazon ve Google arasına katılıyor.
     
-    These trends indicate that 2025
-    Source: https://news.microsoft.com/source/features/ai/6-ai-trends-youll-see-more-of-in-2025/ - · AI-powered agents will do more with greater autonomy and help simplify your life at home and on the job. 
-    Source: https://news.microsoft.com/source/features/ai/6-ai-trends-youll-see-more-of-in-2025/ - In 2025, a new generation of AI-powered agents will do more — even handling certain tasks on your behalf.  
-    Source: https://sloanreview.mit.edu/article/five-trends-in-ai-and-data-science-for-2025/ - Let’s get agentic AI — the kind of AI that does tasks independently — out of the way first: It’s a sure bet for 2025’s “most trending AI trend.” Agent...
-    Source: https://news.microsoft.com/source/features/ai/6-ai-trends-youll-see-more-of-in-2025/ - · “Think of agents as the apps of the AI era,” says Charles Lamanna, corporate vice president of business and industry Copilot.
-    Source: https://sloanreview.mit.edu/article/five-trends-in-ai-and-data-science-for-2025/ - The earliest agents will be those for small, structured internal tasks with little money involved — for instance, helping change your password on the ...
-    Source: https://news.microsoft.com/source/features/ai/6-ai-trends-youll-see-more-of-in-2025/ - Models with advanced reasoning capabilities, like OpenAI o1, can already solve complex problems with logical steps that are similar to how humans thin...
-    Source: https://www.morganstanley.com/insights/articles/ai-trends-reasoning-frontier-models-2025-tmt - The world’s biggest tech companies are vying to refine cutting-edge uses for artificial intelligence utilizations: large language models’ ability to r...
-    Source: https://www.techtarget.com/searchenterpriseai/tip/9-top-AI-and-machine-learning-trends - In 2025, expect businesses to push harder for measurable outcomes from generative AI: reduced costs, demonstrable ROI and efficiency gains. 
-    Source: https://www.techtarget.com/searchenterpriseai/tip/9-top-AI-and-machine-learning-trends - In 2025, expect businesses to push harder for measurable outcomes from generative AI: reduced costs, demonstrable ROI and efficiency gains. 
-    Source: https://www.techtarget.com/searchenterpriseai/tip/9-top-AI-and-machine-learning-trends - In a September 2024 research report, Informa TechTarget's Enterprise Strategy Group found that, although over 90% of organizations had increased their...
-    Source: https://www.technologyreview.com/2025/01/08/1109188/whats-next-for-ai-in-2025/ - Expect this trend to continue next year, and to see more data sets and models that are aimed specifically at scientific discovery. 
-    Source: https://www.technologyreview.com/2025/01/08/1109188/whats-next-for-ai-in-2025/ - One potential area is materials science. Meta has released massive data sets and models that could help scientists use AI to discover new materials mu...
-    Source: https://www.technologyreview.com/2025/01/08/1109188/whats-next-for-ai-in-2025/ - Meta has released massive data sets and models that could help scientists use AI to discover new materials much faster, and in December, Hugging Face,...
-    Source: https://www.techtarget.com/searchenterpriseai/tip/9-top-AI-and-machine-learning-trends - But, as the technology matures, AI developers, end users and business customers alike are looking beyond chatbots. "People need to think more creative...
-    Source: https://spectrum.ieee.org/ai-index-2025 - That means inference costs, or the expense of querying a trained model, are falling dramatically. 
-    Source: https://spectrum.ieee.org/ai-index-2025 - The report notes that the blue line represents a drop from $20 per million tokens to $0.07 per million tokens; the pink line shows a drop from $15 per...
-    Source: https://hai.stanford.edu/ai-index/2025-ai-index-report - Driven by increasingly capable small models, the inference cost for a system performing at the level of GPT-3.5 dropped over 280-fold between November...
-    Source: https://spectrum.ieee.org/ai-index-2025 - In January 2024, the top U.S. model outperformed the best Chinese model by 9.26 percent; by February 2025, this gap had narrowed to just 1.70 percent....
-    Source: https://hai.stanford.edu/ai-index/2025-ai-index-report - Open-weight models are also closing the gap with closed models, reducing the performance difference from 8% to just 1.7% on some benchmarks in a singl...
-    Source: https://hai.stanford.edu/ai-index/2025-ai-index-report - In 2024, U.S. federal agencies introduced 59 AI-related regulations—more than double the number in 2023—and issued by twice as many agencies. Globally...
-    Source: https://sloanreview.mit.edu/article/five-trends-in-ai-and-data-science-for-2025/ - Generative AI has had another impact on organizations: It’s making unstructured data important again. In the 2025 AI & Data Leadership Executive Bench...
-    Source: https://www.morganstanley.com/insights/articles/ai-trends-reasoning-frontier-models-2025-tmt - Executives also highlighted the “data lakehouse revolution”—a trend to create unified data platforms that combine data lakes’ low-cost storage and fle...
-    Source: https://www.technologyreview.com/2025/01/08/1109188/whats-next-for-ai-in-2025/ - In 2025, these trends will continue to be a boon for defense-tech companies like Palantir, Anduril, and others, which are now capitalizing on classifi...
+    Bu trendler 2025'i gösteriyor...
+    Kaynak: https://news.microsoft.com/source/features/ai/6-ai-trends-youll-see-more-of-in-2025/ - · YZ destekli aracılar, evde ve işte hayatınızı basitleştirmeye yardımcı olmak için daha fazla özerklikle daha fazlasını yapacak. 
+    Kaynak: https://news.microsoft.com/source/features/ai/6-ai-trends-youll-see-more-of-in-2025/ - 2025'te yeni nesil YZ destekli aracılar daha fazlasını yapacak - hatta sizin adınıza belirli görevleri yürütecek.  
+    Kaynak: https://sloanreview.mit.edu/article/five-trends-in-ai-and-data-science-for-2025/ - Otonom YZ'yi -bağımsız olarak görev yapan YZ türü- önceden aradan çıkaralım: 2025'in "en trend YZ trendi" olacağı kesin. 
+    Kaynak: https://news.microsoft.com/source/features/ai/6-ai-trends-youll-see-more-of-in-2025/ - Microsoft'un iş ve sektör Copilot kurumsal başkan yardımcısı Charles Lamanna, "Aracıları YZ çağının uygulamaları olarak düşünün," diyor.
+    Kaynak: https://sloanreview.mit.edu/article/five-trends-in-ai-and-data-science-for-2025/ - İlk aracılar, az miktarda paranın söz konusu olduğu küçük, yapılandırılmış dahili görevler için olanlar olacak - örneğin, parolanızı değiştirmenize yardımcı olmak...
+    Kaynak: https://news.microsoft.com/source/features/ai/6-ai-trends-youll-see-more-of-in-2025/ - OpenAI o1 gibi gelişmiş muhakeme yeteneklerine sahip modeller, karmaşık problemleri insanların düşünme şekline benzer mantıksal adımlarla zaten çözebiliyor...
+    Kaynak: https://www.morganstanley.com/insights/articles/ai-trends-reasoning-frontier-models-2025-tmt - Dünyanın en büyük teknoloji şirketleri yapay zeka kullanımı için en son teknolojileri geliştirmek üzere yarışıyorlar: büyük dil modellerinin akıl yürütme yeteneği...
+    Kaynak: https://www.techtarget.com/searchenterpriseai/tip/9-top-AI-and-machine-learning-trends - 2025'te işletmelerin üretken YZ'den ölçülebilir sonuçlar: maliyet düşüşleri, kanıtlanabilir ROI ve verimlilik kazanımları için daha fazla baskı yapmasını bekleyin. 
+    Kaynak: https://www.techtarget.com/searchenterpriseai/tip/9-top-AI-and-machine-learning-trends - 2025'te işletmelerin üretken YZ'den ölçülebilir sonuçlar: maliyet düşüşleri, kanıtlanabilir ROI ve verimlilik kazanımları için daha fazla baskı yapmasını bekleyin. 
+    Kaynak: https://www.techtarget.com/searchenterpriseai/tip/9-top-AI-and-machine-learning-trends - Eylül 2024 tarihli bir araştırma raporunda, Informa TechTarget’ın Enterprise Strategy Group ekibi, kuruluşların %90’ından fazlasının üretken YZ kullanımını artırmasına rağmen...
+    Kaynak: https://www.technologyreview.com/2025/01/08/1109188/whats-next-for-ai-in-2025/ - Bu eğilimin gelecek yıl da devam etmesini ve özellikle bilimsel keşifleri amaçlayan daha fazla veri kümesi ve model görmeyi bekleyin. 
+    Kaynak: https://www.technologyreview.com/2025/01/08/1109188/whats-next-for-ai-in-2025/ - Potansiyel alanlardan biri malzeme bilimi. Meta, bilim insanlarının yeni malzemeleri çok daha hızlı keşfetmek için YZ kullanmalarına yardımcı olabilecek devasa veri kümeleri ve modeller yayınladı...
+    Kaynak: https://www.technologyreview.com/2025/01/08/1109188/whats-next-for-ai-in-2025/ - Meta, bilim insanlarının yeni malzemeleri çok daha hızlı keşfetmek için YZ kullanmalarına yardımcı olabilecek devasa veri kümeleri ve modeller yayınladı ve Aralık ayında Hugging Face...
+    Kaynak: https://www.techtarget.com/searchenterpriseai/tip/9-top-AI-and-machine-learning-trends - Ancak teknoloji olgunlaştıkça, YZ geliştiricileri, son kullanıcılar ve işletme müşterileri sohbet robotlarının ötesine bakıyor. "İnsanların daha yaratıcı düşünmesi gerekiyor..."
+    Kaynak: https://spectrum.ieee.org/ai-index-2025 - Bu, çıkarım maliyetlerinin veya eğitilmiş bir modeli sorgulama maliyetinin dramatik bir şekilde düştüğü anlamına geliyor. 
+    Kaynak: https://spectrum.ieee.org/ai-index-2025 - Rapor, mavi çizginin milyon belirteç başına 20 dolardan 0,07 dolara düştüğünü; pembe çizginin ise 15 dolardan düştüğünü gösteriyor...
+    Kaynak: https://hai.stanford.edu/ai-index/2025-ai-index-report - Giderek daha yetenekli hale gelen küçük modellerin etkisiyle, GPT-3.5 seviyesinde performans gösteren bir sistemin çıkarım maliyeti Kasım 2022'den bu yana 280 kattan fazla düştü...
+    Kaynak: https://spectrum.ieee.org/ai-index-2025 - Ocak 2024'te en iyi ABD modeli en iyi Çin modelinden %9,26 daha iyi performans gösteriyordu; Şubat 2025 itibarıyla bu fark sadece %1,70'e indi....
+    Kaynak: https://hai.stanford.edu/ai-index/2025-ai-index-report - Açık ağırlıklı modeller de kapalı modellerle aradaki farkı kapatıyor ve bazı kıyaslamalarda performans farkını tek bir yılda %8'den sadece %1,7'ye indiriyor...
+    Kaynak: https://hai.stanford.edu/ai-index/2025-ai-index-report - 2024 yılında ABD federal kurumları 59 yapay zeka bağlantılı düzenleme getirdi - bu rakam 2023'tekinin iki katından fazla - ve bu düzenlemeler iki kat daha fazla kurum tarafından yayınlandı. Küresel olarak...
+    Kaynak: https://sloanreview.mit.edu/article/five-trends-in-ai-and-data-science-for-2025/ - Üretken YZ'nin kuruluşlar üzerinde başka bir etkisi daha oldu: Yapılandırılmamış verileri yeniden önemli hale getiriyor. 2025 YZ ve Veri Liderliği Yönetici Araştırması'nda...
+    Kaynak: https://www.morganstanley.com/insights/articles/ai-trends-reasoning-frontier-models-2025-tmt - Yöneticiler ayrıca veri göllerinin düşük maliyetli depolaması ve esnekliğini veri ambarlarının yapısıyla birleştiren birleşik veri platformları oluşturma eğilimi olan "veri göl evi devrimi"ni vurguladılar...
+    Kaynak: https://www.technologyreview.com/2025/01/08/1109188/whats-next-for-ai-in-2025/ - 2025 yılında bu trendler, şu anda gizli askeri verilerden yararlanan Palantir, Anduril ve diğerleri gibi savunma teknolojisi şirketleri için bir nimet olmaya devam edecek...
 
 
-## Tool Calling + Citations
+## Araç Çağırma + Atıflar (Tool Calling + Citations)
 
-In `llama-index-core>=0.12.46` + `llama-index-llms-anthropic>=0.7.6`, we've added support for outputting citable tool results!
+`llama-index-core>=0.12.46` + `llama-index-llms-anthropic>=0.7.6` sürümlerinde, atıf yapılabilir araç sonuçlarını çıktı olarak verme desteği ekledik!
 
-Using Anthropic, you can now utilize server-side citations to cite specific parts of your tool results.
+Anthropic kullanarak, artık araç sonuçlarınızın belirli bölümlerine atıf yapmak için sunucu tarafı atıflarından yararlanabilirsiniz.
 
-If the LLM cites a tool result, the citation will appear in the output as a `CitationBlock`, containing the source, title, and cited content.
+Eğer LLM bir araç sonucuna atıf yaparsa, atıf çıktıda kaynak, başlık ve atıf yapılan içeriği içeren bir `CitationBlock` olarak görünecektir.
 
-Let's cover a few ways to do this in practice.
+Bunu pratikte yapmanın birkaç yolunu inceleyelim.
 
-First, let's define a dummy tool/function that returns a citable block.
-
+İlk olarak, atıf yapılabilir bir blok döndüren bir taslak (dummy) araç/fonksiyon tanımlayalım.
 
 ```python
 from llama_index.core import Document
@@ -736,17 +694,16 @@ dummy_text = Document.example().text
 
 
 async def search_fn(query: str):
-    """Useful for searching the web to answer questions."""
+    """Soruları yanıtlamak için web'de arama yapmak için kullanışlıdır."""
     return CitableBlock(
         content=[TextBlock(text=dummy_text)],
-        title="Facts about LLMs and LlamaIndex",
+        title="LLM'ler ve LlamaIndex Hakkında Gerçekler",
         source="https://docs.llamaindex.ai",
     )
 
 
 search_tool = FunctionTool.from_defaults(search_fn)
 ```
-
 
 ```python
 from llama_index.llms.anthropic import Anthropic
@@ -757,10 +714,9 @@ llm = Anthropic(
 )
 ```
 
-### Agents + Citable Tools
+### Aracılar + Atıf Yapılabilir Araçlar
 
-You can also use these tools directly in pre-built agents, like the `FunctionAgent`, to get the same citations in the output.
-
+Çıktıda aynı atıfları almak için bu araçları doğrudan `FunctionAgent` gibi önceden oluşturulmuş aracılarda da kullanabilirsiniz.
 
 ```python
 from llama_index.core.agent.workflow import FunctionAgent
@@ -768,17 +724,15 @@ from llama_index.core.agent.workflow import FunctionAgent
 agent = FunctionAgent(
     tools=[search_tool],
     llm=llm,
-    # Since we have a fake tool that returns a static result, we don't want to waste LLM tokens
-    system_prompt="Only make one search query per user message.",
+    # Statik bir sonuç döndüren sahte bir aracımız olduğu için LLM belirteçlerini boşa harcamak istemiyoruz
+    system_prompt="Kullanıcı mesajı başına yalnızca bir arama sorgusu yapın.",
     timeout=None,
 )
 ```
 
-
 ```python
-output = await agent.run("How do LlamaIndex and LLMs work together?")
+output = await agent.run("LlamaIndex ve LLM'ler birlikte nasıl çalışır?")
 ```
-
 
 ```python
 from llama_index.core.llms import CitationBlock
@@ -787,68 +741,58 @@ print(output.response.content)
 print("----" * 20)
 for block in output.response.blocks:
     if isinstance(block, CitationBlock):
-        print("Source: ", block.source)
-        print("Title: ", block.title)
-        print("Cited Content:\n", block.cited_content.text)
+        print("Kaynak: ", block.source)
+        print("Başlık: ", block.title)
+        print("Atıf Yapılan İçerik:\n", block.cited_content.text)
         print("----" * 20)
 ```
 
-    Based on the search results, I can explain how LlamaIndex and LLMs work together:
+    Arama sonuçlarına dayanarak, LlamaIndex ve LLM'lerin birlikte nasıl çalıştığını açıklayabilirim:
     
+    LLM'ler, bilgi oluşturma ve muhakeme için olağanüstü bir teknoloji parçasıdır. Büyük miktarda halka açık veri üzerinde önceden eğitilmişlerdir. Ancak temel bir zorluk vardır: LLM'leri kendi özel verilerimizle en iyi nasıl güçlendirebiliriz?
     
-    LLMs are a phenomenal piece of technology for knowledge generation and reasoning. They are pre-trained on large amounts of publicly available data. However, there's a key challenge: How do we best augment LLMs with our own private data?
+    İşte LlamaIndex burada çözüm olarak devreye giriyor. LlamaIndex, LLM uygulamaları oluşturmanıza yardımcı olacak bir "veri çerçevesidir" (data framework). Birlikte şu şekilde çalışırlar:
     
-    This is where LlamaIndex comes in as the solution. LlamaIndex is a "data framework" to help you build LLM apps. Here's how they work together:
+    ## Veri Entegrasyonu ve Yapısı
+    LlamaIndex, mevcut veri kaynaklarınızı ve veri formatlarınızı (API'ler, PDF'ler, belgeler, SQL vb.) almak için veri bağlayıcıları sunar ve bu verilerin LLM'lerle kolayca kullanılabilmesi için verilerinizi yapılandırma yolları (indeksler, grafikler) sağlar.
     
-    ## Data Integration and Structure
-    LlamaIndex offers data connectors to ingest your existing data sources and data formats (APIs, PDFs, docs, SQL, etc.) and provides ways to structure your data (indices, graphs) so that this data can be easily used with LLMs.
+    ## Gelişmiş Sorgu Arayüzü
+    LlamaIndex, verileriniz üzerinde gelişmiş bir erişim/sorgu arayüzü sağlar: Herhangi bir LLM giriş istemini besleyin, geri erişilen bağlamı ve bilgiyle güçlendirilmiş çıktıyı alın. Bu, bir soru sorduğunuzda LlamaIndex'in özel verilerinizden ilgili bilgileri aldığı ve bunu LLM'e bağlam olarak sunduğu, böylece daha doğru ve kişiselleştirilmiş yanıtlar sağladığı anlamına gelir.
     
-    ## Enhanced Query Interface
-    LlamaIndex provides an advanced retrieval/query interface over your data: Feed in any LLM input prompt, get back retrieved context and knowledge-augmented output. This means when you ask a question, LlamaIndex retrieves relevant information from your private data and provides it as context to the LLM, enabling more accurate and personalized responses.
+    ## Esnek Entegrasyon
+    LlamaIndex, dış uygulama çerçevenizle (örneğin LangChain, Flask, Docker, ChatGPT, başka herhangi bir şeyle) kolay entegrasyonlar sağlar.
     
-    ## Flexible Integration
-    LlamaIndex allows easy integrations with your outer application framework (e.g. with LangChain, Flask, Docker, ChatGPT, anything else).
-    
-    ## User-Friendly Design
-    LlamaIndex provides tools for both beginner users and advanced users. The high-level API allows beginner users to use LlamaIndex to ingest and query their data in 5 lines of code. The lower-level APIs allow advanced users to customize and extend any module (data connectors, indices, retrievers, query engines, reranking modules), to fit
+    ## Kullanıcı Dostu Tasarım
+    LlamaIndex hem başlangıç seviyesindeki kullanıcılar hem de ileri düzey kullanıcılar için araçlar sağlar. Üst düzey API, yeni başlayanların LlamaIndex'i kullanarak verilerini 5 satır kodla almalarına ve sorgulamalarına olanak tanır. Alt seviye API'ler, ileri düzey kullanıcıların herhangi bir modülü (veri bağlayıcıları, indeksler, alıcılar, sorgu motorları, yeniden sıralama modülleri) ihtiyaçlarına göre özelleştirmesine ve genişletmesine olanak tanır.
     --------------------------------------------------------------------------------
-    Source:  https://docs.llamaindex.ai
-    Title:  Facts about LLMs and LlamaIndex
-    Cited Content:
+    Kaynak:  https://docs.llamaindex.ai
+    Başlık:  LLM'ler ve LlamaIndex Hakkında Gerçekler
+    Atıf Yapılan İçerik:
      
-    Context
-    LLMs are a phenomenal piece of technology for knowledge generation and reasoning.
-    They are pre-trained on large amounts of publicly available data.
-    How do we best augment LLMs with our own private data?
-    We need a comprehensive toolkit to help perform this data augmentation for LLMs.
+    Bağlam
+    LLM'ler, bilgi oluşturma ve muhakeme için olağanüstü bir teknoloji parçasıdır.
+    Büyük miktarda halka açık veri üzerinde önceden eğitilmişlerdir.
+    LLM'leri kendi özel verilerimizle en iyi nasıl güçlendirebiliriz?
+    LLM'ler için bu veri güçlendirmesini gerçekleştirmeye yardımcı olacak kapsamlı bir araç setine ihtiyacımız var.
     
-    Proposed Solution
-    That's where LlamaIndex comes in. LlamaIndex is a "data framework" to help
-    you build LLM  apps. It provides the following tools:
+    Önerilen Çözüm
+    İşte LlamaIndex burada devreye giriyor. LlamaIndex, LLM uygulamaları oluşturmanıza yardımcı olacak bir "veri çerçevesidir". Şu araçları sağlar:
     
-    Offers data connectors to ingest your existing data sources and data formats
-    (APIs, PDFs, docs, SQL, etc.)
-    Provides ways to structure your data (indices, graphs) so that this data can be
-    easily used with LLMs.
-    Provides an advanced retrieval/query interface over your data:
-    Feed in any LLM input prompt, get back retrieved context and knowledge-augmented output.
-    Allows easy integrations with your outer application framework
-    (e.g. with LangChain, Flask, Docker, ChatGPT, anything else).
-    LlamaIndex provides tools for both beginner users and advanced users.
-    Our high-level API allows beginner users to use LlamaIndex to ingest and
-    query their data in 5 lines of code. Our lower-level APIs allow advanced users to
-    customize and extend any module (data connectors, indices, retrievers, query engines,
-    reranking modules), to fit their needs.
+    Mevcut veri kaynaklarınızı ve veri formatlarınızı (API'ler, PDF'ler, belgeler, SQL vb.) almak için veri bağlayıcıları sunar.
+    Verilerinizin LLM'lerle kolayca kullanılabilmesi için verilerinizi yapılandırma yolları (indeksler, grafikler) sağlar.
+    Verileriniz üzerinde gelişmiş bir erişim/sorgu arayüzü sağlar:
+    Herhangi bir LLM giriş istemini besleyin, geri erişilen bağlamı ve bilgiyle güçlendirilmiş çıktıyı alın.
+    Dış uygulama çerçevenizle (örneğin LangChain, Flask, Docker, ChatGPT, başka herhangi bir şeyle) kolay entegrasyonlar sağlar.
+    LlamaIndex hem başlangıç seviyesindeki kullanıcılar hem de ileri düzey kullanıcılar için araçlar sağlar.
+    Üst düzey API'miz, yeni başlayanların LlamaIndex'i kullanarak verilerini 5 satır kodla almalarına ve sorgulamalarına olanak tanır. Alt seviye API'lerimiz, ileri düzey kullanıcıların herhangi bir modülü (veri bağlayıcıları, indeksler, alıcılar, sorgu motorları, yeniden sıralama modülleri) ihtiyaçlarına göre özelleştirmesine ve genişletmesine olanak tanır.
     
     --------------------------------------------------------------------------------
 
+### Manuel Araç Çağırma + Atıflar
 
-### Manual Tool Calling + Citations
+Atıf yapılabilir bir blok döndüren aracımızı kullanarak, bir manuel aracı döngüsünde verilen araçla LLM'i manuel olarak çağırabiliriz.
 
-Using our tool that returns a citable block, we can manually call the LLM with the given tool in a manual agent loop.
-
-Once the LLM stops making tool calls, we can return the final response and parse the citations from the response.
-
+LLM araç çağırmayı durdurduğunda, nihai yanıtı döndürebilir ve yanıttaki atıfları ayrıştırabiliriz.
 
 ```python
 from llama_index.core.llms import ChatMessage, CitationBlock
@@ -856,11 +800,11 @@ from llama_index.core.llms import ChatMessage, CitationBlock
 chat_history = [
     ChatMessage(
         role="system",
-        # Since we have a fake tool that returns a static result, we don't want to waste LLM tokens
-        content="Only make one search query per user message.",
+        # Statik bir sonuç döndüren sahte bir aracımız olduğu için LLM belirteçlerini boşa harcamak istemiyoruz
+        content="Kullanıcı mesajı başına yalnızca bir arama sorgusu yapın.",
     ),
     ChatMessage(
-        role="user", content="How do LlamaIndex and LLMs work together?"
+        role="user", content="LlamaIndex ve LLM'ler birlikte nasıl çalışır?"
     ),
 ]
 resp = llm.chat_with_tools([search_tool], chat_history=chat_history)
@@ -891,71 +835,63 @@ print(resp.message.content)
 print("----" * 20)
 for block in resp.message.blocks:
     if isinstance(block, CitationBlock):
-        print("Source: ", block.source)
-        print("Title: ", block.title)
-        print("Cited Content:\n", block.cited_content.text)
+        print("Kaynak: ", block.source)
+        print("Başlık: ", block.title)
+        print("Atıf Yapılan İçerik:\n", block.cited_content.text)
         print("----" * 20)
 ```
 
-    Based on the search results, I can explain how LlamaIndex and LLMs work together:
+    Arama sonuçlarına dayanarak, LlamaIndex ve LLM'lerin birlikte nasıl çalıştığını açıklayabilirim:
     
-    
-    LlamaIndex is a "data framework" to help you build LLM apps
-    . The integration works by addressing a key challenge: 
-    while LLMs are a phenomenal piece of technology for knowledge generation and reasoning and are pre-trained on large amounts of publicly available data, we need a comprehensive toolkit to help perform data augmentation for LLMs with our own private data
+    LlamaIndex, LLM uygulamaları oluşturmanıza yardımcı olacak bir "veri çerçevesidir"
+    . Entegrasyon, temel bir zorluğu ele alarak çalışır: 
+    LLM'ler bilgi üretimi ve muhakeme için olağanüstü bir teknoloji parçası olmalarına ve büyük miktarda halka açık veri üzerinde önceden eğitilmelerine rağmen, LLM'leri kendi özel verilerimizle güçlendirmek için kapsamlı bir araç setine ihtiyacımız vardır
     .
     
-    Here's how LlamaIndex and LLMs work together:
+    LlamaIndex ve LLM'lerin birlikte çalışma şekli şöyledir:
     
-    ## Data Integration
+    ## Veri Entegrasyonu
     
-    LlamaIndex offers data connectors to ingest your existing data sources and data formats (APIs, PDFs, docs, SQL, etc.)
-    , allowing you to bring your private data into a format that LLMs can work with.
+    LlamaIndex, mevcut veri kaynaklarınızı ve veri formatlarınızı (API'ler, PDF'ler, belgeler, SQL vb.) almak için veri bağlayıcıları sunar
+    , bu da özel verilerinizi LLM'lerin çalışabileceği bir formata getirmenizi sağlar.
     
-    ## Data Structuring
+    ## Veri Yapılandırma
     
-    LlamaIndex provides ways to structure your data (indices, graphs) so that this data can be easily used with LLMs
-    . This structuring is crucial for making your data accessible and searchable by the LLM.
+    LlamaIndex, bu verilerin LLM'lerle kolayca kullanılabilmesi için verilerinizi yapılandırma yolları (indeksler, grafikler) sağlar
+    . Bu yapılandırma, verilerinizin LLM tarafından erişilebilir ve taranabilir olması için çok önemlidir.
     
-    ## Enhanced Querying
+    ## Gelişmiş Sorgulama
     
-    LlamaIndex provides an advanced retrieval/query interface over your data: Feed in any LLM input prompt, get back retrieved context and knowledge-augmented output
-    . This means when you ask the LLM a question, LlamaIndex retrieves relevant information from your data and provides it as context to enhance the LLM's response.
+    LlamaIndex, verileriniz üzerinde gelişmiş bir erişim/sorgu arayüzü sağlar: Herhangi bir LLM giriş istemini besleyin, geri erişilen bağlamı ve bilgiyle güçlendirilmiş çıktıyı alın
+    . Bu, LLM'e bir soru sorduğunuzda LlamaIndex'in verilerinizden ilgili bilgileri aldığı ve LLM'in yanıtını geliştirmek için bunu bağlam olarak sunduğu anlamına gelir.
     
-    ## Application Integration
+    ## Uygulama Entegrasyonu
     
-    LlamaIndex allows easy integrations with your outer application framework (e.g. with LangChain, Flask, Docker, ChatGPT, anything else)
-    , making it flexible to incorporate into existing systems.
+    LlamaIndex, dış uygulama çerçevenizle (örneğin LangChain, Flask, Docker, ChatGPT, başka herhangi bir şeyle) kolay entegrasyonlar sağlar
+    , bu da mevcut sistemlere dahil edilmesini esnek hale getirir.
     
-    The framework is designed to be accessible to users at different levels: 
-    LlamaIndex's high-level API allows beginner users to use LlamaIndex to ingest and query their data in 5 lines of code, while
+    Çerçeve, farklı seviyelerdeki kullanıcılara erişilebilir olacak şekilde tasarlanmıştır: 
+    LlamaIndex'in üst düzey API'si, yeni başlayanların verilerini 5 satır kodla almalarına ve sorgulamalarına olanak tanırken, alt seviye API'ler uzmanların ihtiyaçlarına göre özelleştirme yapmasına izin verir
     --------------------------------------------------------------------------------
-    Source:  https://docs.llamaindex.ai
-    Title:  Facts about LLMs and LlamaIndex
-    Cited Content:
+    Kaynak:  https://docs.llamaindex.ai
+    Başlık:  LLM'ler ve LlamaIndex Hakkında Gerçekler
+    Atıf Yapılan İçerik:
      
-    Context
-    LLMs are a phenomenal piece of technology for knowledge generation and reasoning.
-    They are pre-trained on large amounts of publicly available data.
-    How do we best augment LLMs with our own private data?
-    We need a comprehensive toolkit to help perform this data augmentation for LLMs.
+    Bağlam
+    LLM'ler, bilgi oluşturma ve muhakeme için olağanüstü bir teknoloji parçasıdır.
+    Büyük miktarda halka açık veri üzerinde önceden eğitilmişlerdir.
+    LLM'leri kendi özel verilerimizle en iyi nasıl güçlendirebiliriz?
+    LLM'ler için bu veri güçlendirmesini gerçekleştirmeye yardımcı olacak kapsamlı bir araç setine ihtiyacımız var.
     
-    Proposed Solution
-    That's where LlamaIndex comes in. LlamaIndex is a "data framework" to help
-    you build LLM  apps. It provides the following tools:
+    Önerilen Çözüm
+    İşte LlamaIndex burada devreye giriyor. LlamaIndex, LLM uygulamaları oluşturmanıza yardımcı olacak bir "veri çerçevesidir". Şu araçları sağlar:
     
-    Offers data connectors to ingest your existing data sources and data formats
-    (APIs, PDFs, docs, SQL, etc.)
-    Provides ways to structure your data (indices, graphs) so that this data can be
-    easily used with LLMs.
-    Provides an advanced retrieval/query interface over your data:
-    Feed in any LLM input prompt, get back retrieved context and knowledge-augmented output.
-    Allows easy integrations with your outer application framework
-    (e.g. with LangChain, Flask, Docker, ChatGPT, anything else).
-    LlamaIndex provides tools for both beginner users and advanced users.
-    Our high-level API allows beginner users to use LlamaIndex to ingest and
-    query their data in 5 lines of code. Our lower-level APIs allow advanced users to
-    customize and extend any module (data connectors, indices, retrievers, query engines,
-    reranking modules), to fit their needs.
+    Mevcut veri kaynaklarınızı ve veri formatlarınızı (API'ler, PDF'ler, belgeler, SQL vb.) almak için veri bağlayıcıları sunar.
+    Verilerinizin LLM'lerle kolayca kullanılabilmesi için verilerinizi yapılandırma yolları (indeksler, grafikler) sağlar.
+    Verileriniz üzerinde gelişmiş bir erişim/sorgu arayüzü sağlar:
+    Herhangi bir LLM giriş istemini besleyin, geri erişilen bağlamı ve bilgiyle güçlendirilmiş çıktıyı alın.
+    Dış uygulama çerçevenizle (örneğin LangChain, Flask, Docker, ChatGPT, başka herhangi bir şeyle) kolay entegrasyonlar sağlar.
+    LlamaIndex hem başlangıç seviyesindeki kullanıcılar hem de ileri düzey kullanıcılar için araçlar sağlar.
+    Üst düzey API'miz, yeni başlayanların LlamaIndex'i kullanarak verilerini 5 satır kodla almalarına ve sorgulamalarına olanak tanır. Alt seviye API'lerimiz, ileri düzey kullanıcıların herhangi bir modülü (veri bağlayıcıları, indeksler, alıcılar, sorgu motorları, yeniden sıralama modülleri) ihtiyaçlarına göre özelleştirmesine ve genişletmesine olanak tanır.
     
     --------------------------------------------------------------------------------
