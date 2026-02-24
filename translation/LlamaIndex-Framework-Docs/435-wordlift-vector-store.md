@@ -1,0 +1,2 @@
+# **WordLift** Vector Store
+
