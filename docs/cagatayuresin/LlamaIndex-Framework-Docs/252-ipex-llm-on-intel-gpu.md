@@ -4,9 +4,9 @@
 
 Bu örnek, Intel GPU üzerinde metin oluşturma ve sohbet işlemleri için LlamaIndex'in [ipex-llm](https://github.com/intel-analytics/ipex-llm/) ile nasıl kullanılacağını göstermektedir.
 
-:::note
+
 IpexLLM'in tüm örnekleri için [buraya](https://github.com/run-llama/llama_index/tree/main/llama-index-integrations/llms/llama-index-llms-ipex-llm/examples) bakabilirsiniz. Intel GPU üzerinde çalıştırırken, lütfen örnekleri çalıştırırken komut argümanında `-d 'xpu'` veya `-d 'xpu:<cihaz_id>'` belirttiğinizden emin olun.
-:::
+
 
 ## Ön Koşulların Kurulumu
 
@@ -27,9 +27,9 @@ pip install llama-index-llms-ipex-llm[xpu] --extra-index-url https://pytorch-ext
 
 Bu adım aynı zamanda `ipex-llm` ve bağımlılıklarını da kuracaktır.
 
-:::note
+
 Ayrıca `extra-index-url` olarak `https://pytorch-extension.intel.com/release-whl/stable/xpu/cn/` adresini de kullanabilirsiniz.
-:::
+
 
 ## Çalışma Zamanı Yapılandırması (Runtime Configuration)
 
@@ -56,9 +56,9 @@ export SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=1
 export SYCL_CACHE_PERSISTENT=1
 ```
 
-:::note
+
 Her modelin Intel iGPU/Intel Arc A300-Serisi veya Pro A60 üzerinde ilk kez çalışması birkaç dakika sürebilir (derleme işlemi nedeniyle).
-:::
+
 
 ## IpexLLM Kullanımı
 

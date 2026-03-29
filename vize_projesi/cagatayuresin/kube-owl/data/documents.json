@@ -1,0 +1,59 @@
+{
+  "documents": [
+    {
+      "id": "doc_00df1dfbf45c",
+      "filename": "oomkilled.md",
+      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\oomkilled.md",
+      "file_size": 3136,
+      "file_type": "md",
+      "chunks": 15,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-03-29T20:45:16.893488+00:00"
+    },
+    {
+      "id": "doc_0d593939c771",
+      "filename": "node-notready.md",
+      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\node-notready.md",
+      "file_size": 4169,
+      "file_type": "md",
+      "chunks": 19,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-03-29T20:45:23.738346+00:00"
+    },
+    {
+      "id": "doc_5a6093ff8eae",
+      "filename": "imagepullbackoff.md",
+      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\imagepullbackoff.md",
+      "file_size": 3232,
+      "file_type": "md",
+      "chunks": 16,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-03-29T20:45:30.089679+00:00"
+    },
+    {
+      "id": "doc_ab1ca5b5b743",
+      "filename": "disk-pressure.md",
+      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\disk-pressure.md",
+      "file_size": 4420,
+      "file_type": "md",
+      "chunks": 19,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-03-29T20:45:37.773011+00:00"
+    },
+    {
+      "id": "doc_c747e509de34",
+      "filename": "crashloopbackoff.md",
+      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\crashloopbackoff.md",
+      "file_size": 2412,
+      "file_type": "md",
+      "chunks": 13,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-03-29T20:45:43.874844+00:00"
+    }
+  ]
+}

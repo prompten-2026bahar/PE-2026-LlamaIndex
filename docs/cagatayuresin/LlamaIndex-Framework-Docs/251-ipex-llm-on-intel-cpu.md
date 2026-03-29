@@ -4,9 +4,9 @@
 
 Bu örnek, Intel CPU üzerinde metin oluşturma ve sohbet işlemleri için LlamaIndex'in [ipex-llm](https://github.com/intel-analytics/ipex-llm/) ile nasıl kullanılacağını göstermektedir.
 
-:::note
+
 IpexLLM'in tüm örnekleri için [buraya](https://github.com/run-llama/llama_index/tree/main/llama-index-integrations/llms/llama-index-llms-ipex-llm/examples) bakabilirsiniz. Intel CPU üzerinde çalıştırırken, lütfen örnekleri çalıştırırken komut argümanında `-d 'cpu'` belirttiğinizden emin olun.
-:::
+
 
 ## Kurulum
 

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KubeOps Agent — Kubernetes operasyonları için agentic RAG sistemi. Otomatik teşhis ve çözüm önerisi.">
+    <title>KubeOps Agent — Kubernetes AI Assistant</title>
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+    <!-- ═══════════ HEADER ═══════════ -->
+    <nav class="navbar kubeops-header" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item kubeops-logo" href="/">
+                <i class="ti ti-brand-kubernetes"></i>
+                <span>KubeOps Agent</span>
+            </a>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="field has-addons">
+                    <div class="control">
+                        <div class="select is-small kubeops-provider-select">
+                            <select id="provider-select">
+                                <option value="ollama">🖥️ Ollama (Lokal)</option>
+                                <option value="gemini">☁️ Gemini (Cloud)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-item">
+                <span id="k8s-status" class="tag kubeops-k8s-badge">
+                    <i class="ti ti-loader-2 ti-spin"></i>&nbsp; Bağlanıyor...
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════ MAIN LAYOUT ═══════════ -->
+    <div class="kubeops-main">
+        <!-- ─── SIDEBAR ─── -->
+        <aside class="kubeops-sidebar" id="sidebar">
+            <div class="kubeops-sidebar-header">
+                <h2 class="kubeops-sidebar-title">
+                    <i class="ti ti-files"></i> Runbook'lar
+                </h2>
+            </div>
+
+            <!-- Doküman Listesi -->
+            <div class="kubeops-doc-list" id="document-list">
+                <div class="kubeops-doc-empty" id="doc-empty">
+                    <i class="ti ti-file-off"></i>
+                    <p>Henüz runbook yüklenmemiş</p>
+                </div>
+            </div>
+
+            <!-- Dosya Yükleme -->
+            <div class="kubeops-upload-area">
+                <div class="kubeops-upload-dropzone" id="upload-dropzone">
+                    <input type="file" id="file-input" accept=".pdf,.md,.txt" hidden>
+                    <i class="ti ti-cloud-upload"></i>
+                    <p>Runbook yükle</p>
+                    <span class="kubeops-upload-hint">.pdf, .md, .txt (max 10MB)</span>
+                </div>
+                <!-- Upload Progress -->
+                <div class="kubeops-upload-progress" id="upload-progress" style="display:none;">
+                    <progress class="progress is-small is-info" max="100">Yükleniyor...</progress>
+                    <span id="upload-status">Yükleniyor...</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ─── CHAT AREA ─── -->
+        <main class="kubeops-chat-area">
+            <!-- Chat Messages -->
+            <div class="kubeops-chat-messages" id="chat-messages">
+                <!-- Welcome Message -->
+                <div class="kubeops-welcome" id="welcome-message">
+                    <div class="kubeops-welcome-icon">
+                        <i class="ti ti-brand-kubernetes"></i>
+                    </div>
+                    <h1>KubeOps Agent</h1>
+                    <p>Kubernetes cluster'ınızdaki sorunları teşhis edip çözüm öneriyorum.</p>
+                    <div class="kubeops-welcome-suggestions">
+                        <button class="kubeops-suggestion" onclick="sendSuggestion('production namespace&#39;indeki pod&#39;lar sürekli restart atıyor, ne olabilir?')">
+                            <i class="ti ti-refresh-alert"></i>
+                            Pod Restart Sorunu
+                        </button>
+                        <button class="kubeops-suggestion" onclick="sendSuggestion('staging namespace&#39;inde ImagePullBackOff hatası alıyorum')">
+                            <i class="ti ti-photo-off"></i>
+                            ImagePullBackOff
+                        </button>
+                        <button class="kubeops-suggestion" onclick="sendSuggestion('worker-2 node&#39;u NotReady durumunda, ne yapmalıyım?')">
+                            <i class="ti ti-server-off"></i>
+                            Node NotReady
+                        </button>
+                        <button class="kubeops-suggestion" onclick="sendSuggestion('disk pressure uyarısı alıyorum, etkilenen pod&#39;lar var mı?')">
+                            <i class="ti ti-database-off"></i>
+                            Disk Pressure
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="kubeops-chat-input-area">
+                <div class="kubeops-chat-input-wrapper">
+                    <textarea
+                        id="chat-input"
+                        class="kubeops-chat-input"
+                        placeholder="Kubernetes sorununuzu yazın..."
+                        rows="1"
+                        maxlength="2000"
+                    ></textarea>
+                    <button id="send-button" class="kubeops-send-btn" onclick="handleSend()">
+                        <i class="ti ti-send"></i>
+                    </button>
+                </div>
+                <p class="kubeops-input-hint">
+                    <kbd>Enter</kbd> ile gönder &bull; <kbd>Shift+Enter</kbd> ile yeni satır
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <!-- ═══════════ NOTIFICATION ═══════════ -->
+    <div id="notification-container" class="kubeops-notifications"></div>
+
+    <!-- ═══════════ SCRIPTS ═══════════ -->
+    <script src="/js/api.js"></script>
+    <script src="/js/documents.js"></script>
+    <script src="/js/chat.js"></script>
+    <script src="/js/app.js"></script>
+
+</body>
+</html>
