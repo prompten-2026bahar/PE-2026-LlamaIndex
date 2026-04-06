@@ -1,234 +1,169 @@
-# LlamaIndex ve Büyük Dil Modellerinde Veri Şeffaflığı
-## Konuşma Metni — Yüksek Lisans Prompt Mühendisliği Sunumu
+# Veriden Bilgeliğe: LlamaIndex İşletim Sistemi — Sunum Metni
 
 ---
 
-## Slayt 1: Başlık — LlamaIndex ve Büyük Dil Modellerinde Veri Şeffaflığı
+## Slayt 1 — Açılış / Başlık
 
-Merhaba herkese. Bugün sizlere "LlamaIndex ve Büyük Dil Modellerinde Veri Şeffaflığı" konusunu ele alacağım. Bu sunumun ana teması şu soruya dayanıyor: Yapay zeka sistemleri ne kadar güçlü olursa olsun, kurumsal verilerinize erişemedikleri sürece gerçek anlamda yararlı olabilirler mi?
-
-Bu soruyu yanıtlarken LlamaIndex framework'ünün ne olduğunu, nasıl çalıştığını ve rakip araçlarla kıyaslandığında nerede konumlandığını inceleyeceğiz. Kurumsal veriler ile üretken yapay zeka arasındaki köprüyü nasıl inşa edebileceğimize birlikte bakacağız.
+Merhaba herkese. Bugün sizinle çok önemli ve güncel bir konuyu ele alacağız: **LlamaIndex**. Sunumun başlığı "Veriden Bilgeliğe: LlamaIndex İşletim Sistemi" — ve bu başlık aslında meselenin özünü çok güzel özetliyor. Elimizde ham veri var; ama asıl ihtiyacımız olan şey o veriden anlam çıkarabilmek, yani bilgeliğe ulaşmak. Bugün bu köprüyü nasıl kuracağımızı konuşacağız.
 
 ---
 
-## Slayt 2: Büyük Dil Modelleri Güçlüdür Ancak Özel Verilerinize Karşı Kördür
+## Slayt 2 — Büyük Dil Modellerinin İzolasyon Problemi
 
-Büyük Dil Modelleri, yani LLM'ler, devasa genel veri setleriyle eğitilmiş son derece güçlü akıl yürütme motorlarıdır. GPT, Claude, Gemini gibi modeller milyarlarca parametreyle metin anlama, özetleme ve üretme konusunda insanüstü bir yetkinliğe sahip.
+Konuya temel bir soruyla başlayalım. GPT, Claude ya da Llama gibi büyük dil modellerini düşündüğünüzde, bunların inanılmaz derecede zeki ve genel dünya bilgisine sahip sistemler olduğunu görürsünüz. Dünya tarihi, bilim, edebiyat, kodlama — bunların hepsini bilirler.
 
-Ancak bu modellerin iki kritik zayıflığı var. Birincisi, "hafıza kaybı" diyebileceğimiz bir sorun: Bu modeller şirketinizin gizli dosyalarını, Slack mesajlarınızı veya özel veritabanlarınızı bilmiyorlar. Eğitim verileri herkese açık kaynaklardan oluşuyor.
+Ama şu soruyu sormamız gerekiyor: **Sizin şirketinizin verisini biliyor mu?**
 
-İkincisi, "bağlam sınırı" sorunu: Tüm kurumsal belgelerinizi bir modelin bağlam penceresine kopyalayıp yapıştıramazsınız. Bu hem son derece pahalı, hem de token sınırları nedeniyle teknik olarak mümkün değil.
+Hayır. Geçen ayki satış rakamlarınızı, iç yazışmalarınızı, müşteri veritabanınızı ya da teknik dokümantasyonunuzu bilmiyorlar. Bu veriler güvende ve kasada kilitli duruyor — ama o kasa ile yapay zeka beyni arasında doğal bir iletişim köprüsü yok.
 
-İşte LlamaIndex tam da bu iki problemi çözmek için tasarlanmış.
-
----
-
-## Slayt 3: Çözüm — Bağlam Artırımı ve LlamaIndex ile Veri Şeffaflığı
-
-Bu probleme getirilen endüstri standardı çözüm, Retrieval-Augmented Generation, yani RAG mimarisidir. RAG, modeli yeniden eğitmek yerine, soruya yanıt vermeden önce ilgili belgeleri dinamik olarak getirir ve modele bağlam olarak sunar.
-
-LlamaIndex bu bağlam artırımını sıfırdan kendiniz yazmak yerine, hazır, yapılandırılmış, yönetilebilir ve ölçeklenebilir bir çerçeve içinde yapmanızı sağlar. Başka bir deyişle, LlamaIndex yapay zekanın verilerinizi okuyabilmesi için gereken şeffaf mercektir. Veri ile akıl yürütme motoru arasındaki köprüdür.
+İşte bu "izolasyon problemi", LlamaIndex'in çözdüğü temel sorundur.
 
 ---
 
-## Slayt 4: Kurumsal Üretken Yapay Zeka İçin Veri Çerçevesi
+## Slayt 3 — LlamaIndex: Nihai Veri Köprüsü
 
-LlamaIndex, LLM uygulamaları için geliştirilmiş en kapsamlı veri çerçevesidir. Üç temel özelliğiyle öne çıkıyor.
+LlamaIndex tam olarak bu köprüyü kuran çerçevedir.
 
-İlk olarak, büyük bir topluluk desteğine sahip: GitHub'da 45.100'den fazla yıldızla aktif ve hızla büyüyen bir ekosistem sunuyor.
+Ama dikkat: LlamaIndex sadece bir kütüphane değil. Ham, dağınık ve yapılandırılmamış verilerinizi — PDF'ler, veritabanları, API'ler — büyük dil modellerinin okuyabileceği, anlayabileceği ve üzerinde mantık yürütebileceği **yapılandırılmış bir formata** dönüştüren eksiksiz bir veri çerçevesidir.
 
-İkinci olarak, geniş bir kapsam: LlamaHub aracılığıyla Notion, Slack, PDF ve SQL dahil 300'den fazla veri bağlayıcısı destekleniyor. Neredeyse her türlü veri kaynağından beslenmek mümkün.
-
-Üçüncü olarak, kurumsal benimseme: Özellikle Hukuk, Finans ve Sağlık gibi belge yoğun dikey sektörlerde en çok tercih edilen RAG altyapısı olarak öne çıkıyor. Bu, framework'ün production-ready olduğunun en güçlü göstergesi.
+Soldaki beyin ile sağdaki kasayı gösterdik. LlamaIndex bu ikisini birbirine bağlıyor ve veriyi sürekli akar hale getiriyor.
 
 ---
 
-## Slayt 5: LlamaIndex Destekli RAG Mimarisinin Anatomisi
+## Slayt 4 — Yükleme İstasyonu: LlamaHub Veri Bağlayıcıları
 
-Şimdi bu sistemin nasıl çalıştığına, yani mimarinin anatomisine bakalım.
+Peki bu köprünün ilk durağı neresi? **LlamaHub**.
 
-Geleneksel bir sistemde kullanıcı sorusu doğrudan LLM'e gider. RAG mimarisinde ise işleyiş farklıdır. Kullanıcı sorusunu önce LlamaIndex karşılar.
+LlamaHub, 300'den fazla farklı kaynaktan veri çekebilen açık kaynaklı evrensel bir bağlayıcı kütüphanesidir. PDF'ler, Notion sayfaları, Slack konuşmaları, SQL veritabanları, Google Docs — hangi formatta olursa olsun LlamaHub bu veriyi alır ve LlamaIndex içindeki standart `Document` nesnelerine dönüştürür.
 
-Süreç şöyle işliyor: Öncelikle PDF, PNG, TXT gibi belgeler sisteme yüklenir ve bir embedding modeliyle vektörlere dönüştürülerek bir vektör veritabanında saklanır. Kullanıcı bir soru sorduğunda, bu soru vektörize edilir ve veritabanında anlam olarak en yakın belgeler bulunur. Bu "Top-K" sonuçlar, orijinal kullanıcı sorusuyla birleştirilerek LLM'e iletilir. LLM artık sadece genel bilgisiyle değil, ilgili kurumsal belgelerle de desteklenmiş şekilde yanıt üretir.
-
-Bu mimari, LLM'in "ne bildiğini" değil "neye erişebildiğini" sorgulamak yerine her ikisini birden optimize eder.
+Yani siz veri formatıyla uğraşmak zorunda kalmıyorsunuz. LlamaHub bu dönüşümü sizin için yapıyor ve veriler fabrikaya hazır hale geliyor.
 
 ---
 
-## Slayt 6: Veriden Yanıta — LlamaIndex Boru Hattı
+## Slayt 5 — İndeksleme Fabrikası: Veriyi Makine Diline Çevirmek
 
-LlamaIndex'in kalbi, yapılandırılmamış veriyi LLM'in anlayabileceği akıllı bir yapıya dönüştüren dört aşamalı bir ardışık düzendir.
+Veri yüklendi. Şimdi ne oluyor? Üç aşamalı bir fabrika sürecinden geçiyor.
 
-Bu dört adım sırasıyla şöyle ilerler: İlk adımda veriler sisteme aktarılır (Ingestion). İkinci adımda bu veriler aranabilir bir formata dönüştürülür (Indexing). Üçüncü adımda kullanıcı sorusuna göre ilgili bilgiler geri çağrılır (Retrieval). Son adımda bu bilgiler bir araya getirilerek doğal dilde yanıt oluşturulur (Synthesis).
+**Birincisi, Parçalama (Chunking):** Büyük belgeler, LLM'in bağlam penceresine sığacak şekilde 512 ile 1024 token arasında küçük parçalara — yani "Node"lara — ayrılıyor.
 
-Şimdi bu adımları tek tek inceleyelim.
+**İkincisi, Gömme (Embedding):** Her parça, bir gömme modeli tarafından anlamsal vektörlere dönüştürülüyor. Bu adımda metin, makinenin anlayabileceği matematiksel bir forma çevriliyor.
 
----
+**Üçüncüsü, Depolama (Storage):** Bu vektörler, milisaniyeler içinde anlamsal arama yapılabilmesi için vektör veritabanlarına indeksleniyor.
 
-## Slayt 7: Adım 1 — İçe Aktarma (Ingestion)
-
-Birinci adım olan İçe Aktarma, sistemin beslendiği hammaddeyi hazırlar. Yapay zeka sisteminiz, beslendiği veri kadar akıllıdır.
-
-LlamaIndex, LlamaHub aracılığıyla her türlü veri kaynağını standart bir Document formatına dönüştürür. PDF mi, CSV mi, SQL veritabanı mı, API mı — fark etmez, hepsi aynı formata gelir.
-
-Bu aşamada üç kritik bileşen öne çıkıyor. LlamaParse, tabloları, çizelgeleri ve karmaşık çok sütunlu formatları kusursuz işleyen endüstri lideri bir belge ayrıştırıcısıdır. Bağlayıcılar sayesinde Google Docs, Discord, MongoDB, Apify ve yerel dizinler gibi onlarca kaynaktan veri çekilebilir. Son olarak Chunking, yani bölümlendirme: Büyük belgeler, LLM'in token sınırlarına uygun olacak şekilde 512 ila 1024 token'lık daha küçük Düğüm nesnelerine bölünür. Bu adım retrieval kalitesi için kritiktir.
+Bu üç adımın sonunda veriniz artık "aranabilir" ve "sorgulanabilir" hale geliyor.
 
 ---
 
-## Slayt 8: Adım 2 — İndeksleme (Indexing)
+## Slayt 6 — İndeksleme Kontrol Paneli: Veriyi Yapılandırma Formatları
 
-Ham düğümler tek başına arama yapmak için yeterli değildir. İndeksleme adımında LlamaIndex, kullanım senaryosuna göre verileri dört farklı yapıda organize eder.
+LlamaIndex'in sunduğu indeks türleri tek tip değil. Kullanım senaryonuza göre beş farklı seçenek var:
 
-Vector Store Index, düğümleri matematiksel vektörlere, yani embedding'lere dönüştürür. Anlamsal benzerlik aramaları için en iyi yöntemdir; "sözleşme iptal koşulları nedir?" gibi sorularda kullanılır.
+**Vektör İndeksi** en yaygın olanı. Anlamsal benzerlik araması için vektör depolarını kullanıyor. "Bu soruya en yakın metin parçası hangisi?" sorusunu yanıtlıyor.
 
-Tree Index, düğümleri hiyerarşik bir ebeveyn-çocuk yapısında depolar. Çok seviyeli sentez gerektiren karmaşık sorular için uygundur.
+**Liste İndeksi** belgeleri ardışık olarak işliyor. Tüm verinin taranması gereken durumlar için ideal.
 
-Keyword Table Index, düğümleri içerdikleri anahtar kelimelere göre haritalar. Kesin terim eşleşmeleri için hızlıdır; hukuki belgeler veya teknik dokümantasyon gibi terminolojinin önemli olduğu alanlarda tercih edilir.
+**Ağaç İndeksi** uzun metinlerde özetleme yaparak hiyerarşik bir arama sağlıyor.
 
-Summary Index ise düğümleri ardışık olarak sıralar ve uzun belgelerin özetlenmesi için idealdir.
+**Anahtar Kelime İndeksi** belirli kelimeleri doğrudan ilgili düğümlerle eşleştiriyor; çoka-çok ilişkisel bir yapı sunuyor.
 
----
+**Bilgi Grafiği** ise kavramlar arasındaki mantıksal ilişkileri çıkararak karmaşık çıkarımlar yapabiliyor.
 
-## Slayt 9: Adım 3 — Geri Çağırma (Retrieval)
-
-Retrieval, doğru soruyu doğru indeksle eşleştirme sanatıdır. Bu süreci Query Engine'ler otomatikleştirir.
-
-LlamaIndex'in sunduğu üç retrieval stratejisi var. Yoğun (Dense) Geri Çağırma, vektör benzerliği üzerinden en alakalı Top-K düğümü getirir. Semantik arama diye de bilinen bu yöntem, kelime kelime eşleşme yerine anlam üzerinden çalışır.
-
-Hibrit Arama ise vektör benzerliği ile BM25 anahtar kelime eşleşmesini birleştirerek hassasiyeti artırır. Hem anlam hem de exact-match gereken senaryolar için güçlü bir seçenek.
-
-Alt-Sorgu Ayrıştırma, karmaşık bir soruyu alır, basit alt sorulara böler ve her birini ilgili indekslere yönlendirerek parçaları toplar. "2023 yılında hangi ürünümüzün en yüksek iade oranı vardı ve bunun sebebi ne?" gibi çok boyutlu sorular için kullanılır.
+Doğru indeksi seçmek, sisteminizin doğruluğunu doğrudan etkiliyor.
 
 ---
 
-## Slayt 10: Adım 4 — Sentezleme (Synthesis)
+## Slayt 7 — Yeni Standart: Belge Özet İndeksi (Document Summary Index)
 
-Son adımda geri çağrılan parçalar bir araya getirilerek nihai, doğal dilde yanıt oluşturulur. LlamaIndex bu süreç için farklı sentez modları sunar.
+Bu slayta özellikle dikkat çekmek istiyorum çünkü klasik RAG sistemlerinin en büyük açığını kapatıyor.
 
-Create and Refine modu, düğümleri sırayla dolaşır. Her yeni bilgiyle mevcut cevabı sürekli günceller ve iyileştirir. Çok sayıda belgenin kapsamlı değerlendirmesi gereken durumlar için uygundur.
+Geleneksel yöntemde ne olur? Belgeler kör körüne parçalanır. Arama sırasında birbiriyle alakasız parçalar geri dönebilir ve asıl bağlam kaybolur.
 
-Tree Summarize modu, seçilen düğümlerden yukarıdan aşağıya bir özet ağacı oluşturur. Bilgiyi tek bir kök yanıtta yoğunlaştırır. Uzun belge özetleme için idealdir.
+**Document Summary Index** yaklaşımında ise LlamaIndex önce her belge için yapılandırılmamış bir "metin özeti" çıkarır. Sorgu sırasında LLM, önce bu özete bakarak belgenin bütünüyle ilgili olup olmadığına karar verir. Eğer ilgiliyse tam belgeye iner.
 
-Compact modu ise LLM token sınırını maksimum verimle kullanmak için mümkün olan en fazla düğümü tek bir prompt içine sıkıştırır. Bu da maliyeti önemli ölçüde düşürür. Production sistemlerde sıkça tercih edilen moddur.
-
----
-
-## Slayt 11: Sadece Arama Değil — LlamaIndex Ajanları ve İş Akışları
-
-LlamaIndex yalnızca belge getirmekle kalmaz; karmaşık senaryoları Workflow'lar ve Ajanlar aracılığıyla orkestre eder.
-
-Üç önemli kavram burada öne çıkıyor. Olay-Güdümlü Mimari (Event-Driven Architecture): Adımlar arası açık olay iletimi ile asenkron çok adımlı boru hatları kurulabilir. Bu, yüksek performanslı sistemler için kritik bir özelliktir.
-
-Veri-Odaklı Ajanlar: Arama motorlarını ve API'leri araç olarak kullanabilen, karar veren ve hareket eden otonom ajanlar tanımlanabilir. Bir ajan; veri tabanını sorgular, API çağrısı yapar ve sonuçları sentezler.
-
-Esnek Yönlendirme (Routing): LLM tabanlı veya anlamsal yönlendiriciler sayesinde kullanıcı sorgusunu dinamik olarak doğru departmana iletmek mümkün. Örneğin aynı sisteme yönelen bir faturalandırma sorusu ile teknik destek talebini otomatik olarak ayırt edebilirsiniz.
+Bu yaklaşım, parça seviyesi yerine **belge seviyesinde** çok daha yüksek mantıksal isabet sağlıyor. Yani daha az "gürültü", daha fazla doğruluk.
 
 ---
 
-## Slayt 12: Yapay Zeka Çerçeveleri Ekosistemini Haritalamak
+## Slayt 8 — Yönlendirme (Router) ve Geri Getirme (Retrieval)
 
-Büyük Dil Modeli uygulamaları inşa etmek için tek bir araç her şeyi çözemez. Her çerçeve belirli bir uzmanlık alanına odaklanır.
+Birden fazla indeksimiz var. Peki hangi sorgu için hangisi kullanılacak?
 
-Bu haritaya bakıldığında: Veri ve RAG için LlamaIndex, Orkestrasyon ve İş Akışları için LangChain ve LangGraph, Rol Tabanlı Çoklu Ajanlar için CrewAI, Prompt Derleme ve Optimizasyon için DSPy ve son olarak Değerlendirme için Promptfoo öne çıkıyor.
+İşte burada **RouterQueryEngine** devreye giriyor. Bu bileşen sadece basit bir arama yapmıyor. LLM destekli bir mantık kullanarak kullanıcının sorusunun doğasını analiz ediyor ve en iyi sonucu verecek indeksi dinamik olarak seçiyor.
 
-Bu araçlar rakip değil, tamamlayıcıdır. En iyi sistemler genellikle bu araçların bir kombinasyonunu kullanır. Hangi aracın ne zaman tercih edileceğini anlamak, bir yapay zeka mühendisi için kritik bir yetkinliktir.
+Örneğin nokta atışı bir bilgi için Vektör Motoru'na, genel bir özetleme için Özet Motoru'na, mantıksal ilişkiler gerektiren sorgular için ise Bilgi Grafiği Motoru'na yönlendiriyor.
 
----
-
-## Slayt 13: LlamaIndex vs. LangChain / LangGraph
-
-Her iki framework de RAG ve Ajan yapabilir. Ancak çıkış noktaları tamamen farklıdır.
-
-LlamaIndex'in odak noktası veridir. Veriyi bağlama, indeksleme ve geri çağırma optimizasyonu üzerine kuruludur. Güçlü yönü ise doğrudan RAG kullanım senaryolarında LangChain'e kıyasla yüzde kırk daha hızlı belge geri çağırma performansı ve yerleşik hiyerarşik chunking gibi özellikleridir. Belge yoğun işler, kurumsal arama ve sözleşme analizi gibi alanlarda tercih edilir.
-
-LangChain ve LangGraph ise iş akışı önceliklidir. Modülerlik ve karmaşık durum yönetimli graf mimarileri üzerine kuruludur. Gelişmiş hafıza, human-in-the-loop ve zaman yolculuğu gibi güçlü özellikleri vardır. Uzun süreli çalışan, son derece karmaşık, adım adım planlama gerektiren görevler için tercih edilir.
-
-Kısacası: RAG ağırlıklı bir sistem için LlamaIndex, karmaşık stateful iş akışları için LangGraph.
+Bu dinamik yönlendirme, sistemin akıllıca davranmasını sağlayan kritik bir mekanizma.
 
 ---
 
-## Slayt 14: LlamaIndex vs. CrewAI
+## Slayt 9 — Gelişmiş RAG: Alt Soru Ayrıştırma (Sub-Question Decomposition)
 
-LlamaIndex ile CrewAI'ı karşılaştırdığımızda temel fark şu: LlamaIndex bir Sistematik Bilgi Motorudur, CrewAI ise Rol Tabanlı İşbirliği platformudur.
+Şimdi daha gelişmiş bir tekniğe bakalım: **Sub-Question Decomposition**, yani alt soru ayrıştırma.
 
-LlamaIndex; araçlar ve indeksler üzerinde çalışan tekil veya yönlendirici ajanlara odaklanır. Amacı, devasa bir veri havuzundan en doğru bilgiye ulaşmak ve bunu sentezlemektir.
+Kullanıcı "San Francisco ve New York ofislerinin Q3 gelirleri arasındaki fark nedir?" diye soruyor. Bu aslında tek soru değil, iki ayrı sorudan oluşan bileşik bir sorgu.
 
-CrewAI ise bir şirketin organizasyon şeması gibi çalışır. Ajanların belirli rolleri, hedefleri ve arka hikayeleri vardır. Sıralı veya yönetici liderliğinde hiyerarşik bir görev yürütme modeli sunar. Bir araştırma raporunu bir ajanın yazması, diğerinin kontrol etmesi ve bir diğerinin tercüme etmesi gibi senaryolar için idealdir.
+LlamaIndex bunu otomatik olarak tespit ediyor ve soruyu ikiye ayırıyor: Soru A — SF Q3 geliri nedir? Soru B — NY Q3 geliri nedir?
 
-Benim de midterm projemde kullandığım CareerCrew sistemi tam da bu CrewAI yaklaşımına dayanıyordu. LlamaIndex ise KubeOps Agent projesinin temelini oluşturuyor.
+Her alt soru ilgili bağımsız belge indeksine gönderiliyor, cevaplar ayrı ayrı getiriliyor ve son olarak LLM tarafından sentezlenerek nihai ve tutarlı bir cevap üretiliyor.
 
----
-
-## Slayt 15: LlamaIndex vs. DSPy
-
-LlamaIndex bir Bağlam Sağlayıcıdır, DSPy ise bir Program Derleyicisidir.
-
-LlamaIndex'in rolü LLM'in hallüsinasyon görmesini engellemek için doğru bağlamı, yani dokümanları, prompt'un içine yerleştirmektir. Doğruluk, getirilen verinin kalitesine bağlıdır.
-
-DSPy ise prompt mühendisliğini manuel bir iş olmaktan çıkarır. İstemleri kod gibi değerlendirir ve otomatik olarak optimize eder. Örneğin LlamaIndex veriyi sağlarken, DSPy bu veriyle çalışan en iyi prompt'u otomatik olarak optimize edebilir. Bazı benchmark'larda MIPROv2 ile başarı oranını yüzde 24'ten yüzde 51'e çıkardığı gösterilmiştir.
-
-İkisi birlikte çok güçlü bir kombinasyon oluşturabilir: LlamaIndex veriyi getirir, DSPy prompt'u en üst düzeye çıkarır.
+Bu teknik, karmaşık ve çok boyutlu sorguları doğru yanıtlamak için son derece güçlü.
 
 ---
 
-## Slayt 16: LlamaIndex vs. Promptfoo
+## Slayt 10 — Uçtan Uca RAG Mimarisi
 
-LlamaIndex uygulamanın kendisini inşa eden altyapıdır. Promptfoo ise bu altyapının kalitesini ölçen test ve değerlendirme aracıdır.
+Şimdiye kadar anlattıklarımızı bir araya getirdiğimizde ortaya çıkan tablo bu.
 
-Promptfoo'nun sunduğu özellikler; kırmızı takım testleri, sızma testleri ve LLM-as-a-Judge değerlendirmeleri. RAG sisteminizin spesifik durumlarda nasıl performans gösterdiğini, hallüsinasyonları ve güvenlik açıklarını otomatik olarak test eder. Önbelleğe alma ve eşzamanlı çalışma ile testleri hızlandırır.
+**İnşa Zamanında:** Belgeler LlamaHub yükleyicileriyle sisteme alınıyor. Parçalama yapılıyor, gömme modeli devreye giriyor ve vektörler depoya kaydediliyor.
 
-Production'a almadan önce sisteminizin doğruluk ve güvenlik testlerini Promptfoo ile otomatikleştirmek, özellikle kurumsal kullanım için bir zorunluluktur.
+**Sorgu Zamanında:** Kullanıcı bir soru soruyor. Geri Getirici en iyi k sonucu buluyor, Sorgu Motoru bu sonuçları LLM'e sunuyor ve LLM sentezleyerek kusursuz bir yanıt üretiyor.
 
----
-
-## Slayt 17: Ekosistem Sentezi — Hangi Aracı Ne Zaman Seçmeli?
-
-Bu karşılaştırma tablosunu bir karar rehberi olarak kullanabilirsiniz.
-
-LlamaIndex: Veri ve RAG odaklı, veri indeksleme ve geri çağırma mimarisi, kurumsal bilgi arama ve doküman Q&A için, orta öğrenme eğrisi ama RAG için kolay başlangıç.
-
-LangChain: Orkestrasyon odaklı, stateful graf mimarisi, karmaşık ve esnek ajan iş akışları için, dik öğrenme eğrisi.
-
-CrewAI: Rol tabanlı ajan odaklı, otonom ekip işbirliği, belirli rollerin tanımlandığı görevler için, kolay öğrenme eğrisi.
-
-DSPy: Optimizasyon odaklı, otomatik prompt derleme, prompt kalitesi ve metrik artırma için, dik öğrenme eğrisi.
-
-Promptfoo: Değerlendirme odaklı, güvenlik ve eval, sistem performansını ölçmek için, orta öğrenme eğrisi.
+Bu akış — veri yüklemeden kullanıcı yanıtına kadar — tam anlamıyla uçtan uca, yönetilebilir ve ölçeklenebilir bir RAG mimarisini temsil ediyor.
 
 ---
 
-## Slayt 18: Büyük Yapay Zeka Yığını (The Hybrid Stack)
+## Slayt 11 — Statik İş Akışlarından Otonom Ajanlara: LlamaIndex Workflows
 
-Bu çerçeveler birbirini dışlamaz. Aksine, en iyi üretim sistemleri bunların bir kombinasyonunu kullanır.
+LlamaIndex sadece veri getirmiyor. Bir adım daha ileri gidiyor: **LlamaIndex Workflows**.
 
-Gelişmiş bir kurumsal mimari üç katmandan oluşur. En altta Veri Katmanı olarak LlamaIndex yer alır: Belgeler işlenir, indekslenir ve en iyi retrieval motorları sağlanır.
+Bu özellik sayesinde olay güdümlü (event-driven), asenkron çoklu ajan sistemleri kurabiliyorsunuz. Yani sadece "soruya cevap ver" değil, "bu görevi çözmek için gerekli adımları kendin planla ve uygula" diyebiliyorsunuz.
 
-Ortada Orkestrasyon Katmanı olarak LangGraph bulunur: LlamaIndex'in sorgu motorlarını birer araç olarak kullanır ve genel mantığı, döngüleri ile hafızayı yönetir.
+Ajanlar, sorgu motorlarını birer "araç" (tool) olarak kullanarak birden fazla doküman koleksiyonu arasında otonom araştırmalar yapabiliyor, bağlamı koruyabiliyor ve karmaşık görevleri kendi başlarına mantık yürüterek çözebiliyor.
 
-En üstte ise Test Katmanı olarak Promptfoo yer alır: Canlıya almadan önce bu hibrit sistemin doğruluk ve güvenlik testlerini otomatikleştirir.
-
-Bu katmanlı yapı, her aracın en güçlü olduğu konuda konumlandırılmasına imkân tanır.
+Bu, RAG'dan tam anlamıyla ajan tabanlı yapay zekaya geçişin kapısı.
 
 ---
 
-## Slayt 19: Pratikte LlamaIndex — Sadeliğin Gücü
+## Slayt 12 — Yapay Zeka Ekosistem Radarı: Kim, Nerede, Neden Güçlü?
 
-Kapsamlı yeteneklerine rağmen, LlamaIndex ile karmaşık bir RAG sistemi kurmak sadece birkaç satır kod gerektirir. Karmaşıklığı arka planda akıllıca gizler.
+Peki bu ekosisteme bütünsel bakarsak kimler var ve hangi işleri yapıyorlar?
 
-Ekranda gördüğünüz bu beş satırlık kod, tam işlevsel bir RAG sistemidir. Önce SimpleDirectoryReader ile belgeler yükleniyor. Sonra VectorStoreIndex bu belgeleri otomatik olarak vektörlere dönüştürüp indeksliyor. Son olarak bir query engine oluşturuluyor ve doğal dilde sorgu yapılıyor. Tek satırda: "Bu şirket poliçesinde iptal şartları nelerdir?"
+**LangChain** karmaşık orkestrasyon için güçlü. 600'den fazla entegrasyon, döngüsel ve durum bilgisi tutan akışlar için "İsviçre Çakısı" olarak tanımlanabilir.
 
-Bu sadeliğin arkasında chunking, embedding, vektör araması ve sentezleme gibi onlarca karmaşık adım var; ama tüm bunlar sizden gizlenmiş durumda. Bu, iyi bir framework'ün en önemli özelliğidir.
+**LlamaIndex** veri bağlantısı ve RAG konusunda lider. Kusursuz belge indeksleme, %40 daha hızlı geri getirme ve 300'den fazla veri bağlayıcısıyla verinin olduğu her yerde güçlü.
+
+**CrewAI** çoklu ajan işbirliği için tasarlanmış. Rol tabanlı ekip kurgusu ve ajanların birbirleriyle tartışması gereken senaryolar için ideal.
+
+**Promptfoo** değerlendirme ve güvenlik odaklı. LLM uygulamaları için test, sızma testleri ve performans ölçümlemeleri sunuyor.
+
+**DSPy** ise algoritmik istem derleme konusunda öncü. Manuel prompt yazmayı bitirip, promptları programatik olarak optimize etmeyi sağlıyor.
+
+Bu araçlar birbirinin rakibi değil, tamamlayıcısı. Doğru senaryoda doğru aracı seçmek kritik.
+
+---
+
+## Slayt 13 — Kapanış: Doğru İş İçin Doğru Mimari
+
+Son olarak şunu vurgulamak istiyorum.
+
+Eğer probleminiz "Sistemim şirket verilerimi doğru, eksiksiz ve hızlı bir şekilde anlayıp cevaplayabilmeli" ise, **temel mimariniz LlamaIndex olmalıdır.**
+
+Diğer araçlar — LangChain, CrewAI, DSPy — bu sağlam veri temelinin üzerinde çalışan harika tamamlayıcılardır. Ama bu temel olmadan, yani yapılandırılmış veriniz yoksa, zeka tek başına yetersiz kalır.
+
+Veri olmadan zeka, pusulasız gemi gibidir.
+
+Teşekkür ederim. Sorularınızı bekliyorum.
 
 ---
 
-## Slayt 20: Kapanış — Veri Altyapısı Olmadan Yapay Zeka Sadece Bir İllüzyondur
-
-Sunumu şu güçlü ifadeyle kapatmak istiyorum: "Veri altyapısı olmadan yapay zeka sadece bir illüzyondur."
-
-Geleceğin kazanan uygulamaları, sadece en zeki LLM'i kullananlar değil; bu zekayı en kaliteli kurumsal veriyle birleştirebilenler olacak. LlamaIndex, kapalı veri siloları ile üretken yapay zeka arasındaki şeffaf, yönetilebilir ve performanslı mercektir.
-
-Ajanlarınızı inşa ederken verinizi ikinci plana atmayın; çünkü yapay zekanın kalitesi, bağlamının kalitesi kadardır.
-
-Bu sunumla LlamaIndex'in temellerini, pipeline mimarisini ve ekosistem içindeki konumunu anladığınızı umuyorum. Sorularınızı bekliyorum.
-
----
+*Sunum: Veriden Bilgeliğe — LlamaIndex İşletim Sistemi | Jerry Liu, Kurucu*
