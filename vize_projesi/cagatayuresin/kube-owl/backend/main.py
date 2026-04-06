@@ -12,10 +12,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-from backend.config import settings
-from backend.api.documents import router as documents_router
-from backend.api.agent import router as agent_router
-from backend.api.system import router as system_router
+from .config import settings
+from .api.documents import router as documents_router
+from .api.agent import router as agent_router
+from .api.system import router as system_router
 
 # Logging konfigürasyonu
 logging.basicConfig(

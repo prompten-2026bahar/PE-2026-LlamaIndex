@@ -9,7 +9,7 @@ import re
 from datetime import datetime, timedelta
 from llama_index.core.tools import FunctionTool
 
-from backend.utils.security import validate_kubectl_command
+from ..utils.security import validate_kubectl_command
 
 logger = logging.getLogger(__name__)
 

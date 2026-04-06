@@ -8,8 +8,8 @@ import subprocess
 from datetime import datetime, timezone
 from fastapi import APIRouter
 
-from backend.config import settings
-from backend.core.indexer import get_all_documents, get_collection_count
+from ..config import settings
+from ..core.indexer import get_all_documents, get_collection_count
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api", tags=["Sistem"])

@@ -19,6 +19,7 @@ env/
 # Data directories (runtime generated)
 data/chromadb/
 data/uploads/
+data/documents.json
 
 # IDE
 .vscode/

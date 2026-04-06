@@ -9,12 +9,12 @@ import time
 
 from llama_index.core.agent import ReActAgent
 
-from backend.config import settings
-from backend.core.providers import get_llm, get_provider_info
-from backend.core.prompts import SYSTEM_PROMPT
-from backend.tools.runbook_search import get_runbook_search_tool, set_provider as set_search_provider
-from backend.tools.kubectl_tool import get_kubectl_tool
-from backend.tools.kubectl_mock import get_kubectl_mock_tool
+from ..config import settings
+from .providers import get_llm, get_provider_info
+from .prompts import SYSTEM_PROMPT
+from ..tools.runbook_search import get_runbook_search_tool, set_provider as set_search_provider
+from ..tools.kubectl_tool import get_kubectl_tool
+from ..tools.kubectl_mock import get_kubectl_mock_tool
 
 logger = logging.getLogger(__name__)
 
@@ -55,8 +55,8 @@ def create_agent(provider: str = None) -> ReActAgent:
 
     tools = [runbook_tool, kubectl_tool]
 
-    # ReAct ajanı oluştur (LlamaIndex 0.14.x workflow-based API)
-    agent = ReActAgent(
+    # ReAct ajanı oluştur (LlamaIndex 0.12+ factory pattern)
+    agent = ReActAgent.from_tools(
         tools=tools,
         llm=llm,
         verbose=True,
@@ -155,13 +155,8 @@ async def query_agent(query: str, provider: str = None) -> dict:
         # Ajanı oluştur
         agent = create_agent(provider)
 
-        # Workflow-based agent: agent.run() returns a handler, await it
-        handler = agent.run(
-            user_msg=query,
-            max_iterations=5,
-            early_stopping_method="generate"
-        )
-        response = await handler
+        # Asenkron olarak ajanı çalıştır
+        response = await agent.aquery(query)
 
         duration_ms = int((time.time() - start_time) * 1000)
 

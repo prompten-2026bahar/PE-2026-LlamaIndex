@@ -6,9 +6,9 @@ Doküman yükleme, listeleme, detay ve silme.
 import logging
 from fastapi import APIRouter, UploadFile, File, Query, HTTPException
 
-from backend.config import settings
-from backend.utils.file_handler import validate_file, save_uploaded_file
-from backend.core.indexer import (
+from ..config import settings
+from ..utils.file_handler import validate_file, save_uploaded_file
+from ..core.indexer import (
     index_document,
     delete_document,
     get_all_documents,

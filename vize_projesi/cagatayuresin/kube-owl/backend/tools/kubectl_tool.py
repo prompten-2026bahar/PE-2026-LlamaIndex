@@ -7,7 +7,7 @@ import logging
 import subprocess
 from llama_index.core.tools import FunctionTool
 
-from backend.utils.security import validate_kubectl_command, sanitize_kubectl_output
+from ..utils.security import validate_kubectl_command, sanitize_kubectl_output
 
 logger = logging.getLogger(__name__)
 

@@ -23,8 +23,8 @@ from llama_index.core.node_parser import (
 )
 from llama_index.vector_stores.chroma import ChromaVectorStore
 
-from backend.config import settings
-from backend.core.providers import get_embed_model
+from ..config import settings
+from .providers import get_embed_model
 
 logger = logging.getLogger(__name__)
 

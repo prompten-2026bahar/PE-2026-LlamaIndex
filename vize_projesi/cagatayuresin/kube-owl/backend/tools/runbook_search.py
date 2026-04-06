@@ -6,7 +6,7 @@ ChromaDB'den semantic search yapan FunctionTool.
 import logging
 from llama_index.core.tools import FunctionTool
 
-from backend.core.indexer import get_query_engine
+from ..core.indexer import get_query_engine
 
 logger = logging.getLogger(__name__)
 

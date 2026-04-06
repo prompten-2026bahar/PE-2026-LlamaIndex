@@ -7,8 +7,8 @@ import logging
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException
 
-from backend.config import settings
-from backend.core.agent import query_agent
+from ..config import settings
+from ..core.agent import query_agent
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/agent", tags=["Ajan"])

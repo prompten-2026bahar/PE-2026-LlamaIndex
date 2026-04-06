@@ -4,7 +4,7 @@ Ollama ve Gemini LLM/Embedding model factory fonksiyonları.
 """
 
 import logging
-from backend.config import settings
+from ..config import settings
 
 logger = logging.getLogger(__name__)
 

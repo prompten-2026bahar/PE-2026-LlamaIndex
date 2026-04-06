@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 from fastapi import UploadFile
 
-from backend.config import settings
+from ..config import settings
 
 logger = logging.getLogger(__name__)
 
