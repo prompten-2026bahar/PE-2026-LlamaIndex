@@ -19,13 +19,15 @@ from ..tools.kubectl_mock import get_kubectl_mock_tool
 logger = logging.getLogger(__name__)
 
 
+from ..api.system import get_active_session_details
+
 def _get_kubectl_tool():
-    """Config'e göre gerçek veya mock kubectl tool'unu seçer."""
-    if settings.has_kubeconfig:
-        logger.info("Gerçek kubectl tool'u kullanılıyor (kubeconfig mevcut)")
+    """Config'e veya SSH session'a göre gerçek veya mock kubectl tool'unu seçer."""
+    if settings.has_kubeconfig or get_active_session_details() is not None:
+        logger.info("Gerçek kubectl tool'u kullanılıyor (kubeconfig veya SSH mevcut)")
         return get_kubectl_tool()
     else:
-        logger.info("Mock kubectl tool'u kullanılıyor (kubeconfig bulunamadı)")
+        logger.info("Mock kubectl tool'u kullanılıyor (kubeconfig veya SSH bulunamadı)")
         return get_kubectl_mock_tool()
 
 
@@ -70,31 +72,38 @@ def create_agent(provider: str = None) -> ReActAgent:
 
 def _parse_agent_steps(response) -> list[dict]:
     """
-    Ajan response'undan düşünce adımlarını parse eder.
-    Yeni LlamaIndex AgentOutput formatı: response.tool_calls, response.raw
+    Ajan response'undan düşünce ve aksiyon adımlarını parse eder.
+    LlamaIndex'te ReAct tool çalıştırdığında response.sources içerisinde
+    ToolOutput objeleri olarak döndürülür.
     """
     steps = []
 
     try:
-        # tool_calls varsa action adımları olarak ekle
-        if hasattr(response, 'tool_calls') and response.tool_calls:
-            for tc in response.tool_calls:
-                step = {
-                    "type": "action",
-                    "tool": getattr(tc, 'tool_name', 'unknown'),
-                    "input": str(getattr(tc, 'tool_kwargs', '')),
-                    "output": "",
-                }
-                steps.append(step)
+        if hasattr(response, 'sources') and response.sources:
+            for source in response.sources:
+                # source bir ToolOutput nesnesidir
+                tool_name = getattr(source, 'tool_name', 'unknown')
+                tool_input = str(getattr(source, 'raw_input', ''))
+                tool_output = str(getattr(source, 'raw_output', ''))
+                
+                if tool_name and tool_name != 'unknown':
+                    step = {
+                        "type": "action",
+                        "tool": tool_name,
+                        "input": tool_input,
+                        "output": tool_output,
+                    }
+                    steps.append(step)
 
-        # raw içinden thought/action/observation parse et
+        # raw içinden thought parse et (Eğer düz metin olarak varsa)
         if hasattr(response, 'raw') and response.raw:
             raw_text = str(response.raw)
-            # Thought pattern
             thoughts = re.findall(r'Thought:\s*(.*?)(?=Action:|Observation:|$)', raw_text, re.DOTALL)
             for t in thoughts:
                 t = t.strip()
                 if t:
+                    # Thought'u başa veya tool'dan önce ekleyebiliriz
+                    # Ancak şimdilik tools listesinin başına ekleyelim
                     steps.insert(0, {"type": "thought", "content": t})
 
     except Exception as e:

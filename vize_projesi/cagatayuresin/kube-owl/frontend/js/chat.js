@@ -86,7 +86,7 @@ function addAgentMessage(data) {
         </div>
         <div class="kubeops-message-content">
             ${stepsHtml}
-            <div class="kubeops-answer-text">${formattedAnswer}</div>
+            <div class="kubeops-answer-text content" style="color: #e0e0e0; font-size: 0.95rem;">${formattedAnswer}</div>
             ${sourcesHtml}
             ${durationHtml}
         </div>
@@ -224,30 +224,22 @@ function scrollToBottom() {
 }
 
 /**
- * Cevap metnini basit formatlar.
- * Kod bloklarını <pre> içine, satır sonlarını <br> yapar.
+ * Cevap metnini markdown olarak formatlar.
  */
 function formatAnswerText(text) {
     if (!text) return '';
-
-    // Escape HTML first
-    let formatted = escapeHtml(text);
-
-    // Kod bloklarını formatla (```)
-    formatted = formatted.replace(/```(\w*)\n([\s\S]*?)```/g, (match, lang, code) => {
-        return `<pre>${code.trim()}</pre>`;
-    });
-
-    // Inline kodu formatla (`)
-    formatted = formatted.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-    // Bold (**text**)
-    formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-
-    // Satır sonlarını <br> yap
-    formatted = formatted.replace(/\n/g, '<br>');
-
-    return formatted;
+    
+    try {
+        if (typeof marked !== 'undefined') {
+            return marked.parse(text);
+        } else {
+            console.warn("Marked.js bulunamadı.");
+            return escapeHtml(text).replace(/\n/g, '<br>');
+        }
+    } catch (e) {
+        console.error("Markdown parsing error:", e);
+        return escapeHtml(text).replace(/\n/g, '<br>');
+    }
 }
 
 /**

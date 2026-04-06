@@ -54,6 +54,72 @@
       "provider": "ollama",
       "status": "indexed",
       "indexed_at": "2026-03-29T20:45:43.874844+00:00"
+    },
+    {
+      "id": "doc_cddb8ba6e222",
+      "filename": "health_check_network.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_network.md",
+      "file_size": 2063,
+      "file_type": "md",
+      "chunks": 5,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-04-06T10:07:17.019067+00:00"
+    },
+    {
+      "id": "doc_ce7f863d270a",
+      "filename": "health_check_node.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_node.md",
+      "file_size": 1638,
+      "file_type": "md",
+      "chunks": 5,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-04-06T10:07:28.465541+00:00"
+    },
+    {
+      "id": "doc_5a304ba62cd9",
+      "filename": "health_check_pods.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_pods.md",
+      "file_size": 2038,
+      "file_type": "md",
+      "chunks": 5,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-04-06T10:07:38.151357+00:00"
+    },
+    {
+      "id": "doc_f3ae313863a6",
+      "filename": "health_check_pods.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_pods.md",
+      "file_size": 2038,
+      "file_type": "md",
+      "chunks": 5,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-04-06T10:40:50.062257+00:00"
+    },
+    {
+      "id": "doc_541091d7242d",
+      "filename": "health_check_node.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_node.md",
+      "file_size": 1638,
+      "file_type": "md",
+      "chunks": 5,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-04-06T10:41:10.424704+00:00"
+    },
+    {
+      "id": "doc_4bb78ae22b19",
+      "filename": "health_check_pods.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_pods.md",
+      "file_size": 2038,
+      "file_type": "md",
+      "chunks": 5,
+      "provider": "ollama",
+      "status": "indexed",
+      "indexed_at": "2026-04-06T10:50:09.587426+00:00"
     }
   ]
 }

@@ -45,6 +45,7 @@ function createDocumentItem(doc) {
     // Dosya tipine göre ikon
     const iconClass = getFileIcon(doc.file_type || doc.filename);
     const fileSize = formatFileSize(doc.file_size || 0);
+    const isEditable = ['.md', '.txt'].some(ext => (doc.filename || '').toLowerCase().endsWith(ext));
 
     item.innerHTML = `
         <i class="ti ${iconClass} kubeops-doc-icon"></i>
@@ -52,9 +53,12 @@ function createDocumentItem(doc) {
             <div class="kubeops-doc-name" title="${doc.filename}">${doc.filename}</div>
             <div class="kubeops-doc-meta">${doc.chunks || 0} chunk &bull; ${fileSize}</div>
         </div>
-        <button class="kubeops-doc-delete" title="Sil" onclick="handleDeleteDocument('${doc.id}', '${doc.filename}')">
-            <i class="ti ti-trash"></i>
-        </button>
+        <div class="kubeops-doc-actions">
+            ${isEditable ? `<button class="kubeops-doc-edit" title="Düzenle" onclick="openDocEditModal('${doc.id}', '${doc.filename}')"><i class="ti ti-edit"></i></button>` : ''}
+            <button class="kubeops-doc-delete" title="Sil" onclick="handleDeleteDocument('${doc.id}', '${doc.filename}')">
+                <i class="ti ti-trash"></i>
+            </button>
+        </div>
     `;
 
     return item;
@@ -99,6 +103,48 @@ async function handleDeleteDocument(docId, filename) {
         await loadDocuments();
     } catch (error) {
         showNotification(`Silme hatası: ${error.message}`, 'error');
+    }
+}
+
+/**
+ * Doküman editör modalını açar.
+ */
+let currentEditDocId = null;
+
+async function openDocEditModal(docId, filename) {
+    try {
+        const response = await getDocumentContent(docId);
+        document.getElementById('doc-edit-filename').textContent = filename;
+        document.getElementById('doc-edit-textarea').value = response.content;
+        currentEditDocId = docId;
+        document.getElementById('document-edit-modal').classList.add('is-active');
+    } catch (error) {
+        showNotification(`Doküman okunamadı: ${error.message}`, 'error');
+    }
+}
+
+function closeDocEditModal() {
+    document.getElementById('document-edit-modal').classList.remove('is-active');
+    currentEditDocId = null;
+    document.getElementById('doc-edit-textarea').value = '';
+}
+
+async function saveDocEdit() {
+    if (!currentEditDocId) return;
+    
+    const btn = document.getElementById('doc-save-btn');
+    const content = document.getElementById('doc-edit-textarea').value;
+    
+    btn.classList.add('is-loading');
+    try {
+        await updateDocumentContent(currentEditDocId, content);
+        showNotification('Doküman güncellendi ve RAG indexi yenilendi.', 'success');
+        closeDocEditModal();
+        await loadDocuments(); // Chunk sayısını vb. güncellemek için
+    } catch (error) {
+        showNotification(`Kaydetme hatası: ${error.message}`, 'error');
+    } finally {
+        btn.classList.remove('is-loading');
     }
 }
 

@@ -13,3 +13,5 @@ python-multipart
 python-dotenv
 pydantic
 pydantic-settings
+paramiko
+llama-index-llms-openai

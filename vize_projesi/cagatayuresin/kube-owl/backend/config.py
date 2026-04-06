@@ -22,8 +22,23 @@ class Settings(BaseSettings):
     gemini_model: str = Field(default="models/gemini-2.0-flash", description="Gemini LLM model adı")
     gemini_embed_model: str = Field(default="models/text-embedding-004", description="Gemini embedding model adı")
 
+    # Claude Configuration
+    claude_api_key: str = Field(default="", description="Anthropic Claude API key")
+    claude_model: str = Field(default="claude-3-5-sonnet-latest", description="Claude LLM model adı")
+
+    # OpenAI Configuration
+    openai_api_key: str = Field(default="", description="OpenAI API key")
+    openai_model: str = Field(default="gpt-4o-mini", description="OpenAI LLM model adı")
+
+    # Ollama Cloud Configuration
+    ollama_cloud_url: str = Field(default="", description="Ollama Cloud API base URL")
+    ollama_cloud_model: str = Field(default="qwen2.5:7b", description="Ollama Cloud LLM model adı")
+
+    # SSH Sessions
+    sessions_file: str = Field(default="./data/sessions.json", description="SSH Kubernetes sessions json file")
+
     # Default Provider
-    default_provider: str = Field(default="ollama", description="Varsayılan LLM provider: 'ollama' veya 'gemini'")
+    default_provider: str = Field(default="ollama", description="Varsayılan LLM provider: 'ollama', 'gemini', 'claude', 'openai' veya 'ollama-cloud'")
 
     # ChromaDB
     chroma_persist_dir: str = Field(default="./data/chromadb", description="ChromaDB persistent storage dizini")

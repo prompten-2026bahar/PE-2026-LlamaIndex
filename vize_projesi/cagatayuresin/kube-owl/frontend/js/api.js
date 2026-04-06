@@ -96,6 +96,24 @@ async function deleteDocument(docId) {
     return apiFetch(`/documents/${docId}`, { method: 'DELETE' });
 }
 
+/**
+ * Doküman içeriğini getirir.
+ */
+async function getDocumentContent(docId) {
+    return apiFetch(`/documents/content/${docId}`);
+}
+
+/**
+ * Doküman içeriğini günceller.
+ */
+async function updateDocumentContent(docId, content) {
+    return apiFetch(`/documents/content/${docId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: content })
+    });
+}
+
 // ═══════════ AJAN API ═══════════
 
 /**
@@ -136,6 +154,27 @@ async function getConfig() {
 }
 
 /**
+ * Ham ayarları (form için) getirir.
+ * @returns {Promise<Object>}
+ */
+async function getRawConfig() {
+    return apiFetch('/config/raw');
+}
+
+/**
+ * Yeni ayarları kaydeder.
+ * @param {Object} data 
+ * @returns {Promise<Object>}
+ */
+async function updateConfig(data) {
+    return apiFetch('/config/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+}
+
+/**
  * Kullanılabilir LLM provider'larını listeler.
  * @returns {Promise<Object>}
  */
@@ -149,4 +188,40 @@ async function getProviders() {
  */
 async function getK8sStatus() {
     return apiFetch('/config/k8s-status');
+}
+
+// ═══════════ SSH API ═══════════
+
+async function listSshSessions() {
+    return apiFetch('/k8s/sessions');
+}
+
+async function addSshSession(sessionData) {
+    return apiFetch('/k8s/sessions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sessionData)
+    });
+}
+
+async function deleteSshSession(sessionId) {
+    return apiFetch(`/k8s/sessions/${sessionId}`, { method: 'DELETE' });
+}
+
+async function setActiveSshSession(sessionId) {
+    return apiFetch('/k8s/sessions/active', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId || null })
+    });
+}
+
+// ═══════════ TERMINAL API ═══════════
+
+async function executeTerminalCommand(command) {
+    return apiFetch('/terminal/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command: command })
+    });
 }
