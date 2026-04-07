@@ -1,125 +1,92 @@
 {
   "documents": [
     {
-      "id": "doc_00df1dfbf45c",
-      "filename": "oomkilled.md",
-      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\oomkilled.md",
-      "file_size": 3136,
-      "file_type": "md",
-      "chunks": 15,
-      "provider": "ollama",
-      "status": "indexed",
-      "indexed_at": "2026-03-29T20:45:16.893488+00:00"
-    },
-    {
-      "id": "doc_0d593939c771",
-      "filename": "node-notready.md",
-      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\node-notready.md",
-      "file_size": 4169,
-      "file_type": "md",
-      "chunks": 19,
-      "provider": "ollama",
-      "status": "indexed",
-      "indexed_at": "2026-03-29T20:45:23.738346+00:00"
-    },
-    {
-      "id": "doc_5a6093ff8eae",
-      "filename": "imagepullbackoff.md",
-      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\imagepullbackoff.md",
-      "file_size": 3232,
-      "file_type": "md",
-      "chunks": 16,
-      "provider": "ollama",
-      "status": "indexed",
-      "indexed_at": "2026-03-29T20:45:30.089679+00:00"
-    },
-    {
-      "id": "doc_ab1ca5b5b743",
-      "filename": "disk-pressure.md",
-      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\disk-pressure.md",
-      "file_size": 4420,
-      "file_type": "md",
-      "chunks": 19,
-      "provider": "ollama",
-      "status": "indexed",
-      "indexed_at": "2026-03-29T20:45:37.773011+00:00"
-    },
-    {
-      "id": "doc_c747e509de34",
+      "id": "doc_e9a8370842f5",
       "filename": "crashloopbackoff.md",
-      "file_path": "C:\\Users\\User\\OneDrive\\Desktop\\llamaindex-rag\\data\\uploads\\crashloopbackoff.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/crashloopbackoff.md",
       "file_size": 2412,
       "file_type": "md",
       "chunks": 13,
-      "provider": "ollama",
+      "provider": "ollama-cloud",
       "status": "indexed",
-      "indexed_at": "2026-03-29T20:45:43.874844+00:00"
+      "indexed_at": "2026-04-07T06:19:44.749381+00:00"
     },
     {
-      "id": "doc_cddb8ba6e222",
+      "id": "doc_e424ee9458f8",
+      "filename": "disk-pressure.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/disk-pressure.md",
+      "file_size": 4420,
+      "file_type": "md",
+      "chunks": 19,
+      "provider": "ollama-cloud",
+      "status": "indexed",
+      "indexed_at": "2026-04-07T06:19:58.219719+00:00"
+    },
+    {
+      "id": "doc_7f51a76ccd71",
       "filename": "health_check_network.md",
       "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_network.md",
       "file_size": 2063,
       "file_type": "md",
       "chunks": 5,
-      "provider": "ollama",
+      "provider": "ollama-cloud",
       "status": "indexed",
-      "indexed_at": "2026-04-06T10:07:17.019067+00:00"
+      "indexed_at": "2026-04-07T06:20:10.513518+00:00"
     },
     {
-      "id": "doc_ce7f863d270a",
+      "id": "doc_379d9b3c3805",
       "filename": "health_check_node.md",
       "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_node.md",
       "file_size": 1638,
       "file_type": "md",
       "chunks": 5,
-      "provider": "ollama",
+      "provider": "ollama-cloud",
       "status": "indexed",
-      "indexed_at": "2026-04-06T10:07:28.465541+00:00"
+      "indexed_at": "2026-04-07T06:20:17.633074+00:00"
     },
     {
-      "id": "doc_5a304ba62cd9",
+      "id": "doc_d8627a8bccff",
       "filename": "health_check_pods.md",
       "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_pods.md",
       "file_size": 2038,
       "file_type": "md",
       "chunks": 5,
-      "provider": "ollama",
+      "provider": "ollama-cloud",
       "status": "indexed",
-      "indexed_at": "2026-04-06T10:07:38.151357+00:00"
+      "indexed_at": "2026-04-07T06:20:26.112078+00:00"
     },
     {
-      "id": "doc_f3ae313863a6",
-      "filename": "health_check_pods.md",
-      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_pods.md",
-      "file_size": 2038,
+      "id": "doc_857ab3d1e21b",
+      "filename": "imagepullbackoff.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/imagepullbackoff.md",
+      "file_size": 3232,
       "file_type": "md",
-      "chunks": 5,
-      "provider": "ollama",
+      "chunks": 16,
+      "provider": "ollama-cloud",
       "status": "indexed",
-      "indexed_at": "2026-04-06T10:40:50.062257+00:00"
+      "indexed_at": "2026-04-07T06:20:36.106373+00:00"
     },
     {
-      "id": "doc_541091d7242d",
-      "filename": "health_check_node.md",
-      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_node.md",
-      "file_size": 1638,
+      "id": "doc_e9dbe9080bda",
+      "filename": "node-notready.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/node-notready.md",
+      "file_size": 4169,
       "file_type": "md",
-      "chunks": 5,
-      "provider": "ollama",
+      "chunks": 19,
+      "provider": "ollama-cloud",
       "status": "indexed",
-      "indexed_at": "2026-04-06T10:41:10.424704+00:00"
+      "indexed_at": "2026-04-07T06:20:44.936067+00:00"
     },
     {
-      "id": "doc_4bb78ae22b19",
-      "filename": "health_check_pods.md",
-      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/health_check_pods.md",
-      "file_size": 2038,
+      "id": "doc_10ddad2a82b5",
+      "filename": "oomkilled.md",
+      "file_path": "/Users/detay/Documents/PE-2026-LlamaIndex/vize_projesi/cagatayuresin/kube-owl/data/uploads/oomkilled.md",
+      "file_size": 3136,
       "file_type": "md",
-      "chunks": 5,
-      "provider": "ollama",
+      "chunks": 15,
+      "provider": "ollama-cloud",
       "status": "indexed",
-      "indexed_at": "2026-04-06T10:50:09.587426+00:00"
+      "indexed_at": "2026-04-07T06:20:55.369602+00:00"
     }
   ]
 }

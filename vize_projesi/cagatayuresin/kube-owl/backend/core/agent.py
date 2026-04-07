@@ -63,10 +63,10 @@ def create_agent(provider: str = None) -> ReActAgent:
         llm=llm,
         verbose=True,
         system_prompt=SYSTEM_PROMPT,
-        max_iterations=10,
+        max_iterations=30,
     )
 
-    logger.info(f"ReAct ajanı hazır — {len(tools)} tool, max_iterations=10")
+    logger.info(f"ReAct ajanı hazır — {len(tools)} tool, max_iterations=30")
     return agent
 
 
